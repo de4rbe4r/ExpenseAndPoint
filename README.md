@@ -8,20 +8,20 @@
 
 ## Используемые модели 
 ### Расход
-- Id - уникальный идентификатор: GUID, PK
+- Id - уникальный идентификатор: int, PK
 - Amount - сумма: ufloat, NOT NULL
 - DateTime - дата и время: DateTime, default(DateTime.Now), NOT NULL
-- CategoryId - идентификатор категории: GUID, FK Category(Id)
-- UserId - идентификатор пользователя: GUID, FK User(Id)
+- CategoryId - идентификатор категории: int, FK Category(Id)
+- UserId - идентификатор пользователя: int, FK User(Id)
 - Category - категория
 - User - пользователь
 
 ### Категория
-- Id - уникальный идентификтор: GUID, PK
+- Id - уникальный идентификтор: int, PK
 - Title - название категории: string, NOT NULL
 - Expenses - список расходов: ICollection<Expense>
 
 ### Пользователь
-- Id - уникальный идентификатор: GUID, PK
+- Id - уникальный идентификатор: int, PK
 - Name - имя пользователя: sting, minlenght(4), должно начинаться с буквы и не должно содержать специальных знаков
 - Expenses - список расходов: ICollection<Expense>
