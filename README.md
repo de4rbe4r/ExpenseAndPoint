@@ -19,7 +19,9 @@
 ### Категория
 - Id - уникальный идентификтор: GUID, PK
 - Title - название категории: string, NOT NULL
+- Expenses - список расходов: ICollection<Expense>
 
 ### Пользователь
 - Id - уникальный идентификатор: GUID, PK
 - Name - имя пользователя: sting, minlenght(4), должно начинаться с буквы и не должно содержать специальных знаков
+- Expenses - список расходов: ICollection<Expense>
