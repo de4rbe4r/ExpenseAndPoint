@@ -9,7 +9,7 @@
 ## Используемые модели 
 ### Расход
 - Id - уникальный идентификатор: int, PK
-- Amount - сумма: ufloat, NOT NULL
+- Amount - сумма: float, NOT NULL
 - DateTime - дата и время: DateTime, default(DateTime.Now), NOT NULL
 - CategoryId - идентификатор категории: int, FK Category(Id)
 - UserId - идентификатор пользователя: int, FK User(Id)
@@ -24,4 +24,5 @@
 ### Пользователь
 - Id - уникальный идентификатор: int, PK
 - Name - имя пользователя: sting, minlenght(4), должно начинаться с буквы и не должно содержать специальных знаков
+- Password - пароль: string, minlenght(8), должен содержать строчные и заглавные буквы и спеиальные символы
 - Expenses - список расходов: ICollection<Expense>
