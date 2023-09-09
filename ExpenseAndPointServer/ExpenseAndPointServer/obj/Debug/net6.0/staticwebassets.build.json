@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "owRPHVh6Jke7hwJyNWzruM16pAQ4PRKNUoR0AQGqnww=",
+  "Source": "ExpenseAndPointServer",
+  "BasePath": "_content/ExpenseAndPointServer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
