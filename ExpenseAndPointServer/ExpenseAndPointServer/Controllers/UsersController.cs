@@ -9,6 +9,7 @@ using ExpenseAndPoint.Data;
 using ExpenseAndPointServer.Models;
 using ExpenseAndPointServer.Services;
 using ExpenseAndPointServer.Services.Cryptographer;
+using ExpenseAndPointServer.Services.PasswordChecker;
 
 namespace ExpenseAndPointServer.Controllers
 {
@@ -19,32 +20,32 @@ namespace ExpenseAndPointServer.Controllers
         private readonly AppDbContext _context;
         private UserService userService;
 
-        public UsersController(AppDbContext context, ICryptographer cryptographer)
+        public UsersController(AppDbContext context, ICryptographer cryptographer, IPasswordChecker passwordChecker)
         {
             _context = context;
-            userService = new UserService(context, cryptographer);
+            userService = new UserService(context, cryptographer, passwordChecker);
         }
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-          if (_context.User == null)
+          if (_context.Users == null)
           {
               return NotFound();
           }
-            return await _context.User.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-          if (_context.User == null)
+          if (_context.Users == null)
           {
               return NotFound();
           }
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
 
             if (user == null)
             {
@@ -90,38 +91,32 @@ namespace ExpenseAndPointServer.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            //if (_context.User == null)
-            //{
-            //    return Problem("Entity set 'AppDbContext.User'  is null.");
-            //}
-            //  _context.User.Add(user);
-            //  await _context.SaveChangesAsync();
-
-            //  return CreatedAtAction("GetUser", new { id = user.Id }, user);
-
-            var result = userService.AddUser(user);
-            if (result == null)
+            try
             {
-                return Problem("Entity set 'AppDbContext.User'  is null.");
+                userService.AddUser(user);
+                return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
             }
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            if (_context.User == null)
+            if (_context.Users == null)
             {
                 return NotFound();
             }
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -129,7 +124,7 @@ namespace ExpenseAndPointServer.Controllers
 
         private bool UserExists(int id)
         {
-            return (_context.User?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
