@@ -93,7 +93,7 @@ namespace ExpenseAndPointServer.Controllers
         {
             try
             {
-                userService.AddUser(user);
+                await userService.AddUser(user);
                 return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
             }
             catch (Exception ex)

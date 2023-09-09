@@ -3,6 +3,7 @@ using ExpenseAndPointServer.Models;
 using ExpenseAndPointServer.Services.Cryptographer;
 using ExpenseAndPointServer.Services.PasswordChecker;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseAndPointServer.Services
 {
@@ -18,16 +19,35 @@ namespace ExpenseAndPointServer.Services
             _passwordChecker = passwordChecker;
         }
 
-        public User AddUser(User user)
+        public async Task<User> AddUser(User user)
         {
-            if (_context.Users == null) throw new Exception("Ссылка на 'AppDbContext.User' пустая");
             if (_context.Users.FirstOrDefault(u => u.Name == user.Name) != null) throw new Exception("Пользователь с таким именем уже существует");
             if (!_passwordChecker.IsStrengthPassword(user.Password)) throw new Exception("Пароль должен содержать буквы верхнего и нижнего регистра," +
                 "хотя бы одну цифру и один специальный символ");
             user.Password = _cryptographer.Encrypt(user.Password);
             _context.Users.Add(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return user;
+        }
+
+        public async Task<ICollection<User>> GetUsers()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
+        public async Task<User> GetUserById(int id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+        }
+        public async Task<User> GetUserByName(string name)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
+        }
+
+        public async void DeleteUser(User user)
+        {
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
         }
     }
 }
