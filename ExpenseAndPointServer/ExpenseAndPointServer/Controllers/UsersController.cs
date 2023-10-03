@@ -10,6 +10,7 @@ using ExpenseAndPointServer.Models;
 using ExpenseAndPointServer.Services;
 using ExpenseAndPointServer.Services.Cryptographer;
 using ExpenseAndPointServer.Services.PasswordChecker;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ExpenseAndPointServer.Controllers
 {
@@ -30,60 +31,43 @@ namespace ExpenseAndPointServer.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
-          if (_context.Users == null)
-          {
-              return NotFound();
-          }
-            return await _context.Users.ToListAsync();
+            var result = await userService.GetUsers();
+            if (result.IsNullOrEmpty())
+            {
+                return NotFound();
+            } else 
+            {
+                return Ok(result);
+            }
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<User>> GetUserById(int id)
         {
-          if (_context.Users == null)
-          {
+            var result = await userService.GetUserById(id);
+            if (result  == null)
+            {
               return NotFound();
-          }
-            var user = await _context.Users.FindAsync(id);
+            } else
+            {
+                return Ok(result);
+            }
+        }
 
-            if (user == null)
+        // GET: api/Users/Name
+        [HttpGet("{name}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUserByName(string name)
+        {
+            var result = await userService.GetUserByName(name);
+            if (result.IsNullOrEmpty())
             {
                 return NotFound();
             }
-
-            return user;
-        }
-
-        // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
-        {
-            if (id != user.Id)
+            else
             {
-                return BadRequest();
+                return Ok(result);
             }
-
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/Users
@@ -106,25 +90,24 @@ namespace ExpenseAndPointServer.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            if (_context.Users == null)
-            {
-                return NotFound();
-            }
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
+            userService.DeleteUserById(id);
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        // PUT: api/Users/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<ActionResult<User>> PutUser(int id, User user)
         {
-            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+            User editedUser;
+            try
+            {
+                editedUser = await userService.EditUser(id, user);
+            } catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+            return Ok(editedUser);
         }
     }
 }
