@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using ExpenseAndPoint.Data;
 using ExpenseAndPointServer.Models;
 using ExpenseAndPointServer.Services;
@@ -45,13 +39,21 @@ namespace ExpenseAndPointServer.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
-            var result = await userService.GetUserById(id);
-            if (result  == null)
+            try
             {
-              return NotFound();
-            } else
+                var result = await userService.GetUserById(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(result);
+                }
+            }
+            catch (Exception ex)
             {
-                return Ok(result);
+                return Problem(ex.Message);
             }
         }
 
@@ -90,7 +92,7 @@ namespace ExpenseAndPointServer.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            userService.DeleteUserById(id);
+            await userService.DeleteUserById(id);
             return NoContent();
         }
 

@@ -2,6 +2,6 @@
 {
     public interface IPasswordChecker
     {
-        public bool IsStrengthPassword(string password);
+        public void CheckStrengthPassword(string password);
     }
 }

@@ -23,12 +23,17 @@ namespace ExpenseAndPointServer.Services
         public async Task<User> AddUser(User user)
         {
             if (_context.Users.FirstOrDefault(u => u.Name == user.Name) != null) throw new Exception("Пользователь с таким именем уже существует");
-            if (!_passwordChecker.IsStrengthPassword(user.Password)) throw new Exception("Пароль должен содержать буквы верхнего и нижнего регистра," +
-                "хотя бы одну цифру и один специальный символ");
             if (user.Name.Length < 4) throw new Exception("Длина имени пользователя должна быть больше 4х символов");
-            if (Regex.Match(user.Name, @".[!,@,#,$,%,^,&,*,?,_,~,-,£,(,)]", RegexOptions.ECMAScript).Success) throw new Exception("Имя пользователя не должен содержать " +
-                "специальные символы");
+            if (Regex.Match(user.Name, @".[!,@,#,$,%,^,&,*,?,_,~,-,£,(,)]", RegexOptions.ECMAScript).Success)
+                throw new Exception("Имя пользователя не должно содержать специальные символы");
+            _passwordChecker.CheckStrengthPassword(user.Password);
             user.Password = _cryptographer.Encrypt(user.Password);
+            user.Categories = new List<Category>
+            {
+                new Category { Title = "Продукты" },
+                new Category { Title = "Транспорт" },
+                new Category { Title = "Аптека" }
+            };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return user;
@@ -41,14 +46,14 @@ namespace ExpenseAndPointServer.Services
 
         public async Task<User> GetUserById(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id) ?? throw new Exception("Пользователь с данным Id не существует"); ;
         }
         public async Task<IEnumerable<User>> GetUserByName(string name)
         {
             return await _context.Users.Where(u => EF.Functions.Like(u.Name, $"%{name}%")).ToListAsync();
         }
 
-        public async void DeleteUserById(int id)
+        public async Task DeleteUserById(int id)
         {
             var user = await this.GetUserById(id);
             _context.Users.Remove(user);
@@ -58,7 +63,7 @@ namespace ExpenseAndPointServer.Services
         public async Task<User> EditUser(int id, User user)
         {
             if (id != user.Id) throw new Exception("Переданные Id и пользователь не совпадают! Проверьте отправляемые данные");
-
+            if (GetUserByName(user.Name) != null) throw new Exception("Пользователь с таким именем уже существует");
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return await this.GetUserById(id);

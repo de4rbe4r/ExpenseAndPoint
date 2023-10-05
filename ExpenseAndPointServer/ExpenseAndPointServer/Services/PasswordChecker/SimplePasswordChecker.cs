@@ -4,7 +4,7 @@ namespace ExpenseAndPointServer.Services.PasswordChecker
 {
     public class SimplePasswordChecker : IPasswordChecker
     {
-        public bool IsStrengthPassword(string password)
+        public void CheckStrengthPassword(string password)
         {
             // В регулярных выражениях
             // \d - соответствие на любую десятичнуюю цифру
@@ -14,8 +14,9 @@ namespace ExpenseAndPointServer.Services.PasswordChecker
                 && (Regex.Match(password, @"[A-Z]", RegexOptions.ECMAScript).Success || Regex.Match(password, @"[А-Я]", RegexOptions.ECMAScript).Success)
                 && Regex.Match(password, @".[!,@,#,$,%,^,&,*,?,_,~,-,£,(,)]", RegexOptions.ECMAScript).Success
                 && password.Length >= 8
-                ) return true;
-            else return false;
+                ) return;
+            throw new Exception("Пароль должен содержать буквы верхнего и нижнего регистра," +
+               "хотя бы одну цифру и один специальный символ");
         }
     }
 }

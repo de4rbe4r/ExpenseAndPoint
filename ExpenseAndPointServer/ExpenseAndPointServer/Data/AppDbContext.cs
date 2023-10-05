@@ -17,7 +17,11 @@ namespace ExpenseAndPoint.Data
             modelBuilder.Entity<Expense>()
                 .HasOne(e => e.User)
                 .WithMany(u => u.Expenses)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
+            modelBuilder.Entity<Category>()
+                .HasOne(e => e.User)
+                .WithMany(u => u.Categories)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }
