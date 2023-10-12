@@ -14,14 +14,29 @@ namespace ExpenseAndPoint.Data
         public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Expenses)
+                .WithOne(e => e.User)
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Expense>()
                 .HasOne(e => e.User)
                 .WithMany(u => u.Expenses)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Categories)
+                .WithOne(e => e.User)
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Category>()
-                .HasOne(e => e.User)
+                .HasOne(c => c.User)
                 .WithMany(u => u.Categories)
-                .OnDelete(DeleteBehavior.ClientCascade);
+                .OnDelete(DeleteBehavior.NoAction);
+
+
         }
     }
 }
