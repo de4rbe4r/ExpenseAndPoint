@@ -12,5 +12,15 @@ namespace ExpenseAndPointServer.Models
         public string Password { get; set; }
         public ICollection<Expense>? Expenses { get; set; }
         public ICollection<Category>? Categories { get; set; }
+        
+        public UserDto ToUserDtoMap()
+        {
+            return new UserDto
+            {
+                Id = Id,
+                Name = Name,
+                Password = null
+            };
+        }
     }
 }

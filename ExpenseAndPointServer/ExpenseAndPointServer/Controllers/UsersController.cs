@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ExpenseAndPoint.Data;
+﻿using ExpenseAndPoint.Data;
 using ExpenseAndPointServer.Models;
 using ExpenseAndPointServer.Services;
 using ExpenseAndPointServer.Services.Cryptographer;
 using ExpenseAndPointServer.Services.PasswordChecker;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ExpenseAndPointServer.Controllers
@@ -23,15 +23,16 @@ namespace ExpenseAndPointServer.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUser()
         {
-            var result = await userService.GetUsers();
-            if (result.IsNullOrEmpty())
+            var userList = await userService.GetUsers();
+            var userDtoList = userList.Select(u => u.ToUserDtoMap());
+            if (userDtoList.IsNullOrEmpty())
             {
                 return NotFound();
             } else 
             {
-                return Ok(result);
+                return Ok(userDtoList);
             }
         }
 
@@ -44,11 +45,11 @@ namespace ExpenseAndPointServer.Controllers
                 var result = await userService.GetUserById(id);
                 if (result == null)
                 {
-                    return NotFound();
+                    throw new Exception("Пользователя с данным Id не существует");
                 }
                 else
                 {
-                    return Ok(result);
+                    return Ok(result.ToUserDtoMap());
                 }
             }
             catch (Exception ex)
@@ -61,26 +62,33 @@ namespace ExpenseAndPointServer.Controllers
         [HttpGet("{name}")]
         public async Task<ActionResult<IEnumerable<User>>> GetUserByName(string name)
         {
-            var result = await userService.GetUserByName(name);
-            if (result.IsNullOrEmpty())
+            try
             {
-                return NotFound();
+                var result = await userService.GetUserByName(name);
+                if (result == null)
+                {
+                    throw new Exception("Пользователя с данным именем не существует"); 
+                }
+                else
+                {
+                    return Ok(result.ToUserDtoMap());
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return Ok(result);
+                return Problem(ex.Message);
             }
         }
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<UserDto>> PostUser(UserDto userDto)
         {
             try
             {
-                await userService.AddUser(user);
-                return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+                await userService.AddUser(userDto.ToUserMap());
+                return Ok(userDto.Name);
             }
             catch (Exception ex)
             {
@@ -98,18 +106,34 @@ namespace ExpenseAndPointServer.Controllers
 
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<ActionResult<User>> PutUser(int id, User user)
+        [HttpPut("EditUserName/{id}")]
+        public async Task<ActionResult<UserDto>> PutUserName(int id, UserDto userDto)
         {
             User editedUser;
             try
             {
-                editedUser = await userService.EditUser(id, user);
+               editedUser  = await userService.EditUserName(id, userDto.ToUserMap());
             } catch (Exception ex)
             {
                 return Problem(ex.Message);
             }
-            return Ok(editedUser);
+            return Ok(editedUser.ToUserDtoMap());
+        }
+        // PUT: api/Users/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("EditUserPassword/{id}")]
+        public async Task<ActionResult<UserDto>> PutUserPassword(int id, UserDto userDto)
+        {
+            User editedUser;
+            try
+            {
+                editedUser = await userService.EditUserPassword(id, userDto.ToUserMap());
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+            return Ok(editedUser.ToUserDtoMap());
         }
     }
 }
