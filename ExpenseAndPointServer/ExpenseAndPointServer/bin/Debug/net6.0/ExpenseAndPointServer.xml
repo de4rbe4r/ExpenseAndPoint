@@ -1,0 +1,254 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExpenseAndPointServer</name>
+    </assembly>
+    <members>
+        <member name="T:ExpenseAndPointServer.Controllers.UsersController">
+            <summary>
+            Контроллер для работы с пользователями
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Controllers.UsersController._context">
+            <summary>
+            Контекст для работы с БД
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Controllers.UsersController.userService">
+            <summary>
+            Сервис для работы с моделями пользователей
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.#ctor(ExpenseAndPoint.Data.AppDbContext,ExpenseAndPointServer.Services.Cryptographer.ICryptographer,ExpenseAndPointServer.Services.PasswordChecker.IPasswordChecker)">
+            <summary>
+            Конструктор создания контроллера
+            </summary>
+            <param name="context">Контекст для работы с БД</param>
+            <param name="cryptographer">Сервис шифрования пароля</param>
+            <param name="passwordChecker">Сервис проверки надежности пароля</param>
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.GetUser">
+            <summary>
+            Получение списка пользователей.
+            </summary>
+            <returns>Список пользователей</returns>
+            <response code="201">Список пользователей</response>
+            <response code="204">Список пользователей пуст</response>
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.GetUserById(System.Int32)">
+            <summary>
+            Получение пользователя по идентификатору.
+            </summary>
+            <param name="id">Идентификатор пользователя</param>
+            <returns>Пользователь с указанным идентификатором</returns>
+            <response code="200">Найденный пользователь</response>
+            <response code="204">Пользователь с указанным идентификатором не найден</response>
+            <response code="500">Ошибка при поиске пользователя</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.GetUserByName(System.String)">
+            <summary>
+            Получение пользователя по имени.
+            </summary>
+            <param name="name">Идентификатор пользователя</param>
+            <returns>Пользователь с указанным идентификатором</returns>
+            <response code="200">Найденный пользователь</response>
+            <response code="204">Пользователь с указанным именем не найден</response>
+            <response code="500">Пользователь с указанным идентификатором не найден</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PostUser(ExpenseAndPointServer.Models.UserInputDto)">
+            <summary>
+            Добавление пользователя
+            </summary>
+            <param name="userInputDto">Класс пользователя приходящий с веб</param>
+            <returns>Созданный пользователь</returns>
+            <response code="200">Созданный пользоваель</response>
+            <response code="500">Ошибка при создании пользователя</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.DeleteUser(System.Int32)">
+            <summary>
+            Удаление пользователя
+            </summary>
+            <param name="id">Идентификатор пользователя</param>
+            <response code="200">Пользователь удален</response> 
+            <response code="500">Ошибка при удалении пользователя</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PutUserName(System.Int32,ExpenseAndPointServer.Models.UserInputDto)">
+            <summary>
+            Изменение имени пользователя
+            </summary>
+            <param name="id">Идентификатор пользователя</param>
+            <param name="userInputDto">Класс пользователя приходящий с веб</param>
+            <returns>Изменный пользователь</returns>
+            <response code="200">Изменный пользователь</response> 
+            <response code="500">Ошибка при изменении имени пользователя</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PutUserPassword(System.Int32,ExpenseAndPointServer.Models.UserInputDto)">
+            <summary>
+            Изменение пароля пользователя
+            </summary>
+            <param name="id">Идентификатор пользователя</param>
+            <param name="userInputDto">Класс пользователя приходящий с веб</param>
+            <returns>Изменный пользователь</returns>
+            <response code="200">Изменный пользователь</response> 
+            <response code="500">Ошибка при изменении пароля пользователя</response> 
+        </member>
+        <member name="T:ExpenseAndPointServer.Models.User">
+            <summary>
+            Модель пользователя из БД
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.User.Id">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.User.Name">
+            <summary>
+            Имя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.User.Password">
+            <summary>
+            Пароль
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.User.Expenses">
+            <summary>
+            Коллекция расходов
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.User.Categories">
+            <summary>
+            Коллекция категорий
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Models.User.ToUserOutputDtoMap">
+            <summary>
+            Преобразование класса User в UserOutputDto
+            </summary>
+            <returns>Класс UserOutputDto для передачи на веб</returns>
+        </member>
+        <member name="T:ExpenseAndPointServer.Models.UserInputDto">
+            <summary>
+            Класс пользователя приходящий с веб
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.UserInputDto.Id">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.UserInputDto.Name">
+            <summary>
+            Имя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.UserInputDto.Password">
+            <summary>
+            Пароль
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Models.UserInputDto.ToUserMap">
+            <summary>
+            Преобразование класса UserOtputDto в класс User
+            </summary>
+            <returns>Класс User для взаимодействия с БД</returns>
+        </member>
+        <member name="T:ExpenseAndPointServer.Models.UserOutputDto">
+            <summary>
+            Класс пользователей для отправления на веб
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.UserOutputDto.Id">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.UserOutputDto.Name">
+            <summary>
+            Имя
+            </summary>
+        </member>
+        <member name="T:ExpenseAndPointServer.Services.UserService">
+            <summary>
+            Сервис работы с пользователями
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Services.UserService._context">
+            <summary>
+            Контект работы с БД
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Services.UserService._cryptographer">
+            <summary>
+            Сервис шифрования пароля
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Services.UserService._passwordChecker">
+            <summary>
+            Сервис проверки надежности пароля
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.UserService.#ctor(ExpenseAndPoint.Data.AppDbContext,ExpenseAndPointServer.Services.Cryptographer.ICryptographer,ExpenseAndPointServer.Services.PasswordChecker.IPasswordChecker)">
+            <summary>
+            Конструктор UserService
+            </summary>
+            <param name="context">Контекст работы с БД</param>
+            <param name="cryptographer">Сервис шифрования пароля</param>
+            <param name="passwordChecker">Сервис шифрования пароля</param>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.UserService.AddUser(ExpenseAndPointServer.Models.User)">
+            <summary>
+            Добавление пользователя
+            </summary>
+            <param name="user">Модель пользователя для работы с БД</param>
+            <returns>Поток с созданным пользователем Task-User</returns>
+            <exception cref="T:System.Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.UserService.GetUsers">
+            <summary>
+            Получение списка пользователей
+            </summary>
+            <returns>Отдельный поток со списком пользователей Task-List-User</returns>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.UserService.GetUserById(System.Int32)">
+            <summary>
+            Получение пользователя по идентификатору
+            </summary>
+            <param name="id">Идентификатор пользователя</param>
+            <returns>Отдельный поток с найденным пользователем Task-User</returns>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.UserService.GetUserByName(System.String)">
+            <summary>
+            Получение пользователя по имени
+            </summary>
+            <param name="name">Имя пользователя</param>
+            <returns>Отдельный поток с найденным пользователем Task-User</returns>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.UserService.DeleteUserById(System.Int32)">
+            <summary>
+            Удаление пользователя по идентификатору
+            </summary>
+            <param name="id">Идентификатор пользователя</param>
+            <returns>Отдельный поток</returns>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.UserService.EditUserName(System.Int32,ExpenseAndPointServer.Models.User)">
+            <summary>
+            Изменение имени пользователя
+            </summary>
+            <param name="id">Идентификтор пользователя</param>
+            <param name="user">Модель пользователя для работы с БД</param>
+            <returns>Отдельный поток с измененным пользователем Task-User</returns>
+            <exception cref="T:System.Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.UserService.EditUserPassword(System.Int32,ExpenseAndPointServer.Models.User)">
+            <summary>
+            Изменение пароля
+            </summary>
+            <param name="id">Идентификатор пользователя</param>
+            <param name="user">Модель пользователя для работы с БД</param>
+            <returns>Отдельный поток с измененным пользователем Task-User</returns>
+            <exception cref="T:System.Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
+        </member>
+    </members>
+</doc>
