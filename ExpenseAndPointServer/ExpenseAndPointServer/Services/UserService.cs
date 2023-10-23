@@ -1,34 +1,37 @@
 ﻿using ExpenseAndPoint.Data;
-using ExpenseAndPointServer.Models;
+using ExpenseAndPointServer.Models.Users;
+using ExpenseAndPointServer.Models.Categories;
 using ExpenseAndPointServer.Services.Cryptographer;
 using ExpenseAndPointServer.Services.PasswordChecker;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
 
 namespace ExpenseAndPointServer.Services
 {
+
     /// <summary>
     /// Сервис работы с пользователями
     /// </summary>
     public class UserService
     {
         /// <summary>
-        /// Контект работы с БД
+        /// Контект для работы с БД
         /// </summary>
         private readonly AppDbContext _context;
+
         /// <summary>
         /// Сервис шифрования пароля
         /// </summary>
         private readonly ICryptographer _cryptographer;
+
         /// <summary>
         /// Сервис проверки надежности пароля
         /// </summary>
         private readonly IPasswordChecker _passwordChecker;
+
         /// <summary>
         /// Конструктор UserService
         /// </summary>
-        /// <param name="context">Контекст работы с БД</param>
+        /// <param name="context">Контекст для работы с БД</param>
         /// <param name="cryptographer">Сервис шифрования пароля</param>
         /// <param name="passwordChecker">Сервис шифрования пароля</param>
         public UserService(AppDbContext context, ICryptographer cryptographer, IPasswordChecker passwordChecker)
@@ -37,12 +40,13 @@ namespace ExpenseAndPointServer.Services
             _cryptographer = cryptographer;
             _passwordChecker = passwordChecker;
         }
+
         /// <summary>
         /// Добавление пользователя
         /// </summary>
         /// <param name="user">Модель пользователя для работы с БД</param>
         /// <returns>Поток с созданным пользователем Task-User</returns>
-        /// <exception cref="Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
+        /// <exception cref="Exception">Ошибки наличия пользователя с таким же именем или ошибка ненадежности пароля</exception>
         public async Task<User> AddUser(User user)
         {
             if (_context.Users.FirstOrDefault(u => u.Name == user.Name) != null) throw new Exception("Пользователь с таким именем уже существует");
@@ -58,6 +62,7 @@ namespace ExpenseAndPointServer.Services
             await _context.SaveChangesAsync();
             return user;
         }
+
         /// <summary>
         /// Получение списка пользователей
         /// </summary>
@@ -66,24 +71,30 @@ namespace ExpenseAndPointServer.Services
         {
             return await _context.Users.ToListAsync();
         }
+
         /// <summary>
         /// Получение пользователя по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор пользователя</param>
         /// <returns>Отдельный поток с найденным пользователем Task-User</returns>
+        /// <exception cref="Exception">Ошибка наличия пользователя с указанным идентификатором</exception>
+
         public async Task<User> GetUserById(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id) ?? throw new Exception("Пользователя с данным Id не существует");
         }
+
         /// <summary>
         /// Получение пользователя по имени
         /// </summary>
         /// <param name="name">Имя пользователя</param>
         /// <returns>Отдельный поток с найденным пользователем Task-User</returns>
+        /// <exception cref="Exception">Ошибка наличия пользователя с указанным именем</exception>
         public async Task<User> GetUserByName(string name)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Name == name) ?? throw new Exception("Пользователя с данным именем не существует"); ;
         }
+
         /// <summary>
         /// Удаление пользователя по идентификатору
         /// </summary>
@@ -95,13 +106,14 @@ namespace ExpenseAndPointServer.Services
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
         }
+
         /// <summary>
         /// Изменение имени пользователя
         /// </summary>
         /// <param name="id">Идентификтор пользователя</param>
         /// <param name="user">Модель пользователя для работы с БД</param>
         /// <returns>Отдельный поток с измененным пользователем Task-User</returns>
-        /// <exception cref="Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
+        /// <exception cref="Exception">Ошибки в переданных данных или ошибка наличия пользователя с таким же именем</exception>
         public async Task<User> EditUserName(int id, User user)
         {
             if (id != user.Id) throw new Exception("Переданные Id и пользователь не совпадают! Проверьте отправляемые данные");
@@ -110,6 +122,7 @@ namespace ExpenseAndPointServer.Services
             await _context.SaveChangesAsync();
             return await GetUserById(id);
         }
+
         /// <summary>
         /// Изменение пароля
         /// </summary>

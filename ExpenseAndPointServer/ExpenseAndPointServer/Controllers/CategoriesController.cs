@@ -1,8 +1,8 @@
 ﻿using ExpenseAndPoint.Data;
-using ExpenseAndPointServer.Models;
 using ExpenseAndPointServer.Services;
-using ExpenseAndPointServer.Services.Cryptographer;
-using ExpenseAndPointServer.Services.PasswordChecker;
+using ExpenseAndPointServer.Models.Users;
+using ExpenseAndPointServer.Models.Categories;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseAndPointServer.Controllers

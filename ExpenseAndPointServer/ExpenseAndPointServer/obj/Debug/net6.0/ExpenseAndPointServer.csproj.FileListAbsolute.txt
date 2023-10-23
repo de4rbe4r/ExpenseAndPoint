@@ -584,3 +584,5 @@ D:\IT\Deev\CourseWork\ExpenseAndPointServer\ExpenseAndPointServer\obj\Debug\net6
 D:\IT\Deev\CourseWork\ExpenseAndPointServer\ExpenseAndPointServer\obj\Debug\net6.0\ref\ExpenseAndPointServer.dll
 D:\Deev\ExpenseAndPoint\ExpenseAndPointServer\ExpenseAndPointServer\bin\Debug\net6.0\ExpenseAndPointServer.xml
 D:\Deev\ExpenseAndPoint\ExpenseAndPointServer\ExpenseAndPointServer\obj\Debug\net6.0\ExpenseAndPointServer.xml
+D:\IT\Deev\CourseWork\ExpenseAndPointServer\ExpenseAndPointServer\obj\Debug\net6.0\ExpenseAndPointServer.xml
+D:\IT\Deev\CourseWork\ExpenseAndPointServer\ExpenseAndPointServer\bin\Debug\net6.0\ExpenseAndPointServer.xml

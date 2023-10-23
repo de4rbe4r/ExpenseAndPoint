@@ -1,5 +1,6 @@
 ﻿using ExpenseAndPoint.Data;
-using ExpenseAndPointServer.Models;
+using ExpenseAndPointServer.Models.Users;
+
 using ExpenseAndPointServer.Services;
 using ExpenseAndPointServer.Services.Cryptographer;
 using ExpenseAndPointServer.Services.PasswordChecker;

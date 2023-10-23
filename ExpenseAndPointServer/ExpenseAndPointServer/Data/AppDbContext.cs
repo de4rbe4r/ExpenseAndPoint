@@ -1,4 +1,7 @@
-﻿using ExpenseAndPointServer.Models;
+﻿using ExpenseAndPointServer.Models.Categories;
+using ExpenseAndPointServer.Models.Users;
+using ExpenseAndPointServer.Models.Expenses;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseAndPoint.Data

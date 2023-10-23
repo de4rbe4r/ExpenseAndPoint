@@ -1,4 +1,7 @@
-﻿namespace ExpenseAndPointServer.Models
+﻿using ExpenseAndPointServer.Models.Users;
+using ExpenseAndPointServer.Models.Categories;
+
+namespace ExpenseAndPointServer.Models.Expenses
 {
     public class Expense
     {

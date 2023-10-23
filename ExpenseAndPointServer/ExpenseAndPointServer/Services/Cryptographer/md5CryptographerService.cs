@@ -4,8 +4,12 @@ using System.Text;
 
 namespace ExpenseAndPointServer.Services.Cryptographer
 {
+    /// <summary>
+    /// Простой шифровщик пароля
+    /// </summary>
     public class md5CryptographerService : ICryptographer
     {
+        /// <inheritdoc/>
         public string Encrypt(string str)
         {
             // Генерация 128-битного salt, используя последовательность

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ExpenseAndPointServer.Models
+namespace ExpenseAndPointServer.Models.Users
 {
     /// <summary>
     /// Класс пользователя приходящий с веб
@@ -20,6 +20,7 @@ namespace ExpenseAndPointServer.Models
         /// Пароль
         /// </summary>
         public string Password { get; set; }
+
         /// <summary>
         /// Преобразование класса UserOtputDto в класс User
         /// </summary>

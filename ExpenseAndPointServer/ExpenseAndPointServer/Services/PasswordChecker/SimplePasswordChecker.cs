@@ -2,8 +2,16 @@
 
 namespace ExpenseAndPointServer.Services.PasswordChecker
 {
+    /// <summary>
+    /// Класс простой проверки пароля
+    /// </summary>
     public class SimplePasswordChecker : IPasswordChecker
     {
+        /// <summary>
+        /// Проверить надежность пароля
+        /// </summary>
+        /// <param name="password">Пароль</param>
+        /// <exception cref="Exception">Ошибка, связанная с ненадежностью пароля</exception>
         public void CheckStrengthPassword(string password)
         {
             // В регулярных выражениях

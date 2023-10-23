@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ExpenseAndPointServer.Models
+namespace ExpenseAndPointServer.Models.Users
 {
     /// <summary>
     /// Класс пользователей для отправления на веб

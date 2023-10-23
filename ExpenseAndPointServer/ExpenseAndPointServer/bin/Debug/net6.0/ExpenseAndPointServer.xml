@@ -55,7 +55,7 @@
             <response code="204">Пользователь с указанным именем не найден</response>
             <response code="500">Пользователь с указанным идентификатором не найден</response> 
         </member>
-        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PostUser(ExpenseAndPointServer.Models.UserInputDto)">
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PostUser(ExpenseAndPointServer.Models.Users.UserInputDto)">
             <summary>
             Добавление пользователя
             </summary>
@@ -72,7 +72,7 @@
             <response code="200">Пользователь удален</response> 
             <response code="500">Ошибка при удалении пользователя</response> 
         </member>
-        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PutUserName(System.Int32,ExpenseAndPointServer.Models.UserInputDto)">
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PutUserName(System.Int32,ExpenseAndPointServer.Models.Users.UserInputDto)">
             <summary>
             Изменение имени пользователя
             </summary>
@@ -82,7 +82,7 @@
             <response code="200">Изменный пользователь</response> 
             <response code="500">Ошибка при изменении имени пользователя</response> 
         </member>
-        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PutUserPassword(System.Int32,ExpenseAndPointServer.Models.UserInputDto)">
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PutUserPassword(System.Int32,ExpenseAndPointServer.Models.Users.UserInputDto)">
             <summary>
             Изменение пароля пользователя
             </summary>
@@ -92,79 +92,79 @@
             <response code="200">Изменный пользователь</response> 
             <response code="500">Ошибка при изменении пароля пользователя</response> 
         </member>
-        <member name="T:ExpenseAndPointServer.Models.User">
+        <member name="T:ExpenseAndPointServer.Models.Users.User">
             <summary>
             Модель пользователя из БД
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.User.Id">
+        <member name="P:ExpenseAndPointServer.Models.Users.User.Id">
             <summary>
             Идентификатор пользователя
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.User.Name">
+        <member name="P:ExpenseAndPointServer.Models.Users.User.Name">
             <summary>
             Имя
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.User.Password">
+        <member name="P:ExpenseAndPointServer.Models.Users.User.Password">
             <summary>
             Пароль
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.User.Expenses">
+        <member name="P:ExpenseAndPointServer.Models.Users.User.Expenses">
             <summary>
             Коллекция расходов
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.User.Categories">
+        <member name="P:ExpenseAndPointServer.Models.Users.User.Categories">
             <summary>
             Коллекция категорий
             </summary>
         </member>
-        <member name="M:ExpenseAndPointServer.Models.User.ToUserOutputDtoMap">
+        <member name="M:ExpenseAndPointServer.Models.Users.User.ToUserOutputDtoMap">
             <summary>
             Преобразование класса User в UserOutputDto
             </summary>
             <returns>Класс UserOutputDto для передачи на веб</returns>
         </member>
-        <member name="T:ExpenseAndPointServer.Models.UserInputDto">
+        <member name="T:ExpenseAndPointServer.Models.Users.UserInputDto">
             <summary>
             Класс пользователя приходящий с веб
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.UserInputDto.Id">
+        <member name="P:ExpenseAndPointServer.Models.Users.UserInputDto.Id">
             <summary>
             Идентификатор пользователя
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.UserInputDto.Name">
+        <member name="P:ExpenseAndPointServer.Models.Users.UserInputDto.Name">
             <summary>
             Имя
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.UserInputDto.Password">
+        <member name="P:ExpenseAndPointServer.Models.Users.UserInputDto.Password">
             <summary>
             Пароль
             </summary>
         </member>
-        <member name="M:ExpenseAndPointServer.Models.UserInputDto.ToUserMap">
+        <member name="M:ExpenseAndPointServer.Models.Users.UserInputDto.ToUserMap">
             <summary>
             Преобразование класса UserOtputDto в класс User
             </summary>
             <returns>Класс User для взаимодействия с БД</returns>
         </member>
-        <member name="T:ExpenseAndPointServer.Models.UserOutputDto">
+        <member name="T:ExpenseAndPointServer.Models.Users.UserOutputDto">
             <summary>
             Класс пользователей для отправления на веб
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.UserOutputDto.Id">
+        <member name="P:ExpenseAndPointServer.Models.Users.UserOutputDto.Id">
             <summary>
             Идентификатор пользователя
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.UserOutputDto.Name">
+        <member name="P:ExpenseAndPointServer.Models.Users.UserOutputDto.Name">
             <summary>
             Имя
             </summary>
@@ -197,7 +197,7 @@
             <param name="cryptographer">Сервис шифрования пароля</param>
             <param name="passwordChecker">Сервис шифрования пароля</param>
         </member>
-        <member name="M:ExpenseAndPointServer.Services.UserService.AddUser(ExpenseAndPointServer.Models.User)">
+        <member name="M:ExpenseAndPointServer.Services.UserService.AddUser(ExpenseAndPointServer.Models.Users.User)">
             <summary>
             Добавление пользователя
             </summary>
@@ -232,7 +232,7 @@
             <param name="id">Идентификатор пользователя</param>
             <returns>Отдельный поток</returns>
         </member>
-        <member name="M:ExpenseAndPointServer.Services.UserService.EditUserName(System.Int32,ExpenseAndPointServer.Models.User)">
+        <member name="M:ExpenseAndPointServer.Services.UserService.EditUserName(System.Int32,ExpenseAndPointServer.Models.Users.User)">
             <summary>
             Изменение имени пользователя
             </summary>
@@ -241,7 +241,7 @@
             <returns>Отдельный поток с измененным пользователем Task-User</returns>
             <exception cref="T:System.Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
         </member>
-        <member name="M:ExpenseAndPointServer.Services.UserService.EditUserPassword(System.Int32,ExpenseAndPointServer.Models.User)">
+        <member name="M:ExpenseAndPointServer.Services.UserService.EditUserPassword(System.Int32,ExpenseAndPointServer.Models.Users.User)">
             <summary>
             Изменение пароля
             </summary>

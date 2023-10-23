@@ -1,4 +1,4 @@
-﻿namespace ExpenseAndPointServer.Models
+﻿namespace ExpenseAndPointServer.Models.Expenses
 {
     public class ExpenseDto
     {
