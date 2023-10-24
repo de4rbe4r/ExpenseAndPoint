@@ -1,6 +1,5 @@
 ﻿using ExpenseAndPoint.Data;
 using ExpenseAndPointServer.Models.Categories;
-using ExpenseAndPointServer.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
@@ -12,7 +11,6 @@ namespace ExpenseAndPointServer.Services
     /// </summary>
     public class CategoryService
     {
-
         /// <summary>
         /// Контекст для работы с БД
         /// </summary>
@@ -30,15 +28,16 @@ namespace ExpenseAndPointServer.Services
         /// <summary>
         /// Добавление категории
         /// </summary>
-        /// <param name="category"></param>
+        /// <param name="category">Модель категории для рбаоты с БД</param>
         /// <returns>Поток с созданной категорией Task-Category</returns>
         /// <exception cref="Exception">Ошибка наличия категории с таким же названием или ошибка в названии категории</exception>
         public async Task<Category> AddCategory(Category category)
         {
+            if (_context.Users.FirstOrDefault(u => u.Id == category.UserId) == null) throw new Exception($"Пользователя с идентификатором {category.UserId} не существует");
             if (_context.Categories.FirstOrDefault(c => 
                                                         c.Title == category.Title 
                                                         && c.UserId == category.UserId) != null) 
-               throw new Exception($"Категория с данным названием ({category.Title}) существует");
+               throw new Exception($"Категория с названием {category.Title} уже существует");
             if (Regex.Match(category.Title, @".[!,@,#,$,%,^,&,*,?,_,~,-,£,(,)]", RegexOptions.ECMAScript).Success) 
                 throw new Exception("Название категории не должно содержать специальные символы");
             _context.Categories.Add(category);
@@ -51,8 +50,12 @@ namespace ExpenseAndPointServer.Services
         /// </summary>
         /// <param name="userId">Идентификатор пользователя</param>
         /// <returns>Отдельный поток со списком категорий Task-Category</returns>
+        /// <exception cref="Exception">Ошибка наличия пользователя с указанным идентификатором</exception>
+
         public async Task<IEnumerable<Category>> GetCategoriesByUserId(int userId)
         {
+            if (_context.Users.FirstOrDefault(u => u.Id == userId) == null)
+                throw new Exception($"Пользователя с идентификатором {userId} не существует");
             return await _context.Categories.Where(c => c.UserId == userId).ToListAsync();
         }
 
@@ -64,7 +67,7 @@ namespace ExpenseAndPointServer.Services
         /// <exception cref="Exception">Ошибка наличия категории с указанным идентификатором</exception>
         public async Task<Category> GetCategoryById(int id)
         {
-            return await _context.Categories.Include(c => c.Expenses).FirstOrDefaultAsync(u => u.Id == id) ?? throw new Exception("Категория с данным Id не существует");
+            return await _context.Categories.Include(c => c.Expenses).FirstOrDefaultAsync(u => u.Id == id);
         }
 
         /// <summary>
@@ -74,7 +77,7 @@ namespace ExpenseAndPointServer.Services
         /// <param name="category">Модель категории для работы с БД</param>
         /// <returns>Отдельный поток с измененной категорией</returns>
         /// <exception cref="Exception">Ошибка в переданных данных</exception>
-        public async Task<Category> EditCategory(int id, Category category)
+        public async Task<Category> EditCategoryTitle(int id, Category category)
         {
             if (id != category.Id) throw new Exception("Переданные Id и категория не совпадают! Проверьте отправляемые данные");
             _context.Entry(category).Property(c => c.Title).IsModified = true;

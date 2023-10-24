@@ -92,7 +92,7 @@ namespace ExpenseAndPointServer.Services
         /// <exception cref="Exception">Ошибка наличия пользователя с указанным именем</exception>
         public async Task<User> GetUserByName(string name)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Name == name) ?? throw new Exception("Пользователя с данным именем не существует"); ;
+            return await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
         }
 
         /// <summary>

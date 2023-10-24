@@ -1,7 +1,7 @@
 ﻿namespace ExpenseAndPointServer.Models.Categories
 {
     /// <summary>
-    /// Класс категории для отправления на веб
+    /// Класс категории для работы с веб
     /// </summary>
     public class CategoryDto
     {
@@ -21,7 +21,7 @@
         public int UserId { get; set; }
 
         /// <summary>
-        /// Преобразование класса CategoryDro в Category
+        /// Преобразование класса CategoryDto в Category
         /// </summary>
         /// <returns>Класс Category для взаимодействия с БД</returns>
         public Category ToCategoryMap()

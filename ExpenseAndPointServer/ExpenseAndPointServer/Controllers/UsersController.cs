@@ -17,10 +17,6 @@ namespace ExpenseAndPointServer.Controllers
     public class UsersController : ControllerBase
     {
         /// <summary>
-        /// Контекст для работы с БД
-        /// </summary>
-        private readonly AppDbContext _context;
-        /// <summary>
         /// Сервис для работы с моделями пользователей
         /// </summary>
         private UserService userService;
@@ -33,7 +29,6 @@ namespace ExpenseAndPointServer.Controllers
         /// <param name="passwordChecker">Сервис проверки надежности пароля</param>
         public UsersController(AppDbContext context, ICryptographer cryptographer, IPasswordChecker passwordChecker)
         {
-            _context = context;
             userService = new UserService(context, cryptographer, passwordChecker);
         }
 
@@ -155,8 +150,6 @@ namespace ExpenseAndPointServer.Controllers
         /// <param name="id">Идентификатор пользователя</param>
         /// <response code="200">Пользователь удален</response> 
         /// <response code="500">Ошибка при удалении пользователя</response> 
-
-        // DELETE: api/Users/5
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

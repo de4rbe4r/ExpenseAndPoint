@@ -4,14 +4,117 @@
         <name>ExpenseAndPointServer</name>
     </assembly>
     <members>
+        <member name="T:ExpenseAndPointServer.Controllers.CategoriesController">
+            <summary>
+            Контроллер для работы с категориями
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Controllers.CategoriesController.categoryService">
+            <summary>
+            Сервис для работы с моделями категорий
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.CategoriesController.#ctor(ExpenseAndPoint.Data.AppDbContext)">
+            <summary>
+            Конструктор создания контроллера
+            </summary>
+            <param name="context">Контекс для работы с БД</param>
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.CategoriesController.GetCategoryById(System.Int32)">
+            <summary>
+            Получение списка категорий по идентификатору
+            </summary>
+            <param name="id">Идентификатор категории</param>
+            <returns>Категория с указанным идентификатором</returns>
+            <response code="200">Найденная категория</response>
+            <response code="204">Категория с указанным идентификатором не найдена</response>
+            <response code="500">Ошибка при поиске категории</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.CategoriesController.GetCategoriesByUserId(System.Int32)">
+            <summary>
+            Получение списка категорий по идентификатору пользователя
+            </summary>
+            <param name="id">Идентификтаор пользователя</param>
+            <returns>Список категорий</returns>
+            <response code="200">Найденный список категорий</response>
+            <response code="204">Список категорий пуст</response>
+            <response code="500">Ошибка при поиске категорий</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.CategoriesController.PostCategory(ExpenseAndPointServer.Models.Categories.CategoryDto)">
+            <summary>
+            Добавление категории
+            </summary>
+            <param name="categoryDto">Категория приходящая с веб</param>
+            <returns>Добавленная категория</returns>
+            <response code="200">Созданная категория</response>
+            <response code="500">Ошибка при создании категории</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.CategoriesController.DeleteCategory(System.Int32)">
+            <summary>
+            Удаление категории по идентификатору
+            </summary>
+            <param name="id">Идентификатор категории</param>
+            <response code="200">Категория удалена</response> 
+            <response code="500">Ошибка при удалении категории</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.CategoriesController.PutCategory(System.Int32,ExpenseAndPointServer.Models.Categories.CategoryDto)">
+            <summary>
+            Изменение названия категории
+            </summary>
+            <param name="id">Идентификатор категории</param>
+            <param name="categoryDto">Класс категории приходящего с веб</param>
+            <returns>Измененная категория</returns>
+            <response code="200">Измененная категория</response> 
+            <response code="500">Ошибка при удалении категории</response> 
+        </member>
+        <member name="T:ExpenseAndPointServer.Controllers.ExpenseController">
+            <summary>
+            Контроллер для работы с расходами
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Controllers.ExpenseController.expenseService">
+            <summary>
+            Сервис для работы с моделями расходов
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.#ctor(ExpenseAndPoint.Data.AppDbContext)">
+            <summary>
+            Конструктор создания контроллера
+            </summary>
+            <param name="context">Контекст для работы с БД</param>
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.PostExpense(ExpenseAndPointServer.Models.Expenses.ExpenseDto)">
+            <summary>
+            Добавление расхода
+            </summary>
+            <param name="expenseDto"></param>
+            <returns>Добавленный расход</returns>
+            <response code="200">Созданный расход</response>
+            <response code="500">Ошибка при создании расхода</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.GetExpensesByUserId(System.Int32)">
+            <summary>
+            Получение списка расходов по идентификатору пользователя
+            </summary>
+            <param name="id">Идентификтаор пользователя</param>
+            <returns>Список категорий</returns>
+            <response code="200">Найденный список расходов</response>
+            <response code="204">Список расходов пуст</response>
+            <response code="500">Ошибка при поиске расходов</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.GetExpensesByUserIdAndDate(ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndDateDto)">
+            <summary>
+            Получение списка расходов по идентификатору пользователя
+            </summary>
+            <param name="expenseInput"> Класс для работы с входными данными для получения расхода по идентификатору пользователя и дате</param>
+            <returns>Список категорий</returns>
+            <response code="200">Найденный список расходов</response>
+            <response code="204">Список расходов пуст</response>
+            <response code="500">Ошибка при поиске расходов</response> 
+        </member>
         <member name="T:ExpenseAndPointServer.Controllers.UsersController">
             <summary>
             Контроллер для работы с пользователями
-            </summary>
-        </member>
-        <member name="F:ExpenseAndPointServer.Controllers.UsersController._context">
-            <summary>
-            Контекст для работы с БД
             </summary>
         </member>
         <member name="F:ExpenseAndPointServer.Controllers.UsersController.userService">
@@ -92,6 +195,160 @@
             <response code="200">Изменный пользователь</response> 
             <response code="500">Ошибка при изменении пароля пользователя</response> 
         </member>
+        <member name="T:ExpenseAndPointServer.Models.Categories.Category">
+            <summary>
+            Модель категории из БД
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Categories.Category.Id">
+            <summary>
+            Идентификатор категории
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Categories.Category.Title">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Categories.Category.UserId">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Categories.Category.User">
+            <summary>
+            Пользователь
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Categories.Category.Expenses">
+            <summary>
+            Коллекция расходов
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Models.Categories.Category.ToCategoryDtoMap">
+            <summary>
+            Преобразование класса Category в CategoryDto
+            </summary>
+            <returns>Класс CategoryDto для передачи на веб</returns>
+        </member>
+        <member name="T:ExpenseAndPointServer.Models.Categories.CategoryDto">
+            <summary>
+            Класс категории для работы с веб
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Categories.CategoryDto.Id">
+            <summary>
+            Идентификатор категории
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Categories.CategoryDto.Title">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Categories.CategoryDto.UserId">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Models.Categories.CategoryDto.ToCategoryMap">
+            <summary>
+            Преобразование класса CategoryDto в Category
+            </summary>
+            <returns>Класс Category для взаимодействия с БД</returns>
+        </member>
+        <member name="T:ExpenseAndPointServer.Models.Expenses.Expense">
+            <summary>
+            Модель расходов из БД
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.Expense.Id">
+            <summary>
+            Идентификатор расхода
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.Expense.Amount">
+            <summary>
+            Сумма расхода
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.Expense.DateTime">
+            <summary>
+            Дата и время
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.Expense.CategoryId">
+            <summary>
+            Идентификатор категории
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.Expense.UserId">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.Expense.Category">
+            <summary>
+            Категория
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.Expense.User">
+            <summary>
+            Пользователь
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Models.Expenses.Expense.ToExpenseDtoMap">
+            <summary>
+            Преобразование класса Expense в ExpenseDto
+            </summary>
+            <returns>Класс ExpenseDto для взаимодействия с веб</returns>
+        </member>
+        <member name="T:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndDateDto">
+            <summary>
+            Класс для работы с входными данными для получения расхода по идентификатору пользователя и дате
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndDateDto.UserId">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndDateDto.date">
+            <summary>
+            Дата
+            </summary>
+        </member>
+        <member name="T:ExpenseAndPointServer.Models.Expenses.ExpenseDto">
+            <summary>
+            Класс расхода для работы с веб
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseDto.Amount">
+            <summary>
+            Сумма расхода
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseDto.DateTime">
+            <summary>
+            Дата и время
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseDto.CategoryId">
+            <summary>
+            Идентификатор категории
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseDto.UserId">
+            <summary>
+            Идентификтор пользователя
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Models.Expenses.ExpenseDto.ToExpenseMap">
+            <summary>
+            Преобразование класса ExpenseDto в Expense
+            </summary>
+            <returns>Класс Expense для взаимодействия с БД</returns>
+        </member>
         <member name="T:ExpenseAndPointServer.Models.Users.User">
             <summary>
             Модель пользователя из БД
@@ -169,6 +426,147 @@
             Имя
             </summary>
         </member>
+        <member name="T:ExpenseAndPointServer.Services.CategoryService">
+            <summary>
+            Сервис работы с категориями
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Services.CategoryService._context">
+            <summary>
+            Контекст для работы с БД
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.CategoryService.#ctor(ExpenseAndPoint.Data.AppDbContext)">
+            <summary>
+            Конструктор CategoryService
+            </summary>
+            <param name="context">Контекст для работы с БД</param>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.CategoryService.AddCategory(ExpenseAndPointServer.Models.Categories.Category)">
+            <summary>
+            Добавление категории
+            </summary>
+            <param name="category">Модель категории для рбаоты с БД</param>
+            <returns>Поток с созданной категорией Task-Category</returns>
+            <exception cref="T:System.Exception">Ошибка наличия категории с таким же названием или ошибка в названии категории</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.CategoryService.GetCategoriesByUserId(System.Int32)">
+            <summary>
+            Получение списка категорий по идентификатору пользователя
+            </summary>
+            <param name="userId">Идентификатор пользователя</param>
+            <returns>Отдельный поток со списком категорий Task-Category</returns>
+            <exception cref="T:System.Exception">Ошибка наличия пользователя с указанным идентификатором</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.CategoryService.GetCategoryById(System.Int32)">
+            <summary>
+            Получение категории по идентификатору
+            </summary>
+            <param name="id">Идентификатор категории</param>
+            <returns></returns>
+            <exception cref="T:System.Exception">Ошибка наличия категории с указанным идентификатором</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.CategoryService.EditCategoryTitle(System.Int32,ExpenseAndPointServer.Models.Categories.Category)">
+            <summary>
+            Изменение названия категории
+            </summary>
+            <param name="id">Идентификатор категории</param>
+            <param name="category">Модель категории для работы с БД</param>
+            <returns>Отдельный поток с измененной категорией</returns>
+            <exception cref="T:System.Exception">Ошибка в переданных данных</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.CategoryService.DeleteCategoryById(System.Int32)">
+            <summary>
+            Удаление категории по идентификатору
+            </summary>
+            <param name="id">Идентификатор категории</param>
+            <returns>Отдельный поток</returns>
+            <exception cref="T:System.Exception">Ошибка удаления категории, содержащей расходы</exception>
+        </member>
+        <member name="T:ExpenseAndPointServer.Services.Cryptographer.ICryptographer">
+            <summary>
+            Интерфейс шифровщика пароля
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.Cryptographer.ICryptographer.Encrypt(System.String)">
+            <summary>
+            Зашифровать пароль
+            </summary>
+            <param name="str">Пароль</param>
+            <returns>Зашифрованный пароль</returns>
+        </member>
+        <member name="T:ExpenseAndPointServer.Services.Cryptographer.md5CryptographerService">
+            <summary>
+            Простой шифровщик пароля
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.Cryptographer.md5CryptographerService.Encrypt(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:ExpenseAndPointServer.Services.ExpenseService">
+            <summary>
+            Сервис работы с расходами
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Services.ExpenseService._context">
+            <summary>
+            Контекс для работы с БД
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseService.#ctor(ExpenseAndPoint.Data.AppDbContext)">
+            <summary>
+            Конструктор ExpenseService
+            </summary>
+            <param name="context">Контекст для работы с БД</param>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseService.AddExpense(ExpenseAndPointServer.Models.Expenses.Expense)">
+            <summary>
+            Добавление расхода
+            </summary>
+            <param name="expense">Модель расхода для работы с БД</param>
+            <returns>Поток с созданным расходом Task-Expense</returns>
+            <exception cref="T:System.Exception">Ошибка связанный с отсутсвием пользователя/категории с указанным идентификатором или с некорректной датой</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpensesByUserId(System.Int32)">
+            <summary>
+            Получение списка расходов по идентификатору пользователя
+            </summary>
+            <param name="userId">Идентификатор пользователя</param>
+            <returns>Отдельны поток с коллекцияей расходов</returns>
+            <exception cref="T:System.Exception">Ошибка связанная с отсутствием пользователя с указанным идентификтаором</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpenseByUserIdAndDate(System.Int32,System.DateTime)">
+            <summary>
+            Получение списка раходов по идентификатору пользователя и дате
+            </summary>
+            <param name="userId">Идентификтор пользователя</param>
+            <param name="date">Дата расхода</param>
+            <returns></returns>
+            <exception cref="T:System.Exception">Ошибка связанный с отсутсвием пользователя с указанным идентификатором или с некорректной датой</exception>
+        </member>
+        <member name="T:ExpenseAndPointServer.Services.PasswordChecker.IPasswordChecker">
+            <summary>
+            Интерфейс класса проверки пароля
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.PasswordChecker.IPasswordChecker.CheckStrengthPassword(System.String)">
+            <summary>
+            Проверить надежность пароля
+            </summary>
+            <param name="password">Пароль</param>
+        </member>
+        <member name="T:ExpenseAndPointServer.Services.PasswordChecker.SimplePasswordChecker">
+            <summary>
+            Класс простой проверки пароля
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.PasswordChecker.SimplePasswordChecker.CheckStrengthPassword(System.String)">
+            <summary>
+            Проверить надежность пароля
+            </summary>
+            <param name="password">Пароль</param>
+            <exception cref="T:System.Exception">Ошибка, связанная с ненадежностью пароля</exception>
+        </member>
         <member name="T:ExpenseAndPointServer.Services.UserService">
             <summary>
             Сервис работы с пользователями
@@ -176,7 +574,7 @@
         </member>
         <member name="F:ExpenseAndPointServer.Services.UserService._context">
             <summary>
-            Контект работы с БД
+            Контект для работы с БД
             </summary>
         </member>
         <member name="F:ExpenseAndPointServer.Services.UserService._cryptographer">
@@ -193,7 +591,7 @@
             <summary>
             Конструктор UserService
             </summary>
-            <param name="context">Контекст работы с БД</param>
+            <param name="context">Контекст для работы с БД</param>
             <param name="cryptographer">Сервис шифрования пароля</param>
             <param name="passwordChecker">Сервис шифрования пароля</param>
         </member>
@@ -203,7 +601,7 @@
             </summary>
             <param name="user">Модель пользователя для работы с БД</param>
             <returns>Поток с созданным пользователем Task-User</returns>
-            <exception cref="T:System.Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
+            <exception cref="T:System.Exception">Ошибки наличия пользователя с таким же именем или ошибка ненадежности пароля</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.UserService.GetUsers">
             <summary>
@@ -217,6 +615,7 @@
             </summary>
             <param name="id">Идентификатор пользователя</param>
             <returns>Отдельный поток с найденным пользователем Task-User</returns>
+            <exception cref="T:System.Exception">Ошибка наличия пользователя с указанным идентификатором</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.UserService.GetUserByName(System.String)">
             <summary>
@@ -224,6 +623,7 @@
             </summary>
             <param name="name">Имя пользователя</param>
             <returns>Отдельный поток с найденным пользователем Task-User</returns>
+            <exception cref="T:System.Exception">Ошибка наличия пользователя с указанным именем</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.UserService.DeleteUserById(System.Int32)">
             <summary>
@@ -239,7 +639,7 @@
             <param name="id">Идентификтор пользователя</param>
             <param name="user">Модель пользователя для работы с БД</param>
             <returns>Отдельный поток с измененным пользователем Task-User</returns>
-            <exception cref="T:System.Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
+            <exception cref="T:System.Exception">Ошибки в переданных данных или ошибка наличия пользователя с таким же именем</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.UserService.EditUserPassword(System.Int32,ExpenseAndPointServer.Models.Users.User)">
             <summary>

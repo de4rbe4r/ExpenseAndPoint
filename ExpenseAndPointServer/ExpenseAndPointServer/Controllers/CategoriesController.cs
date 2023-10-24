@@ -7,22 +7,40 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseAndPointServer.Controllers
 {
+    /// <summary>
+    /// Контроллер для работы с категориями
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        /// <summary>
+        /// Сервис для работы с моделями категорий
+        /// </summary>
         private CategoryService categoryService;
 
+        /// <summary>
+        /// Конструктор создания контроллера
+        /// </summary>
+        /// <param name="context">Контекс для работы с БД</param>
         public CategoriesController(AppDbContext context)
         {
-            _context = context;
             categoryService = new CategoryService(context);
         }
 
-        // GET: api/Categories/5
+        /// <summary>
+        /// Получение списка категорий по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор категории</param>
+        /// <returns>Категория с указанным идентификатором</returns>
+        /// <response code="200">Найденная категория</response>
+        /// <response code="204">Категория с указанным идентификатором не найдена</response>
+        /// <response code="500">Ошибка при поиске категории</response> 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<User>> GetCategoriesById(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<CategoryDto>> GetCategoryById(int id)
         {
             try
             {
@@ -33,7 +51,7 @@ namespace ExpenseAndPointServer.Controllers
                 }
                 else
                 {
-                    return Ok(result);
+                    return Ok(result.ToCategoryDtoMap());
                 }
             }
             catch (Exception ex)
@@ -42,20 +60,31 @@ namespace ExpenseAndPointServer.Controllers
             }
         }
 
-        // GET: api/Categories/ByUserId/5
+        /// <summary>
+        /// Получение списка категорий по идентификатору пользователя
+        /// </summary>
+        /// <param name="id">Идентификтаор пользователя</param>
+        /// <returns>Список категорий</returns>
+        /// <response code="200">Найденный список категорий</response>
+        /// <response code="204">Список категорий пуст</response>
+        /// <response code="500">Ошибка при поиске категорий</response> 
         [HttpGet("ByUserId/{id:int}")]
-        public async Task<ActionResult<User>> GetCategoriesByUserId(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategoriesByUserId(int id)
         {
             try
             {
-                var result = await categoryService.GetCategoriesByUserId(id);
-                if (result == null)
+                var categoryList = await categoryService.GetCategoriesByUserId(id);
+                var categoryDtoList = categoryList.Select(c => c.ToCategoryDtoMap());
+                if (categoryDtoList.Count() == 0)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    return Ok(result);
+                    return Ok(categoryDtoList);
                 }
             }
             catch (Exception ex)
@@ -64,15 +93,22 @@ namespace ExpenseAndPointServer.Controllers
             }
         }
 
+        /// <summary>
+        /// Добавление категории
+        /// </summary>
+        /// <param name="categoryDto">Категория приходящая с веб</param>
+        /// <returns>Добавленная категория</returns>
+        /// <response code="200">Созданная категория</response>
+        /// <response code="500">Ошибка при создании категории</response> 
         // POST: api/Categories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory(Category category)
+        public async Task<ActionResult<CategoryDto>> PostCategory(CategoryDto categoryDto)
         {
             try
             {
-                await categoryService.AddCategory(category);
-                return CreatedAtAction(nameof(GetCategoriesById), new { id = category.Id }, category);
+                var category = await categoryService.AddCategory(categoryDto.ToCategoryMap());
+                return Ok(category.ToCategoryDtoMap());
             }
             catch (Exception ex)
             {
@@ -80,29 +116,40 @@ namespace ExpenseAndPointServer.Controllers
             }
         }
 
-        // DELETE: api/Categories/5
+        /// <summary>
+        /// Удаление категории по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор категории</param>
+        /// <response code="200">Категория удалена</response> 
+        /// <response code="500">Ошибка при удалении категории</response> 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             await categoryService.DeleteCategoryById(id);
-            return NoContent();
+            return Ok();
         }
 
-        // PUT: api/Categories/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Изменение названия категории
+        /// </summary>
+        /// <param name="id">Идентификатор категории</param>
+        /// <param name="categoryDto">Класс категории приходящего с веб</param>
+        /// <returns>Измененная категория</returns>
+        /// <response code="200">Измененная категория</response> 
+        /// <response code="500">Ошибка при удалении категории</response> 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Category>> PutCategory(int id, Category category)
+        public async Task<ActionResult<Category>> PutCategory(int id, CategoryDto categoryDto)
         {
             Category editedCategory;
             try
             {
-                editedCategory = await categoryService.EditCategory(id, category);
+                editedCategory = await categoryService.EditCategoryTitle(id, categoryDto.ToCategoryMap());
             }
             catch (Exception ex)
             {
                 return Problem(ex.Message);
             }
-            return Ok(editedCategory);
+            return Ok(editedCategory.ToCategoryDtoMap());
         }
     }
 }
