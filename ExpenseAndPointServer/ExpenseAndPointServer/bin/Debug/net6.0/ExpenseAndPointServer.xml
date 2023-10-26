@@ -83,6 +83,26 @@
             </summary>
             <param name="context">Контекст для работы с БД</param>
         </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.GetExpensesByUserId(System.Int32)">
+            <summary>
+            Получение списка расходов по идентификатору пользователя
+            </summary>
+            <param name="id">Идентификтаор пользователя</param>
+            <returns>Список расходов</returns>
+            <response code="200">Найденный список расходов</response>
+            <response code="204">Список расходов пуст</response>
+            <response code="500">Ошибка при поиске расходов</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.GetExpensesById(System.Int32)">
+            <summary>
+            Получение списка расходов по идентификатору расходу
+            </summary>
+            <param name="id">Идентификтаор расхода</param>
+            <returns>Расход</returns>
+            <response code="200">Найденный расход</response>
+            <response code="204">Расход не найден</response>
+            <response code="500">Ошибка при поиске расхода</response> 
+        </member>
         <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.PostExpense(ExpenseAndPointServer.Models.Expenses.ExpenseDto)">
             <summary>
             Добавление расхода
@@ -92,25 +112,63 @@
             <response code="200">Созданный расход</response>
             <response code="500">Ошибка при создании расхода</response> 
         </member>
-        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.GetExpensesByUserId(System.Int32)">
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.GetExpensesByUserIdAndDate(ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndDateRequest)">
             <summary>
-            Получение списка расходов по идентификатору пользователя
+            Получение списка расходов по идентификатору пользователя и дате
             </summary>
-            <param name="id">Идентификтаор пользователя</param>
-            <returns>Список категорий</returns>
+            <param name="expenseInput"> Класс для работы с входными данными для получения расхода по идентификатору пользователя и дате</param>
+            <returns>Список расходов</returns>
             <response code="200">Найденный список расходов</response>
             <response code="204">Список расходов пуст</response>
             <response code="500">Ошибка при поиске расходов</response> 
         </member>
-        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.GetExpensesByUserIdAndDate(ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndDateDto)">
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.GetExpensesByUserIdAndPeriod(ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndPeriodRequest)">
             <summary>
-            Получение списка расходов по идентификатору пользователя
+            Получение списка расходов по идентификатору пользователя и периоду
             </summary>
-            <param name="expenseInput"> Класс для работы с входными данными для получения расхода по идентификатору пользователя и дате</param>
-            <returns>Список категорий</returns>
+            <param name="expenseInput"> Класс для работы с входными данными для получения расхода по идентификатору пользователя и периоду</param>
+            <returns>Список расходов</returns>
             <response code="200">Найденный список расходов</response>
             <response code="204">Список расходов пуст</response>
             <response code="500">Ошибка при поиске расходов</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.GetExpensesByUserIdAndCategoryId(ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdRequest)">
+            <summary>
+            Получение списка расходов по идентификатору пользователя и идентификатору категории
+            </summary>
+            <param name="expenseInput"> Класс для работы с входными данными для получения расхода по идентификатору пользователя и идентификатору категории</param>
+            <returns>Список расходов</returns>
+            <response code="200">Найденный список расходов</response>
+            <response code="204">Список расходов пуст</response>
+            <response code="500">Ошибка при поиске расходов</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.GetExpensesByUserIdAndCategoryIdAndDate(ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdAndDateRequest)">
+            <summary>
+            Получение списка расходов по идентификатору пользователя, идентификтору категории и дате
+            </summary>
+            <param name="expenseInput"> Класс для работы с входными данными для получения расхода по идентификатору пользователя, идентификатору категории, дате</param>
+            <returns>Список расходов</returns>
+            <response code="200">Найденный список расходов</response>
+            <response code="204">Список расходов пуст</response>
+            <response code="500">Ошибка при поиске расходов</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.GetExpensesByUserIdAndCategoryIdAndPeriod(ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdAndPeriodRequest)">
+            <summary>
+            Получение списка расходов по идентификатору пользователя, идентификтору категории и периоду
+            </summary>
+            <param name="expenseInput"> Класс для работы с входными данными для получения расхода по идентификатору пользователя, идентификатору категории, периоду</param>
+            <returns>Список расходов</returns>
+            <response code="200">Найденный список расходов</response>
+            <response code="204">Список расходов пуст</response>
+            <response code="500">Ошибка при поиске расходов</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.DeleteExpense(System.Int32)">
+            <summary>
+            Удаление расхода по идентификатору
+            </summary>
+            <param name="id">Идентификатор расхода</param>
+            <response code="200">Расход удален</response> 
+            <response code="500">Ошибка при удалении расход</response> 
         </member>
         <member name="T:ExpenseAndPointServer.Controllers.UsersController">
             <summary>
@@ -158,7 +216,7 @@
             <response code="204">Пользователь с указанным именем не найден</response>
             <response code="500">Пользователь с указанным идентификатором не найден</response> 
         </member>
-        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PostUser(ExpenseAndPointServer.Models.Users.UserInputDto)">
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PostUser(ExpenseAndPointServer.Models.Users.UserRequest)">
             <summary>
             Добавление пользователя
             </summary>
@@ -175,7 +233,7 @@
             <response code="200">Пользователь удален</response> 
             <response code="500">Ошибка при удалении пользователя</response> 
         </member>
-        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PutUserName(System.Int32,ExpenseAndPointServer.Models.Users.UserInputDto)">
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PutUserName(System.Int32,ExpenseAndPointServer.Models.Users.UserRequest)">
             <summary>
             Изменение имени пользователя
             </summary>
@@ -185,7 +243,7 @@
             <response code="200">Изменный пользователь</response> 
             <response code="500">Ошибка при изменении имени пользователя</response> 
         </member>
-        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PutUserPassword(System.Int32,ExpenseAndPointServer.Models.Users.UserInputDto)">
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.PutUserPassword(System.Int32,ExpenseAndPointServer.Models.Users.UserRequest)">
             <summary>
             Изменение пароля пользователя
             </summary>
@@ -303,24 +361,109 @@
             </summary>
             <returns>Класс ExpenseDto для взаимодействия с веб</returns>
         </member>
-        <member name="T:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndDateDto">
+        <member name="T:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdAndDateRequest">
             <summary>
-            Класс для работы с входными данными для получения расхода по идентификатору пользователя и дате
+            Класс для работы с входными данными для получения расхода по идентификатору пользователя, идентификатору категории и дате
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndDateDto.UserId">
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdAndDateRequest.UserId">
             <summary>
             Идентификатор пользователя
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndDateDto.date">
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdAndDateRequest.CategoryId">
+            <summary>
+            Идентификатор категории
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdAndDateRequest.Date">
+            <summary>
+            Дата расхода
+            </summary>
+        </member>
+        <member name="T:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdAndPeriodRequest">
+            <summary>
+            Класс для работы с входными данными для получения расхода по идентификатору пользователя, идентификатору категории и периоду
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdAndPeriodRequest.UserId">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdAndPeriodRequest.CategoryId">
+            <summary>
+            Идентификатор категории
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdAndPeriodRequest.DateStart">
+            <summary>
+            Дата начала
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdAndPeriodRequest.DateEnd">
+            <summary>
+            Дата конца
+            </summary>
+        </member>
+        <member name="T:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdRequest">
+            <summary>
+            Класс для работы с входными данными для получения расхода по идентификатору пользователя и идентификатору категории
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdRequest.UserId">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndCategoryIdRequest.CategoryId">
+            <summary>
+            Идентификатор категории
+            </summary>
+        </member>
+        <member name="T:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndDateRequest">
+            <summary>
+            Класс для работы с входными данными для получения расхода по идентификатору пользователя и дате
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndDateRequest.UserId">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndDateRequest.Date">
             <summary>
             Дата
+            </summary>
+        </member>
+        <member name="T:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndPeriodRequest">
+            <summary>
+            Класс для работы с входными данными для получения расхода по идентификатору пользователя и периоду
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndPeriodRequest.UserId">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndPeriodRequest.DateStart">
+            <summary>
+            Дата начала периода
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseByUserIdAndPeriodRequest.DateEnd">
+            <summary>
+            Дата конца периода
             </summary>
         </member>
         <member name="T:ExpenseAndPointServer.Models.Expenses.ExpenseDto">
             <summary>
             Класс расхода для работы с веб
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseDto.Id">
+            <summary>
+            Идентификатор расхода
             </summary>
         </member>
         <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseDto.Amount">
@@ -385,43 +528,43 @@
             </summary>
             <returns>Класс UserOutputDto для передачи на веб</returns>
         </member>
-        <member name="T:ExpenseAndPointServer.Models.Users.UserInputDto">
+        <member name="T:ExpenseAndPointServer.Models.Users.UserRequest">
             <summary>
             Класс пользователя приходящий с веб
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.Users.UserInputDto.Id">
+        <member name="P:ExpenseAndPointServer.Models.Users.UserRequest.Id">
             <summary>
             Идентификатор пользователя
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.Users.UserInputDto.Name">
+        <member name="P:ExpenseAndPointServer.Models.Users.UserRequest.Name">
             <summary>
             Имя
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.Users.UserInputDto.Password">
+        <member name="P:ExpenseAndPointServer.Models.Users.UserRequest.Password">
             <summary>
             Пароль
             </summary>
         </member>
-        <member name="M:ExpenseAndPointServer.Models.Users.UserInputDto.ToUserMap">
+        <member name="M:ExpenseAndPointServer.Models.Users.UserRequest.ToUserMap">
             <summary>
             Преобразование класса UserOtputDto в класс User
             </summary>
             <returns>Класс User для взаимодействия с БД</returns>
         </member>
-        <member name="T:ExpenseAndPointServer.Models.Users.UserOutputDto">
+        <member name="T:ExpenseAndPointServer.Models.Users.UserResponse">
             <summary>
             Класс пользователей для отправления на веб
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.Users.UserOutputDto.Id">
+        <member name="P:ExpenseAndPointServer.Models.Users.UserResponse.Id">
             <summary>
             Идентификатор пользователя
             </summary>
         </member>
-        <member name="P:ExpenseAndPointServer.Models.Users.UserOutputDto.Name">
+        <member name="P:ExpenseAndPointServer.Models.Users.UserResponse.Name">
             <summary>
             Имя
             </summary>
@@ -535,6 +678,13 @@
             <returns>Отдельны поток с коллекцияей расходов</returns>
             <exception cref="T:System.Exception">Ошибка связанная с отсутствием пользователя с указанным идентификтаором</exception>
         </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpensesById(System.Int32)">
+            <summary>
+            Получение расхода по идентификатору
+            </summary>
+            <param name="id">Идентификатор расхода</param>
+            <returns>Найденный расход</returns>
+        </member>
         <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpenseByUserIdAndDate(System.Int32,System.DateTime)">
             <summary>
             Получение списка раходов по идентификатору пользователя и дате
@@ -543,6 +693,53 @@
             <param name="date">Дата расхода</param>
             <returns></returns>
             <exception cref="T:System.Exception">Ошибка связанный с отсутсвием пользователя с указанным идентификатором или с некорректной датой</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpenseByUserIdAndPeriod(System.Int32,System.DateTime,System.DateTime)">
+            <summary>
+            Получение списка раходов по идентификатору пользователя и периоду
+            </summary>
+            <param name="userId">Идентификтор пользователя</param>
+            <param name="dateStart">Дата начала периода</param>
+            <param name="dateEnd">Дата конца периода</param>
+            <returns></returns>
+            <exception cref="T:System.Exception">Ошибка связанный с отсутсвием пользователя с указанным идентификтором</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpensesByUserIdAndCategoryId(System.Int32,System.Int32)">
+            <summary>
+            Получение списка расходов по идентификатору пользователя и идентификатору категории
+            </summary>
+            <param name="userId">Идентификатор пользователя</param>
+            <param name="categoryId">Идентификатор категории</param>
+            <returns>Отдельны поток с коллекцияей расходов</returns>
+            <exception cref="T:System.Exception">Ошибка связанная с отсутствием пользователя или категории с указанным идентификтором</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpensesByUserIdAndCategoryIdAndDate(System.Int32,System.Int32,System.DateTime)">
+            <summary>
+            Получение списка расходов по идентификатору пользователя, идентификатору категории и дате
+            </summary>
+            <param name="userId">Идентификатор пользователя</param>
+            <param name="categoryId">Идентификатор категории</param>
+            <param name="date">Дата</param>
+            <returns>Отдельны поток с коллекцияей расходов</returns>
+            <exception cref="T:System.Exception">Ошибка связанная с отсутствием пользователя или категории с указанным идентификтором, неверно указанной датой</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpensesByUserIdAndCategoryIdAndPeriod(System.Int32,System.Int32,System.DateTime,System.DateTime)">
+            <summary>
+            Получение списка расходов по идентификатору пользователя, идентификатору категории и периоду
+            </summary>
+            <param name="userId">Идентификатор пользователя</param>
+            <param name="categoryId">Идентификатор категории</param>
+            <param name="dateStart">Дата начала</param>
+            <param name="dateEnd">Дата конца</param>
+            <returns>Отдельны поток с коллекцияей расходов</returns>
+            <exception cref="T:System.Exception">Ошибка связанная с отсутствием пользователя или категории с указанным идентификтором, неверно указанной датой</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseService.DeleteExpenseById(System.Int32)">
+            <summary>
+            Удаление расхода по идентификатору
+            </summary>
+            <param name="id">Идентификатор расхода</param>
+            <returns>Отдельный поток</returns>
         </member>
         <member name="T:ExpenseAndPointServer.Services.PasswordChecker.IPasswordChecker">
             <summary>

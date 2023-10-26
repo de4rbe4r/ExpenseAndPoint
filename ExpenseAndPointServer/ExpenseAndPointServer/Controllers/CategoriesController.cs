@@ -125,8 +125,14 @@ namespace ExpenseAndPointServer.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            await categoryService.DeleteCategoryById(id);
-            return Ok();
+            try
+            {
+                await categoryService.DeleteCategoryById(id);
+                return Ok();
+            } catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
 
         /// <summary>

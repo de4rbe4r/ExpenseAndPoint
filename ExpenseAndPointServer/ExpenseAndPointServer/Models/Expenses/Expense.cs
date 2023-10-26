@@ -51,6 +51,7 @@ namespace ExpenseAndPointServer.Models.Expenses
         {
             return new ExpenseDto
             {
+                Id = Id,
                 Amount = Amount,
                 DateTime = DateTime,
                 CategoryId = CategoryId,

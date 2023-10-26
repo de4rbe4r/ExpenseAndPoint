@@ -6,6 +6,11 @@
     public class ExpenseDto
     {
         /// <summary>
+        /// Идентификатор расхода
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Сумма расхода
         /// </summary>
         public float Amount { get; set; }
@@ -33,6 +38,7 @@
         {
             return new Expense
             {
+                Id = Id,
                 Amount = Amount,
                 DateTime = DateTime,
                 CategoryId = CategoryId,

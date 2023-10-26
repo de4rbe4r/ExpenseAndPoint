@@ -93,7 +93,7 @@ namespace ExpenseAndPointServer.Services
         /// <exception cref="Exception">Ошибка удаления категории, содержащей расходы</exception>
         public async Task DeleteCategoryById(int id)
         {
-            var category = await this.GetCategoryById(id);
+            var category = await GetCategoryById(id);
             if (category.Expenses.Count > 0) throw new Exception("Нельзя удалить категорию, в которой есть расходы");
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();

@@ -1,6 +1,7 @@
 ﻿using ExpenseAndPoint.Data;
 using ExpenseAndPointServer.Models.Expenses;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing.Printing;
 
 namespace ExpenseAndPointServer.Services
 {
@@ -59,6 +60,16 @@ namespace ExpenseAndPointServer.Services
         }
 
         /// <summary>
+        /// Получение расхода по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор расхода</param>
+        /// <returns>Найденный расход</returns>
+        public async Task<Expense> GetExpensesById(int id)
+        {
+            return await _context.Expenses.FirstOrDefaultAsync(e => e.Id == id);
+        }
+
+        /// <summary>
         /// Получение списка раходов по идентификатору пользователя и дате
         /// </summary>
         /// <param name="userId">Идентификтор пользователя</param>
@@ -72,6 +83,103 @@ namespace ExpenseAndPointServer.Services
             if (_context.Users.FirstOrDefault(u => u.Id == userId) == null)
                 throw new Exception($"Пользователя с идентификатором {userId} не существует");
             return await _context.Expenses.Where(e => e.UserId == userId && e.DateTime.Date == date.Date).ToListAsync();
+        }
+
+        /// <summary>
+        /// Получение списка раходов по идентификатору пользователя и периоду
+        /// </summary>
+        /// <param name="userId">Идентификтор пользователя</param>
+        /// <param name="dateStart">Дата начала периода</param>
+        /// <param name="dateEnd">Дата конца периода</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">Ошибка связанный с отсутсвием пользователя с указанным идентификтором</exception>
+        public async Task<IEnumerable<Expense>> GetExpenseByUserIdAndPeriod(int userId, DateTime dateStart, DateTime dateEnd)
+        {
+            if (_context.Users.FirstOrDefault(u => u.Id == userId) == null)
+                throw new Exception($"Пользователя с идентификатором {userId} не существует");
+            if (dateStart > dateEnd)
+            {
+                var temp = dateStart;
+                dateStart = dateEnd;
+                dateEnd = temp;
+            }
+            return await _context.Expenses.Where(e => e.UserId == userId 
+                                                && e.DateTime.Date > dateStart.Date 
+                                                && e.DateTime.Date < dateEnd.Date).ToListAsync();
+        }
+
+        /// <summary>
+        /// Получение списка расходов по идентификатору пользователя и идентификатору категории
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя</param>
+        /// <param name="categoryId">Идентификатор категории</param>
+        /// <returns>Отдельны поток с коллекцияей расходов</returns>
+        /// <exception cref="Exception">Ошибка связанная с отсутствием пользователя или категории с указанным идентификтором</exception>
+        public async Task<IEnumerable<Expense>> GetExpensesByUserIdAndCategoryId(int userId, int categoryId)
+        {
+            if (_context.Users.FirstOrDefault(u => u.Id == userId) == null)
+                throw new Exception($"Пользователя с идентификатором {userId} не существует");
+            if (_context.Categories.FirstOrDefault(c => c.Id == categoryId) == null)
+                throw new Exception($"Категории с идентификатором {categoryId} не существует");
+            return await _context.Expenses.Where(e => e.UserId == userId && e.CategoryId == categoryId).ToListAsync();
+        }
+
+        /// <summary>
+        /// Получение списка расходов по идентификатору пользователя, идентификатору категории и дате
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя</param>
+        /// <param name="categoryId">Идентификатор категории</param>
+        /// <param name="date">Дата</param>
+        /// <returns>Отдельны поток с коллекцияей расходов</returns>
+        /// <exception cref="Exception">Ошибка связанная с отсутствием пользователя или категории с указанным идентификтором, неверно указанной датой</exception>
+        public async Task<IEnumerable<Expense>> GetExpensesByUserIdAndCategoryIdAndDate(int userId, int categoryId, DateTime date)
+        {
+            if (_context.Users.FirstOrDefault(u => u.Id == userId) == null)
+                throw new Exception($"Пользователя с идентификатором {userId} не существует");
+            if (_context.Categories.FirstOrDefault(c => c.Id == categoryId) == null)
+                throw new Exception($"Категории с идентификатором {categoryId} не существует");
+            if (date > DateTime.Now)
+                throw new Exception($"Не существует расходов с датой из будущего ({date.ToString("yyyyMMddHHmmss")})");
+            return await _context.Expenses.Where(e => e.UserId == userId && e.CategoryId == categoryId 
+                                                    && e.DateTime.Date == date.Date).ToListAsync();
+        }
+
+        /// <summary>
+        /// Получение списка расходов по идентификатору пользователя, идентификатору категории и периоду
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя</param>
+        /// <param name="categoryId">Идентификатор категории</param>
+        /// <param name="dateStart">Дата начала</param>
+        /// <param name="dateEnd">Дата конца</param>
+        /// <returns>Отдельны поток с коллекцияей расходов</returns>
+        /// <exception cref="Exception">Ошибка связанная с отсутствием пользователя или категории с указанным идентификтором, неверно указанной датой</exception>
+        public async Task<IEnumerable<Expense>> GetExpensesByUserIdAndCategoryIdAndPeriod(int userId, int categoryId, DateTime dateStart, DateTime dateEnd)
+        {
+            if (_context.Users.FirstOrDefault(u => u.Id == userId) == null)
+                throw new Exception($"Пользователя с идентификатором {userId} не существует");
+            if (_context.Categories.FirstOrDefault(c => c.Id == categoryId) == null)
+                throw new Exception($"Категории с идентификатором {categoryId} не существует");
+            if (dateStart > dateEnd)
+            {
+                var temp = dateStart;
+                dateStart = dateEnd;
+                dateEnd = temp;
+            }
+            return await _context.Expenses.Where(e => e.UserId == userId && e.CategoryId == categoryId
+                                                    && e.DateTime.Date > dateStart.Date
+                                                    && e.DateTime.Date < dateEnd.Date).ToListAsync();
+        }
+
+        /// <summary>
+        /// Удаление расхода по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор расхода</param>
+        /// <returns>Отдельный поток</returns>
+        public async Task DeleteExpenseById(int id)
+        {
+            var expense = await GetExpensesById(id);
+            _context.Expenses.Remove(expense);
+            await _context.SaveChangesAsync();
         }
     }
 }

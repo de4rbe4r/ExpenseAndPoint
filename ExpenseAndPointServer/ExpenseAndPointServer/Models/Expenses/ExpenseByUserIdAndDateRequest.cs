@@ -3,7 +3,7 @@
     /// <summary>
     /// Класс для работы с входными данными для получения расхода по идентификатору пользователя и дате
     /// </summary>
-    public class ExpenseByUserIdAndDateDto
+    public class ExpenseByUserIdAndDateRequest
     {
         /// <summary>
         /// Идентификатор пользователя
@@ -13,8 +13,6 @@
         /// <summary>
         /// Дата
         /// </summary>
-        public DateTime date { get; set; }
-
-
+        public DateTime Date { get; set; }
     }
 }

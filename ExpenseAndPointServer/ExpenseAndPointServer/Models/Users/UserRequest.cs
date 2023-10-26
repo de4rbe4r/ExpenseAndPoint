@@ -6,7 +6,7 @@ namespace ExpenseAndPointServer.Models.Users
     /// <summary>
     /// Класс пользователя приходящий с веб
     /// </summary>
-    public class UserInputDto
+    public class UserRequest
     {
         /// <summary>
         /// Идентификатор пользователя

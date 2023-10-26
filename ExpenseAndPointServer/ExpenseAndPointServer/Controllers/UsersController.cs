@@ -41,7 +41,7 @@ namespace ExpenseAndPointServer.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<IEnumerable<UserOutputDto>>> GetUser()
+        public async Task<ActionResult<IEnumerable<UserResponse>>> GetUser()
         {
             var userList = await userService.GetUsers();
             var userDtoList = userList.Select(u => u.ToUserOutputDtoMap());
@@ -66,7 +66,7 @@ namespace ExpenseAndPointServer.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UserOutputDto>> GetUserById(int id)
+        public async Task<ActionResult<UserResponse>> GetUserById(int id)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace ExpenseAndPointServer.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<UserOutputDto>>> GetUserByName(string name)
+        public async Task<ActionResult<IEnumerable<UserResponse>>> GetUserByName(string name)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace ExpenseAndPointServer.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UserOutputDto>> PostUser(UserInputDto userInputDto)
+        public async Task<ActionResult<UserResponse>> PostUser(UserRequest userInputDto)
         {
             try
             {
@@ -177,7 +177,7 @@ namespace ExpenseAndPointServer.Controllers
         [HttpPut("EditUserName/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UserOutputDto>> PutUserName(int id, UserInputDto userInputDto)
+        public async Task<ActionResult<UserResponse>> PutUserName(int id, UserRequest userInputDto)
         {
             User editedUser;
             try
@@ -204,7 +204,7 @@ namespace ExpenseAndPointServer.Controllers
         [HttpPut("EditUserPassword/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UserInputDto>> PutUserPassword(int id, UserInputDto userInputDto)
+        public async Task<ActionResult<UserRequest>> PutUserPassword(int id, UserRequest userInputDto)
         {
             User editedUser;
             try

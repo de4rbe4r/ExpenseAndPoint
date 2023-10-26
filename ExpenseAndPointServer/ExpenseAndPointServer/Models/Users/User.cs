@@ -41,9 +41,9 @@ namespace ExpenseAndPointServer.Models.Users
         /// Преобразование класса User в UserOutputDto
         /// </summary>
         /// <returns>Класс UserOutputDto для передачи на веб</returns>
-        public UserOutputDto ToUserOutputDtoMap()
+        public UserResponse ToUserOutputDtoMap()
         {
-            return new UserOutputDto
+            return new UserResponse
             {
                 Id = Id,
                 Name = Name
