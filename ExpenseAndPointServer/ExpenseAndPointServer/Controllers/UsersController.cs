@@ -1,4 +1,5 @@
 ﻿using ExpenseAndPoint.Data;
+using ExpenseAndPointServer.ErrorLogging;
 using ExpenseAndPointServer.Models.Users;
 
 using ExpenseAndPointServer.Services;
@@ -6,6 +7,7 @@ using ExpenseAndPointServer.Services.Cryptographer;
 using ExpenseAndPointServer.Services.PasswordChecker;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.Json;
 
 namespace ExpenseAndPointServer.Controllers
 {
@@ -20,6 +22,11 @@ namespace ExpenseAndPointServer.Controllers
         /// Сервис для работы с моделями пользователей
         /// </summary>
         private UserService userService;
+
+        /// <summary>
+        /// Логгирование ошибок
+        /// </summary>
+        private readonly ErrorLogger _errorLogger = new ErrorLogger();
 
         /// <summary>
         /// Конструктор создания контроллера
@@ -82,6 +89,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    "Id: " + id,
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -114,6 +124,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    "Name: " + name,
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -140,6 +153,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    JsonSerializer.Serialize(userInputDto),
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -161,6 +177,9 @@ namespace ExpenseAndPointServer.Controllers
                 return Ok();
             } catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    "Id: " + id,
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -185,6 +204,9 @@ namespace ExpenseAndPointServer.Controllers
                editedUser  = await userService.EditUserName(id, userInputDto.ToUserMap());
             } catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    "Id: " + id + ", " + JsonSerializer.Serialize(userInputDto),
+                    ex.Message);
                 return Problem(ex.Message);
             }
             return Ok(editedUser.ToUserOutputDtoMap());
@@ -213,6 +235,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    JsonSerializer.Serialize(userInputDto),
+                    ex.Message);
                 return Problem(ex.Message);
             }
             return Ok(editedUser.ToUserOutputDtoMap());

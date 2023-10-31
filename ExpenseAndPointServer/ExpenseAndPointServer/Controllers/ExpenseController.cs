@@ -1,7 +1,10 @@
 ﻿using ExpenseAndPoint.Data;
+using ExpenseAndPointServer.ErrorLogging;
+using ExpenseAndPointServer.Models.Categories;
 using ExpenseAndPointServer.Models.Expenses;
 using ExpenseAndPointServer.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace ExpenseAndPointServer.Controllers
 {
@@ -16,6 +19,11 @@ namespace ExpenseAndPointServer.Controllers
         /// Сервис для работы с моделями расходов
         /// </summary>
         private ExpenseService expenseService;
+
+        /// <summary>
+        /// Логирование ошибок
+        /// </summary>
+        private readonly ErrorLogger _errorLogger = new ErrorLogger();
 
         /// <summary>
         /// Конструктор создания контроллера
@@ -54,6 +62,9 @@ namespace ExpenseAndPointServer.Controllers
                 }
             } catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    "Id: " + id,
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -86,6 +97,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    "Id:" + id,
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -109,6 +123,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    JsonSerializer.Serialize(expenseDto),
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -142,6 +159,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    JsonSerializer.Serialize(expenseInput),
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -175,6 +195,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    JsonSerializer.Serialize(expenseInput),
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -208,6 +231,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    JsonSerializer.Serialize(expenseInput),
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -241,6 +267,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    JsonSerializer.Serialize(expenseInput),
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -274,6 +303,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    JsonSerializer.Serialize(expenseInput),
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -297,6 +329,9 @@ namespace ExpenseAndPointServer.Controllers
                 editedExpense = await expenseService.EditExpense(id, expenseDto.ToExpenseMap());
             } catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    JsonSerializer.Serialize(expenseDto),
+                    ex.Message);
                 return Problem(ex.Message);
             }
             return Ok(editedExpense.ToExpenseDtoMap());
@@ -318,6 +353,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    "Id: " + id,
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }

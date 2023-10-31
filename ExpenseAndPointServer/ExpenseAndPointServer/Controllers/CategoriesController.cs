@@ -4,6 +4,8 @@ using ExpenseAndPointServer.Models.Users;
 using ExpenseAndPointServer.Models.Categories;
 
 using Microsoft.AspNetCore.Mvc;
+using ExpenseAndPointServer.ErrorLogging;
+using System.Text.Json;
 
 namespace ExpenseAndPointServer.Controllers
 {
@@ -18,6 +20,11 @@ namespace ExpenseAndPointServer.Controllers
         /// Сервис для работы с моделями категорий
         /// </summary>
         private CategoryService categoryService;
+
+        /// <summary>
+        /// Логирование ошибок
+        /// </summary>
+        private readonly ErrorLogger _errorLogger = new ErrorLogger();
 
         /// <summary>
         /// Конструктор создания контроллера
@@ -56,6 +63,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    "Id: " + id,
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -89,6 +99,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    "Id: " + id,
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -114,6 +127,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    JsonSerializer.Serialize(categoryDto),
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -135,6 +151,9 @@ namespace ExpenseAndPointServer.Controllers
                 return Ok();
             } catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    "Id: " + JsonSerializer.Serialize(id),
+                    ex.Message);
                 return Problem(ex.Message);
             }
         }
@@ -159,6 +178,9 @@ namespace ExpenseAndPointServer.Controllers
             }
             catch (Exception ex)
             {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name, 
+                    "Id: " + id + ", " + JsonSerializer.Serialize(categoryDto), 
+                    ex.Message);
                 return Problem(ex.Message);
             }
             return Ok(editedCategory.ToCategoryDtoMap());

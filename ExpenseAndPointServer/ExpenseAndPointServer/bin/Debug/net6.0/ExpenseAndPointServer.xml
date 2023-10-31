@@ -14,6 +14,11 @@
             Сервис для работы с моделями категорий
             </summary>
         </member>
+        <member name="F:ExpenseAndPointServer.Controllers.CategoriesController._errorLogger">
+            <summary>
+            Логирование ошибок
+            </summary>
+        </member>
         <member name="M:ExpenseAndPointServer.Controllers.CategoriesController.#ctor(ExpenseAndPoint.Data.AppDbContext)">
             <summary>
             Конструктор создания контроллера
@@ -75,6 +80,11 @@
         <member name="F:ExpenseAndPointServer.Controllers.ExpenseController.expenseService">
             <summary>
             Сервис для работы с моделями расходов
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Controllers.ExpenseController._errorLogger">
+            <summary>
+            Логирование ошибок
             </summary>
         </member>
         <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.#ctor(ExpenseAndPoint.Data.AppDbContext)">
@@ -190,6 +200,11 @@
             Сервис для работы с моделями пользователей
             </summary>
         </member>
+        <member name="F:ExpenseAndPointServer.Controllers.UsersController._errorLogger">
+            <summary>
+            Логгирование ошибок
+            </summary>
+        </member>
         <member name="M:ExpenseAndPointServer.Controllers.UsersController.#ctor(ExpenseAndPoint.Data.AppDbContext,ExpenseAndPointServer.Services.Cryptographer.ICryptographer,ExpenseAndPointServer.Services.PasswordChecker.IPasswordChecker)">
             <summary>
             Конструктор создания контроллера
@@ -262,6 +277,24 @@
             <returns>Изменный пользователь</returns>
             <response code="200">Изменный пользователь</response> 
             <response code="500">Ошибка при изменении пароля пользователя</response> 
+        </member>
+        <member name="T:ExpenseAndPointServer.ErrorLogging.ErrorLogger">
+            <summary>
+            Логировщик ошибок
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.ErrorLogging.ErrorLogger.path">
+            <summary>
+            Путь хранения файла
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.ErrorLogging.ErrorLogger.LogError(System.String,System.String,System.String)">
+            <summary>
+            Логирование ошибки
+            </summary>
+            <param name="methodName">Название метода</param>
+            <param name="request">Текст запроса</param>
+            <param name="errorMessage">Текст ошибки</param>
         </member>
         <member name="T:ExpenseAndPointServer.Models.Categories.Category">
             <summary>
