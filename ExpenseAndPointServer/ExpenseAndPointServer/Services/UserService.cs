@@ -45,7 +45,7 @@ namespace ExpenseAndPointServer.Services
         /// Добавление пользователя
         /// </summary>
         /// <param name="user">Модель пользователя для работы с БД</param>
-        /// <returns>Поток с созданным пользователем Task-User</returns>
+        /// <returns>Созданный пользователь</returns>
         /// <exception cref="Exception">Ошибки наличия пользователя с таким же именем или ошибка ненадежности пароля</exception>
         public async Task<User> AddUser(User user)
         {
@@ -66,7 +66,7 @@ namespace ExpenseAndPointServer.Services
         /// <summary>
         /// Получение списка пользователей
         /// </summary>
-        /// <returns>Отдельный поток со списком пользователей Task-List-User</returns>
+        /// <returns>Коллекция пользователей</returns>
         public async Task<IEnumerable<User>> GetUsers()
         {
             return await _context.Users.ToListAsync();
@@ -76,7 +76,7 @@ namespace ExpenseAndPointServer.Services
         /// Получение пользователя по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор пользователя</param>
-        /// <returns>Отдельный поток с найденным пользователем Task-User</returns>
+        /// <returns>Пользователь</returns>
         /// <exception cref="Exception">Ошибка наличия пользователя с указанным идентификатором</exception>
 
         public async Task<User> GetUserById(int id)
@@ -88,7 +88,7 @@ namespace ExpenseAndPointServer.Services
         /// Получение пользователя по имени
         /// </summary>
         /// <param name="name">Имя пользователя</param>
-        /// <returns>Отдельный поток с найденным пользователем Task-User</returns>
+        /// <returns>Пользователь</returns>
         /// <exception cref="Exception">Ошибка наличия пользователя с указанным именем</exception>
         public async Task<User> GetUserByName(string name)
         {
@@ -99,7 +99,6 @@ namespace ExpenseAndPointServer.Services
         /// Удаление пользователя по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор пользователя</param>
-        /// <returns>Отдельный поток</returns>
         public async Task DeleteUserById(int id)
         {
             var user = await this.GetUserById(id);
@@ -112,7 +111,7 @@ namespace ExpenseAndPointServer.Services
         /// </summary>
         /// <param name="id">Идентификтор пользователя</param>
         /// <param name="user">Модель пользователя для работы с БД</param>
-        /// <returns>Отдельный поток с измененным пользователем Task-User</returns>
+        /// <returns>Измененный пользователь</returns>
         /// <exception cref="Exception">Ошибки в переданных данных или ошибка наличия пользователя с таким же именем</exception>
         public async Task<User> EditUserName(int id, User user)
         {
@@ -128,7 +127,7 @@ namespace ExpenseAndPointServer.Services
         /// </summary>
         /// <param name="id">Идентификатор пользователя</param>
         /// <param name="user">Модель пользователя для работы с БД</param>
-        /// <returns>Отдельный поток с измененным пользователем Task-User</returns>
+        /// <returns>Измененный пользователь</returns>
         /// <exception cref="Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
         public async Task<User> EditUserPassword(int id, User user)
         {

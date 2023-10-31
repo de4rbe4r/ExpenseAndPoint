@@ -62,7 +62,7 @@
             Изменение названия категории
             </summary>
             <param name="id">Идентификатор категории</param>
-            <param name="categoryDto">Класс категории приходящего с веб</param>
+            <param name="categoryDto">Класс категории приходящий с веб</param>
             <returns>Измененная категория</returns>
             <response code="200">Измененная категория</response> 
             <response code="500">Ошибка при удалении категории</response> 
@@ -161,6 +161,16 @@
             <response code="200">Найденный список расходов</response>
             <response code="204">Список расходов пуст</response>
             <response code="500">Ошибка при поиске расходов</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.PutCategory(System.Int32,ExpenseAndPointServer.Models.Expenses.ExpenseDto)">
+            <summary>
+            Изменение расхода
+            </summary>
+            <param name="id">Идентификатор расхода</param>
+            <param name="expenseDto">Класс расхода приходящий с веб</param>
+            <returns>Измененный пользователь</returns>
+            <response code="200">Измененная категория</response> 
+            <response code="500">Ошибка при удалении категории</response> 
         </member>
         <member name="M:ExpenseAndPointServer.Controllers.ExpenseController.DeleteExpense(System.Int32)">
             <summary>
@@ -590,7 +600,7 @@
             Добавление категории
             </summary>
             <param name="category">Модель категории для рбаоты с БД</param>
-            <returns>Поток с созданной категорией Task-Category</returns>
+            <returns>Созданная категория</returns>
             <exception cref="T:System.Exception">Ошибка наличия категории с таким же названием или ошибка в названии категории</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.CategoryService.GetCategoriesByUserId(System.Int32)">
@@ -598,7 +608,7 @@
             Получение списка категорий по идентификатору пользователя
             </summary>
             <param name="userId">Идентификатор пользователя</param>
-            <returns>Отдельный поток со списком категорий Task-Category</returns>
+            <returns>Коллекция категорий</returns>
             <exception cref="T:System.Exception">Ошибка наличия пользователя с указанным идентификатором</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.CategoryService.GetCategoryById(System.Int32)">
@@ -606,7 +616,7 @@
             Получение категории по идентификатору
             </summary>
             <param name="id">Идентификатор категории</param>
-            <returns></returns>
+            <returns>Категория</returns>
             <exception cref="T:System.Exception">Ошибка наличия категории с указанным идентификатором</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.CategoryService.EditCategoryTitle(System.Int32,ExpenseAndPointServer.Models.Categories.Category)">
@@ -615,7 +625,7 @@
             </summary>
             <param name="id">Идентификатор категории</param>
             <param name="category">Модель категории для работы с БД</param>
-            <returns>Отдельный поток с измененной категорией</returns>
+            <returns>Измененная категория</returns>
             <exception cref="T:System.Exception">Ошибка в переданных данных</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.CategoryService.DeleteCategoryById(System.Int32)">
@@ -623,7 +633,6 @@
             Удаление категории по идентификатору
             </summary>
             <param name="id">Идентификатор категории</param>
-            <returns>Отдельный поток</returns>
             <exception cref="T:System.Exception">Ошибка удаления категории, содержащей расходы</exception>
         </member>
         <member name="T:ExpenseAndPointServer.Services.Cryptographer.ICryptographer">
@@ -675,7 +684,7 @@
             Получение списка расходов по идентификатору пользователя
             </summary>
             <param name="userId">Идентификатор пользователя</param>
-            <returns>Отдельны поток с коллекцияей расходов</returns>
+            <returns>Коллекция расходов</returns>
             <exception cref="T:System.Exception">Ошибка связанная с отсутствием пользователя с указанным идентификтаором</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpensesById(System.Int32)">
@@ -691,7 +700,7 @@
             </summary>
             <param name="userId">Идентификтор пользователя</param>
             <param name="date">Дата расхода</param>
-            <returns></returns>
+            <returns>Коллекция расходов</returns>
             <exception cref="T:System.Exception">Ошибка связанный с отсутсвием пользователя с указанным идентификатором или с некорректной датой</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpenseByUserIdAndPeriod(System.Int32,System.DateTime,System.DateTime)">
@@ -701,7 +710,7 @@
             <param name="userId">Идентификтор пользователя</param>
             <param name="dateStart">Дата начала периода</param>
             <param name="dateEnd">Дата конца периода</param>
-            <returns></returns>
+            <returns>Коллекция расходов</returns>
             <exception cref="T:System.Exception">Ошибка связанный с отсутсвием пользователя с указанным идентификтором</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpensesByUserIdAndCategoryId(System.Int32,System.Int32)">
@@ -710,7 +719,7 @@
             </summary>
             <param name="userId">Идентификатор пользователя</param>
             <param name="categoryId">Идентификатор категории</param>
-            <returns>Отдельны поток с коллекцияей расходов</returns>
+            <returns>Коллекция расходов</returns>
             <exception cref="T:System.Exception">Ошибка связанная с отсутствием пользователя или категории с указанным идентификтором</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpensesByUserIdAndCategoryIdAndDate(System.Int32,System.Int32,System.DateTime)">
@@ -720,7 +729,7 @@
             <param name="userId">Идентификатор пользователя</param>
             <param name="categoryId">Идентификатор категории</param>
             <param name="date">Дата</param>
-            <returns>Отдельны поток с коллекцияей расходов</returns>
+            <returns>Коллекция расходов</returns>
             <exception cref="T:System.Exception">Ошибка связанная с отсутствием пользователя или категории с указанным идентификтором, неверно указанной датой</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.ExpenseService.GetExpensesByUserIdAndCategoryIdAndPeriod(System.Int32,System.Int32,System.DateTime,System.DateTime)">
@@ -731,15 +740,23 @@
             <param name="categoryId">Идентификатор категории</param>
             <param name="dateStart">Дата начала</param>
             <param name="dateEnd">Дата конца</param>
-            <returns>Отдельны поток с коллекцияей расходов</returns>
+            <returns>Коллекцияе расходов</returns>
             <exception cref="T:System.Exception">Ошибка связанная с отсутствием пользователя или категории с указанным идентификтором, неверно указанной датой</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseService.EditExpense(System.Int32,ExpenseAndPointServer.Models.Expenses.Expense)">
+            <summary>
+            Изменение расхода
+            </summary>
+            <param name="id">Идентификатор расхода</param>
+            <param name="expense">Модель расхода для работы с БД</param>
+            <returns>Измененная категория</returns>
+            <exception cref="T:System.Exception">Ошибка в передаче данных</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.ExpenseService.DeleteExpenseById(System.Int32)">
             <summary>
             Удаление расхода по идентификатору
             </summary>
             <param name="id">Идентификатор расхода</param>
-            <returns>Отдельный поток</returns>
         </member>
         <member name="T:ExpenseAndPointServer.Services.PasswordChecker.IPasswordChecker">
             <summary>
@@ -797,21 +814,21 @@
             Добавление пользователя
             </summary>
             <param name="user">Модель пользователя для работы с БД</param>
-            <returns>Поток с созданным пользователем Task-User</returns>
+            <returns>Созданный пользователь</returns>
             <exception cref="T:System.Exception">Ошибки наличия пользователя с таким же именем или ошибка ненадежности пароля</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.UserService.GetUsers">
             <summary>
             Получение списка пользователей
             </summary>
-            <returns>Отдельный поток со списком пользователей Task-List-User</returns>
+            <returns>Коллекция пользователей</returns>
         </member>
         <member name="M:ExpenseAndPointServer.Services.UserService.GetUserById(System.Int32)">
             <summary>
             Получение пользователя по идентификатору
             </summary>
             <param name="id">Идентификатор пользователя</param>
-            <returns>Отдельный поток с найденным пользователем Task-User</returns>
+            <returns>Пользователь</returns>
             <exception cref="T:System.Exception">Ошибка наличия пользователя с указанным идентификатором</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.UserService.GetUserByName(System.String)">
@@ -819,7 +836,7 @@
             Получение пользователя по имени
             </summary>
             <param name="name">Имя пользователя</param>
-            <returns>Отдельный поток с найденным пользователем Task-User</returns>
+            <returns>Пользователь</returns>
             <exception cref="T:System.Exception">Ошибка наличия пользователя с указанным именем</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.UserService.DeleteUserById(System.Int32)">
@@ -827,7 +844,6 @@
             Удаление пользователя по идентификатору
             </summary>
             <param name="id">Идентификатор пользователя</param>
-            <returns>Отдельный поток</returns>
         </member>
         <member name="M:ExpenseAndPointServer.Services.UserService.EditUserName(System.Int32,ExpenseAndPointServer.Models.Users.User)">
             <summary>
@@ -835,7 +851,7 @@
             </summary>
             <param name="id">Идентификтор пользователя</param>
             <param name="user">Модель пользователя для работы с БД</param>
-            <returns>Отдельный поток с измененным пользователем Task-User</returns>
+            <returns>Измененный пользователь</returns>
             <exception cref="T:System.Exception">Ошибки в переданных данных или ошибка наличия пользователя с таким же именем</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.UserService.EditUserPassword(System.Int32,ExpenseAndPointServer.Models.Users.User)">
@@ -844,7 +860,7 @@
             </summary>
             <param name="id">Идентификатор пользователя</param>
             <param name="user">Модель пользователя для работы с БД</param>
-            <returns>Отдельный поток с измененным пользователем Task-User</returns>
+            <returns>Измененный пользователь</returns>
             <exception cref="T:System.Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
         </member>
     </members>

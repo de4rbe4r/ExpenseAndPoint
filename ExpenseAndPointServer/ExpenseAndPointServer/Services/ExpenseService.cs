@@ -50,7 +50,7 @@ namespace ExpenseAndPointServer.Services
         /// Получение списка расходов по идентификатору пользователя
         /// </summary>
         /// <param name="userId">Идентификатор пользователя</param>
-        /// <returns>Отдельны поток с коллекцияей расходов</returns>
+        /// <returns>Коллекция расходов</returns>
         /// <exception cref="Exception">Ошибка связанная с отсутствием пользователя с указанным идентификтаором</exception>
         public async Task<IEnumerable<Expense>> GetExpensesByUserId(int userId)
         {
@@ -74,7 +74,7 @@ namespace ExpenseAndPointServer.Services
         /// </summary>
         /// <param name="userId">Идентификтор пользователя</param>
         /// <param name="date">Дата расхода</param>
-        /// <returns></returns>
+        /// <returns>Коллекция расходов</returns>
         /// <exception cref="Exception">Ошибка связанный с отсутсвием пользователя с указанным идентификатором или с некорректной датой</exception>
         public async Task<IEnumerable<Expense>> GetExpenseByUserIdAndDate(int userId, DateTime date)
         {
@@ -91,7 +91,7 @@ namespace ExpenseAndPointServer.Services
         /// <param name="userId">Идентификтор пользователя</param>
         /// <param name="dateStart">Дата начала периода</param>
         /// <param name="dateEnd">Дата конца периода</param>
-        /// <returns></returns>
+        /// <returns>Коллекция расходов</returns>
         /// <exception cref="Exception">Ошибка связанный с отсутсвием пользователя с указанным идентификтором</exception>
         public async Task<IEnumerable<Expense>> GetExpenseByUserIdAndPeriod(int userId, DateTime dateStart, DateTime dateEnd)
         {
@@ -113,7 +113,7 @@ namespace ExpenseAndPointServer.Services
         /// </summary>
         /// <param name="userId">Идентификатор пользователя</param>
         /// <param name="categoryId">Идентификатор категории</param>
-        /// <returns>Отдельны поток с коллекцияей расходов</returns>
+        /// <returns>Коллекция расходов</returns>
         /// <exception cref="Exception">Ошибка связанная с отсутствием пользователя или категории с указанным идентификтором</exception>
         public async Task<IEnumerable<Expense>> GetExpensesByUserIdAndCategoryId(int userId, int categoryId)
         {
@@ -130,7 +130,7 @@ namespace ExpenseAndPointServer.Services
         /// <param name="userId">Идентификатор пользователя</param>
         /// <param name="categoryId">Идентификатор категории</param>
         /// <param name="date">Дата</param>
-        /// <returns>Отдельны поток с коллекцияей расходов</returns>
+        /// <returns>Коллекция расходов</returns>
         /// <exception cref="Exception">Ошибка связанная с отсутствием пользователя или категории с указанным идентификтором, неверно указанной датой</exception>
         public async Task<IEnumerable<Expense>> GetExpensesByUserIdAndCategoryIdAndDate(int userId, int categoryId, DateTime date)
         {
@@ -151,7 +151,7 @@ namespace ExpenseAndPointServer.Services
         /// <param name="categoryId">Идентификатор категории</param>
         /// <param name="dateStart">Дата начала</param>
         /// <param name="dateEnd">Дата конца</param>
-        /// <returns>Отдельны поток с коллекцияей расходов</returns>
+        /// <returns>Коллекцияе расходов</returns>
         /// <exception cref="Exception">Ошибка связанная с отсутствием пользователя или категории с указанным идентификтором, неверно указанной датой</exception>
         public async Task<IEnumerable<Expense>> GetExpensesByUserIdAndCategoryIdAndPeriod(int userId, int categoryId, DateTime dateStart, DateTime dateEnd)
         {
@@ -171,10 +171,26 @@ namespace ExpenseAndPointServer.Services
         }
 
         /// <summary>
+        /// Изменение расхода
+        /// </summary>
+        /// <param name="id">Идентификатор расхода</param>
+        /// <param name="expense">Модель расхода для работы с БД</param>
+        /// <returns>Измененная категория</returns>
+        /// <exception cref="Exception">Ошибка в передаче данных</exception>
+        public async Task<Expense> EditExpense(int id, Expense expense)
+        {
+            if (id != expense.Id) throw new Exception("Переданные Id и расход не совпадают! Проверьте опарвляемые данные");
+            _context.Entry(expense).Property(e => e.DateTime).IsModified = true;
+            _context.Entry(expense).Property(e => e.Amount).IsModified = true;
+            _context.Entry(expense).Property(e => e.CategoryId).IsModified = true;
+            await _context.SaveChangesAsync();
+            return await GetExpensesById(id);
+        }
+
+        /// <summary>
         /// Удаление расхода по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор расхода</param>
-        /// <returns>Отдельный поток</returns>
         public async Task DeleteExpenseById(int id)
         {
             var expense = await GetExpensesById(id);

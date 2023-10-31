@@ -103,6 +103,8 @@ namespace ExpenseAndPointServer.Controllers
         // POST: api/Categories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<CategoryDto>> PostCategory(CategoryDto categoryDto)
         {
             try
@@ -123,6 +125,8 @@ namespace ExpenseAndPointServer.Controllers
         /// <response code="200">Категория удалена</response> 
         /// <response code="500">Ошибка при удалении категории</response> 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             try
@@ -139,12 +143,14 @@ namespace ExpenseAndPointServer.Controllers
         /// Изменение названия категории
         /// </summary>
         /// <param name="id">Идентификатор категории</param>
-        /// <param name="categoryDto">Класс категории приходящего с веб</param>
+        /// <param name="categoryDto">Класс категории приходящий с веб</param>
         /// <returns>Измененная категория</returns>
         /// <response code="200">Измененная категория</response> 
         /// <response code="500">Ошибка при удалении категории</response> 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Category>> PutCategory(int id, CategoryDto categoryDto)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<CategoryDto>> PutCategory(int id, CategoryDto categoryDto)
         {
             Category editedCategory;
             try

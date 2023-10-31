@@ -279,6 +279,30 @@ namespace ExpenseAndPointServer.Controllers
         }
 
         /// <summary>
+        /// Изменение расхода
+        /// </summary>
+        /// <param name="id">Идентификатор расхода</param>
+        /// <param name="expenseDto">Класс расхода приходящий с веб</param>
+        /// <returns>Измененный пользователь</returns>
+        /// <response code="200">Измененная категория</response> 
+        /// <response code="500">Ошибка при удалении категории</response> 
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ExpenseDto>> PutCategory(int id, ExpenseDto expenseDto)
+        {
+            Expense editedExpense;
+            try
+            {
+                editedExpense = await expenseService.EditExpense(id, expenseDto.ToExpenseMap());
+            } catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+            return Ok(editedExpense.ToExpenseDtoMap());
+        }
+
+        /// <summary>
         /// Удаление расхода по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор расхода</param>
