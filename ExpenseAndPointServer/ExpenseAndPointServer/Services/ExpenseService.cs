@@ -16,12 +16,18 @@ namespace ExpenseAndPointServer.Services
         private readonly AppDbContext _context;
 
         /// <summary>
+        /// Сервис для работы с историей расходов
+        /// </summary>
+        private readonly ExpenseHistoryService _expenseHistoryService;
+
+        /// <summary>
         /// Конструктор ExpenseService
         /// </summary>
         /// <param name="context">Контекст для работы с БД</param>
         public ExpenseService(AppDbContext context)
         {
             _context = context;
+            _expenseHistoryService = new ExpenseHistoryService(context);
         }
 
         /// <summary>
@@ -43,6 +49,7 @@ namespace ExpenseAndPointServer.Services
 
             _context.Expenses.Add(expense);
             await _context.SaveChangesAsync();
+            await _expenseHistoryService.AddExpenseHistory(ActionType.Create, expense);
             return expense;
         }
       
@@ -180,10 +187,12 @@ namespace ExpenseAndPointServer.Services
         public async Task<Expense> EditExpense(int id, Expense expense)
         {
             if (id != expense.Id) throw new Exception("Переданные Id и расход не совпадают! Проверьте опарвляемые данные");
+            Expense editedExpense = await _context.Expenses.FirstOrDefaultAsync(e => e.Id == id);
             _context.Entry(expense).Property(e => e.DateTime).IsModified = true;
             _context.Entry(expense).Property(e => e.Amount).IsModified = true;
             _context.Entry(expense).Property(e => e.CategoryId).IsModified = true;
             await _context.SaveChangesAsync();
+            await _expenseHistoryService.AddExpenseHistory(ActionType.Change, expense, editedExpense);
             return await GetExpensesById(id);
         }
 
@@ -196,6 +205,7 @@ namespace ExpenseAndPointServer.Services
             var expense = await GetExpensesById(id);
             _context.Expenses.Remove(expense);
             await _context.SaveChangesAsync();
+            await _expenseHistoryService.AddExpenseHistory(ActionType.Delete, expense);
         }
     }
 }

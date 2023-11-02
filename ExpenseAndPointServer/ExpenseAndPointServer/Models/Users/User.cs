@@ -36,6 +36,11 @@ namespace ExpenseAndPointServer.Models.Users
         /// </summary>
         public ICollection<Category>? Categories { get; set; }
 
+        /// <summary>
+        /// Колекция истории изменения расходов
+        /// </summary>
+        public ICollection<ExpenseHistory> ExpenseHistories { get; set; }
+
         
         /// <summary>
         /// Преобразование класса User в UserOutputDto

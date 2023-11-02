@@ -190,6 +190,37 @@
             <response code="200">Расход удален</response> 
             <response code="500">Ошибка при удалении расход</response> 
         </member>
+        <member name="T:ExpenseAndPointServer.Controllers.ExpenseHistoryController">
+            <summary>
+            Контроллер для работы с историей расходов
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Controllers.ExpenseHistoryController.expenseHistoryService">
+            <summary>
+            Сервис для работы с моделями расходов
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Controllers.ExpenseHistoryController._errorLogger">
+            <summary>
+            Логирование ошибок
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseHistoryController.#ctor(ExpenseAndPoint.Data.AppDbContext)">
+            <summary>
+            Конструктор создания контроллера
+            </summary>
+            <param name="context">Контекст для работы с БД</param>
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseHistoryController.GetExpensesHistoryByUserId(System.Int32)">
+            <summary>
+            Получение списка истории расходов по идентификатору пользователя
+            </summary>
+            <param name="id">Идентификтаор пользователя</param>
+            <returns>Список истории расходов</returns>
+            <response code="200">Найденный список истории расходов</response>
+            <response code="204">Список историй расходов пуст</response>
+            <response code="500">Ошибка при поиске истории расходов</response> 
+        </member>
         <member name="T:ExpenseAndPointServer.Controllers.UsersController">
             <summary>
             Контроллер для работы с пользователями
@@ -357,6 +388,26 @@
             Преобразование класса CategoryDto в Category
             </summary>
             <returns>Класс Category для взаимодействия с БД</returns>
+        </member>
+        <member name="T:ExpenseAndPointServer.Models.Expenses.ActionType">
+            <summary>
+            Тип действия
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Models.Expenses.ActionType.Create">
+            <summary>
+            Изменение
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Models.Expenses.ActionType.Delete">
+            <summary>
+            Удаление
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Models.Expenses.ActionType.Change">
+            <summary>
+            Изменение
+            </summary>
         </member>
         <member name="T:ExpenseAndPointServer.Models.Expenses.Expense">
             <summary>
@@ -535,6 +586,111 @@
             </summary>
             <returns>Класс Expense для взаимодействия с БД</returns>
         </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistory.Id">
+            <summary>
+            Идентификатор записи
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistory.DateCreated">
+            <summary>
+            Дата создания записи
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistory.UserId">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistory.User">
+            <summary>
+            Пользователь
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistory.ActionType">
+            <summary>
+            Действие
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistory.NewAmount">
+            <summary>
+            Новая сумма расхода 
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistory.NewDateTime">
+            <summary>
+            Новые дата и время
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistory.NewCategoryTitle">
+            <summary>
+            Новый название категории
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistory.OldAmount">
+            <summary>
+            Старая сумма расхода 
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistory.OldDateTime">
+            <summary>
+            Старые дата и время
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistory.OldCategoryTitle">
+            <summary>
+            Старый название категории
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistoryDto.Id">
+            <summary>
+            Идентификатор записи
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistoryDto.DateCreated">
+            <summary>
+            Дата создания записи
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistoryDto.UserId">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistoryDto.Action">
+            <summary>
+            Действие
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistoryDto.NewAmount">
+            <summary>
+            Новая сумма расхода 
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistoryDto.NewDateTime">
+            <summary>
+            Новые дата и время
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistoryDto.NewCategoryTitle">
+            <summary>
+            Новый название категории
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistoryDto.OldAmount">
+            <summary>
+            Старая сумма расхода 
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistoryDto.OldDateTime">
+            <summary>
+            Старые дата и время
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Expenses.ExpenseHistoryDto.OldCategoryTitle">
+            <summary>
+            Старый название категории
+            </summary>
+        </member>
         <member name="T:ExpenseAndPointServer.Models.Users.User">
             <summary>
             Модель пользователя из БД
@@ -563,6 +719,11 @@
         <member name="P:ExpenseAndPointServer.Models.Users.User.Categories">
             <summary>
             Коллекция категорий
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPointServer.Models.Users.User.ExpenseHistories">
+            <summary>
+            Колекция истории изменения расходов
             </summary>
         </member>
         <member name="M:ExpenseAndPointServer.Models.Users.User.ToUserOutputDtoMap">
@@ -688,6 +849,37 @@
         <member name="M:ExpenseAndPointServer.Services.Cryptographer.md5CryptographerService.Encrypt(System.String)">
             <inheritdoc/>
         </member>
+        <member name="T:ExpenseAndPointServer.Services.ExpenseHistoryService">
+            <summary>
+            Сервис работы с историей расходов
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Services.ExpenseHistoryService._context">
+            <summary>
+            Контекст для работы с БД
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseHistoryService.#ctor(ExpenseAndPoint.Data.AppDbContext)">
+            <summary>
+            Конструктор CategoryService
+            </summary>
+            <param name="context">Контекст для работы с БД</param>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseHistoryService.AddExpenseHistory(ExpenseAndPointServer.Models.Expenses.ActionType,ExpenseAndPointServer.Models.Expenses.Expense,ExpenseAndPointServer.Models.Expenses.Expense)">
+            <summary>
+            Добавление истории расходов
+            </summary>
+            <param name="expenseHistory"></param>
+            <returns>Добавленная история расходов</returns>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.ExpenseHistoryService.GetLastMonthExpenseHistoriesByUserId(System.Int32)">
+            <summary>
+            Получить список расходов по идентификатору пользователя
+            </summary>
+            <param name="userId">Идентификатор пользователя</param>
+            <returns>Коллекция истории расходов</returns>
+            <exception cref="T:System.Exception">Ошибка связанный с отсутсвием пользователя с указанным идентификтором</exception>
+        </member>
         <member name="T:ExpenseAndPointServer.Services.ExpenseService">
             <summary>
             Сервис работы с расходами
@@ -696,6 +888,11 @@
         <member name="F:ExpenseAndPointServer.Services.ExpenseService._context">
             <summary>
             Контекс для работы с БД
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Services.ExpenseService._expenseHistoryService">
+            <summary>
+            Сервис для работы с историей расходов
             </summary>
         </member>
         <member name="M:ExpenseAndPointServer.Services.ExpenseService.#ctor(ExpenseAndPoint.Data.AppDbContext)">
@@ -895,6 +1092,31 @@
             <param name="user">Модель пользователя для работы с БД</param>
             <returns>Измененный пользователь</returns>
             <exception cref="T:System.Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
+        </member>
+        <member name="T:ExpenseAndPoint.Data.AppDbContext">
+            <summary>
+            Контекст работы с базой данных
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPoint.Data.AppDbContext.Expenses">
+            <summary>
+            Расходы
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPoint.Data.AppDbContext.Categories">
+            <summary>
+            Категорияя
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPoint.Data.AppDbContext.Users">
+            <summary>
+            Пользователи
+            </summary>
+        </member>
+        <member name="P:ExpenseAndPoint.Data.AppDbContext.ExpenseHistories">
+            <summary>
+            История расходов
+            </summary>
         </member>
     </members>
 </doc>

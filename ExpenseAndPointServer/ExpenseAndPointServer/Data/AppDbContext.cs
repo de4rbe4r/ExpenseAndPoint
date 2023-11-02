@@ -6,15 +6,36 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseAndPoint.Data
 {
+    /// <summary>
+    /// Контекст работы с базой данных
+    /// </summary>
     public class AppDbContext : DbContext 
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
             Database.EnsureCreated();
         }
+
+        /// <summary>
+        /// Расходы
+        /// </summary>
         public DbSet<Expense> Expenses { get; set; }
+
+        /// <summary>
+        /// Категорияя
+        /// </summary>
         public DbSet<Category> Categories { get; set; } 
+
+        /// <summary>
+        /// Пользователи
+        /// </summary>
         public DbSet<User> Users { get; set; }
+
+        /// <summary>
+        /// История расходов
+        /// </summary>
+        public DbSet<ExpenseHistory> ExpenseHistories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
@@ -39,7 +60,14 @@ namespace ExpenseAndPoint.Data
                 .WithMany(u => u.Categories)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.ExpenseHistories)
+                .WithOne(e => e.User)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ExpenseHistory>()
+                .HasOne(e => e.User)
+                .WithMany(u => u.ExpenseHistories)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

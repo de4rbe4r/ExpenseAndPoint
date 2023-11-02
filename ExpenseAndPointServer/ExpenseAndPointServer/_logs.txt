@@ -23,3 +23,28 @@
 Вызываемый метод: MoveNext
 Передаваемый запрос: {"Id":0,"Amount":125,"DateTime":"2023-10-31T16:11:09.241Z","CategoryId":0,"UserId":150}
 Текст ошибки: Пользователя с идентификатором 150 не существует
+------------------------------
+Дата и время: 02.11.2023 19:25:31
+Вызываемый метод: MoveNext
+Передаваемый запрос: {"Id":0,"Name":"string","Password":"string@2!"}
+Текст ошибки: Пароль должен содержать буквы верхнего и нижнего регистра,хотя бы одну цифру и один специальный символ
+------------------------------
+Дата и время: 02.11.2023 19:25:53
+Вызываемый метод: MoveNext
+Передаваемый запрос: {"Id":0,"Amount":123,"DateTime":"2023-11-02T15:25:44.053Z","CategoryId":1,"UserId":1}
+Текст ошибки: An error occurred while saving the entity changes. See the inner exception for details.
+------------------------------
+Дата и время: 02.11.2023 19:37:55
+Вызываемый метод: MoveNext
+Передаваемый запрос: {"Id":0,"Amount":2000,"DateTime":"2023-11-02T15:37:43.47Z","CategoryId":2,"UserId":1}
+Текст ошибки: Переданные Id и расход не совпадают! Проверьте опарвляемые данные
+------------------------------
+Дата и время: 02.11.2023 19:38:01
+Вызываемый метод: MoveNext
+Передаваемый запрос: {"Id":1,"Amount":2000,"DateTime":"2023-11-02T15:37:43.47Z","CategoryId":2,"UserId":1}
+Текст ошибки: The instance of entity type 'Expense' cannot be tracked because another instance with the same key value for {'Id'} is already being tracked. When attaching existing entities, ensure that only one entity instance with a given key value is attached. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see the conflicting key values.
+------------------------------
+Дата и время: 02.11.2023 19:39:08
+Вызываемый метод: MoveNext
+Передаваемый запрос: {"Id":1,"Amount":2000,"DateTime":"2023-11-02T15:37:43.47Z","CategoryId":2,"UserId":1}
+Текст ошибки: The instance of entity type 'Expense' cannot be tracked because another instance with the same key value for {'Id'} is already being tracked. When attaching existing entities, ensure that only one entity instance with a given key value is attached. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see the conflicting key values.

@@ -1,9 +1,8 @@
-﻿using ExpenseAndPointServer.Models.Categories;
-using ExpenseAndPointServer.Models.Users;
+﻿using ExpenseAndPointServer.Models.Users;
 
 namespace ExpenseAndPointServer.Models.Expenses
 {
-    public class ExpenseHistory
+    public class ExpenseHistoryDto
     {
         /// <summary>
         /// Идентификатор записи
@@ -21,14 +20,9 @@ namespace ExpenseAndPointServer.Models.Expenses
         public int UserId { get; set; }
 
         /// <summary>
-        /// Пользователь
-        /// </summary>
-        public User User { get; set; }
-
-        /// <summary>
         /// Действие
         /// </summary>
-        public ActionType ActionType { get; set; }
+        public string Action { get; set; }
 
         /// <summary>
         /// Новая сумма расхода 
@@ -59,31 +53,5 @@ namespace ExpenseAndPointServer.Models.Expenses
         /// Старый название категории
         /// </summary>
         public string? OldCategoryTitle { get; set; }
-
-        public ExpenseHistoryDto ToExpenseHistoryDtoMap()
-        {
-            ExpenseHistoryDto expenseHistoryDto = new ExpenseHistoryDto();
-            switch (ActionType)
-            {
-                case ActionType.Create:
-                    expenseHistoryDto.Action = "Создал";
-                    break;
-                case ActionType.Delete:
-                    expenseHistoryDto.Action = "Удалил";
-                    break;
-                case ActionType.Change:
-                    expenseHistoryDto.Action = "Изменил";
-                    break;
-            }
-            expenseHistoryDto.DateCreated = DateCreated;
-            expenseHistoryDto.NewCategoryTitle = NewCategoryTitle;
-            expenseHistoryDto.OldCategoryTitle = OldCategoryTitle;
-            expenseHistoryDto.OldDateTime = OldDateTime;
-            expenseHistoryDto.NewDateTime = NewDateTime;
-            expenseHistoryDto.UserId = UserId;
-            expenseHistoryDto.NewAmount = NewAmount;
-            expenseHistoryDto.OldAmount = OldAmount;
-            return expenseHistoryDto;
-        }
     }
 }
