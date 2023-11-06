@@ -33,7 +33,7 @@ namespace ExpenseAndPointServer.Controllers
         }
 
         /// <summary>
-        /// Получение списка истории расходов по идентификатору пользователя
+        /// Получение списка истории расходов за последние 30 дней по идентификатору пользователя
         /// </summary>
         /// <param name="id">Идентификтаор пользователя</param>
         /// <returns>Список истории расходов</returns>
@@ -44,11 +44,11 @@ namespace ExpenseAndPointServer.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<ExpenseHistory>>> GetExpensesHistoryByUserId(int id)
+        public async Task<ActionResult<IEnumerable<ExpenseHistory>>> GetLast30DaysExpensesHistoryByUserId(int id)
         {
             try
             {
-                var expenseList = await expenseHistoryService.GetLastMonthExpenseHistoriesByUserId(id);
+                var expenseList = await expenseHistoryService.GetLast30DaysExpenseHistoriesByUserId(id);
                 var expenseDtoList = expenseList.Select(e => e.ToExpenseHistoryDtoMap());
                 if (expenseList.Count() == 0)
                 {

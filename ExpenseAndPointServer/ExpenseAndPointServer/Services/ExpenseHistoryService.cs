@@ -71,12 +71,12 @@ namespace ExpenseAndPointServer.Services
         }
 
         /// <summary>
-        /// Получить список расходов по идентификатору пользователя
+        /// Получить список истории расходо за последнии 30 дней по идентификатору пользователя
         /// </summary>
         /// <param name="userId">Идентификатор пользователя</param>
         /// <returns>Коллекция истории расходов</returns>
         /// <exception cref="Exception">Ошибка связанный с отсутсвием пользователя с указанным идентификтором</exception>
-        public async Task<IEnumerable<ExpenseHistory>> GetLastMonthExpenseHistoriesByUserId(int userId)
+        public async Task<IEnumerable<ExpenseHistory>> GetLast30DaysExpenseHistoriesByUserId(int userId)
         {
             if (_context.Users.FirstOrDefault(u => u.Id == userId) == null)
                 throw new Exception($"Пользователя с идентификатором {userId} не существует");

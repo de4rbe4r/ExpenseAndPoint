@@ -48,3 +48,8 @@
 Вызываемый метод: MoveNext
 Передаваемый запрос: {"Id":1,"Amount":2000,"DateTime":"2023-11-02T15:37:43.47Z","CategoryId":2,"UserId":1}
 Текст ошибки: The instance of entity type 'Expense' cannot be tracked because another instance with the same key value for {'Id'} is already being tracked. When attaching existing entities, ensure that only one entity instance with a given key value is attached. Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see the conflicting key values.
+------------------------------
+Дата и время: 06.11.2023 16:51:20
+Вызываемый метод: MoveNext
+Передаваемый запрос: Id: 1
+Текст ошибки: Пользователя с идентификатором 1 не существует
