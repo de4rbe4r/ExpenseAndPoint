@@ -211,9 +211,9 @@
             </summary>
             <param name="context">Контекст для работы с БД</param>
         </member>
-        <member name="M:ExpenseAndPointServer.Controllers.ExpenseHistoryController.GetExpensesHistoryByUserId(System.Int32)">
+        <member name="M:ExpenseAndPointServer.Controllers.ExpenseHistoryController.GetLast30DaysExpensesHistoryByUserId(System.Int32)">
             <summary>
-            Получение списка истории расходов по идентификатору пользователя
+            Получение списка истории расходов за последние 30 дней по идентификатору пользователя
             </summary>
             <param name="id">Идентификтаор пользователя</param>
             <returns>Список истории расходов</returns>
@@ -872,9 +872,9 @@
             <param name="expenseHistory"></param>
             <returns>Добавленная история расходов</returns>
         </member>
-        <member name="M:ExpenseAndPointServer.Services.ExpenseHistoryService.GetLastMonthExpenseHistoriesByUserId(System.Int32)">
+        <member name="M:ExpenseAndPointServer.Services.ExpenseHistoryService.GetLast30DaysExpenseHistoriesByUserId(System.Int32)">
             <summary>
-            Получить список расходов по идентификатору пользователя
+            Получить список истории расходо за последнии 30 дней по идентификатору пользователя
             </summary>
             <param name="userId">Идентификатор пользователя</param>
             <returns>Коллекция истории расходов</returns>
