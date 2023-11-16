@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Deev\\ExpenseAndPoint\\ExpenseAndPointServer\\ExpenseAndPointServer\\ExpenseAndPointServer.csproj": {}
+    "D:\\IT\\Deev\\CourseWork\\ExpenseAndPointServer\\ExpenseAndPointServer\\ExpenseAndPointServer.csproj": {}
   },
   "projects": {
-    "D:\\Deev\\ExpenseAndPoint\\ExpenseAndPointServer\\ExpenseAndPointServer\\ExpenseAndPointServer.csproj": {
+    "D:\\IT\\Deev\\CourseWork\\ExpenseAndPointServer\\ExpenseAndPointServer\\ExpenseAndPointServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Deev\\ExpenseAndPoint\\ExpenseAndPointServer\\ExpenseAndPointServer\\ExpenseAndPointServer.csproj",
+        "projectUniqueName": "D:\\IT\\Deev\\CourseWork\\ExpenseAndPointServer\\ExpenseAndPointServer\\ExpenseAndPointServer.csproj",
         "projectName": "ExpenseAndPointServer",
-        "projectPath": "D:\\Deev\\ExpenseAndPoint\\ExpenseAndPointServer\\ExpenseAndPointServer\\ExpenseAndPointServer.csproj",
-        "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
-        "outputPath": "D:\\Deev\\ExpenseAndPoint\\ExpenseAndPointServer\\ExpenseAndPointServer\\obj\\",
+        "projectPath": "D:\\IT\\Deev\\CourseWork\\ExpenseAndPointServer\\ExpenseAndPointServer\\ExpenseAndPointServer.csproj",
+        "packagesPath": "C:\\Users\\artem\\.nuget\\packages\\",
+        "outputPath": "D:\\IT\\Deev\\CourseWork\\ExpenseAndPointServer\\ExpenseAndPointServer\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\artem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

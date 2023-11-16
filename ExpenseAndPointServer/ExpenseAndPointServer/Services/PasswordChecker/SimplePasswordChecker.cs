@@ -24,7 +24,7 @@ namespace ExpenseAndPointServer.Services.PasswordChecker
                 && password.Length >= 8
                 ) return;
             throw new Exception("Пароль должен содержать буквы верхнего и нижнего регистра," +
-               "хотя бы одну цифру и один специальный символ");
+               "хотя бы одну цифру и один специальный символ и его длина должна быть больше 8 символов");
         }
     }
 }

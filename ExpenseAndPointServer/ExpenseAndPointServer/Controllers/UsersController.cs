@@ -226,7 +226,7 @@ namespace ExpenseAndPointServer.Controllers
         [HttpPut("EditUserPassword/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UserRequest>> PutUserPassword(int id, UserRequest userInputDto)
+        public async Task<ActionResult<UserResponse>> PutUserPassword(int id, UserRequest userInputDto)
         {
             User editedUser;
             try
@@ -241,6 +241,33 @@ namespace ExpenseAndPointServer.Controllers
                 return Problem(ex.Message);
             }
             return Ok(editedUser.ToUserOutputDtoMap());
+        }
+
+        /// <summary>
+        /// Проверка имени пользователя и пароля
+        /// </summary>
+        /// <param name="userRequest">Класс пользователя приходящий с веб</param>
+        /// <response code="200">Имя пользователя и пароль корректны</response>
+        /// <response code="500">Неверное имя пользователя или пароль</response> 
+
+        // POST: api/Users
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost("IsUsernameAndPasswordCorrect")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> IsUsernameAndPasswordCorrect(UserRequest userRequest)
+        {
+            try
+            {
+                await userService.IsUsernameAndPasswordCorrect(userRequest.Name, userRequest.Password);
+                return Ok();
+            } catch (Exception ex)
+            {
+                _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
+                    JsonSerializer.Serialize(userRequest),
+                    ex.Message);
+                return Problem(ex.Message);
+            }
         }
     }
 }

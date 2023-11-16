@@ -89,7 +89,6 @@ namespace ExpenseAndPointServer.Services
         /// </summary>
         /// <param name="name">Имя пользователя</param>
         /// <returns>Пользователь</returns>
-        /// <exception cref="Exception">Ошибка наличия пользователя с указанным именем</exception>
         public async Task<User> GetUserByName(string name)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
@@ -137,6 +136,23 @@ namespace ExpenseAndPointServer.Services
             _context.Entry(user).Property(u => u.Password).IsModified = true;
             await _context.SaveChangesAsync();
             return await GetUserById(id);
+        }
+
+        /// <summary>
+        /// Проверка правильности имени пользователя и пароля
+        /// </summary>
+        /// <param name="username">Имя пользователя</param>
+        /// <param name="password">Пароль</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">Ошибка праавильности имени пользователя или пароля</exception>
+        public async Task<bool> IsUsernameAndPasswordCorrect(string username, string password)
+        {
+            password = _cryptographer.Encrypt(password);
+            var user = GetUserByName(username);
+            if (user.Result == null) throw new Exception("Неверное имя пользователя или пароль");
+            if (password != user.Result.Password) throw new Exception("Неверное имя пользователя или пароль");
+
+            return true;
         }
     }
 }

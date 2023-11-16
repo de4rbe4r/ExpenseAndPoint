@@ -14,7 +14,7 @@ namespace ExpenseAndPointServer.Services.Cryptographer
         {
             // Генерация 128-битного salt, используя последовательность
             // криптографически надежных случайных байтов
-            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
+            byte[] salt = new byte[str.Length];
 
             // Получение 256-байтного ключа используя HMACSHA256 со 100 000 итерациями
 

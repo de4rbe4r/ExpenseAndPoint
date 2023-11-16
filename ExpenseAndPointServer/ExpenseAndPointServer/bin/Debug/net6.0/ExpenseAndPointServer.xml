@@ -4,6 +4,64 @@
         <name>ExpenseAndPointServer</name>
     </assembly>
     <members>
+        <member name="T:ExpenseAndPointServer.Authentication.AuthOptions">
+            <summary>
+            Опции аутенфикации
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Authentication.AuthOptions.ISSUER">
+            <summary>
+            Издатель токена
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Authentication.AuthOptions.AUDINCE">
+            <summary>
+            Потребитель токена
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Authentication.AuthOptions.LIFETIME">
+            <summary>
+            Время жизни токена в минутах
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Authentication.AuthOptions.GetSymmetricSecurityKey">
+            <summary>
+            Получение симметричного ключа шифрования
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ExpenseAndPointServer.Controllers.AuthenticationController">
+            <summary>
+            Контроллер работы с аутенфикацией
+            </summary>
+        </member>
+        <member name="F:ExpenseAndPointServer.Controllers.AuthenticationController._userservice">
+            <summary>
+            Сервис для работы с пользователями
+            </summary>
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.AuthenticationController.#ctor(ExpenseAndPoint.Data.AppDbContext,ExpenseAndPointServer.Services.Cryptographer.ICryptographer,ExpenseAndPointServer.Services.PasswordChecker.IPasswordChecker)">
+            <summary>
+            Конструктор создания контроллера
+            </summary>
+            <param name="context">Контекст для работы с БД</param>
+            <param name="cryptographer">Сервис шифрования пароля</param>
+            <param name="passwordChecker">Сервис проверки надежности пароля</param>
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.AuthenticationController.AuthUser(ExpenseAndPointServer.Models.Users.UserRequest)">
+            <summary>
+            Аутенфикация пользователя
+            </summary>
+            <param name="userRequest">Модель пользователя, приходящего с веб</param>
+            <returns>JWT токен, идентификатор пользователя</returns>
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.AuthenticationController.GetIdentity(ExpenseAndPointServer.Models.Users.UserRequest)">
+            <summary>
+            Идентификация пользователя
+            </summary>
+            <param name="userRequest">Модель пользователя, приходящего с веб</param>
+            <returns>Список Claim</returns>
+        </member>
         <member name="T:ExpenseAndPointServer.Controllers.CategoriesController">
             <summary>
             Контроллер для работы с категориями
@@ -308,6 +366,14 @@
             <returns>Изменный пользователь</returns>
             <response code="200">Изменный пользователь</response> 
             <response code="500">Ошибка при изменении пароля пользователя</response> 
+        </member>
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.IsUsernameAndPasswordCorrect(ExpenseAndPointServer.Models.Users.UserRequest)">
+            <summary>
+            Проверка имени пользователя и пароля
+            </summary>
+            <param name="userRequest">Класс пользователя приходящий с веб</param>
+            <response code="200">Имя пользователя и пароль корректны</response>
+            <response code="500">Неверное имя пользователя или пароль</response> 
         </member>
         <member name="T:ExpenseAndPointServer.ErrorLogging.ErrorLogger">
             <summary>
@@ -1067,7 +1133,6 @@
             </summary>
             <param name="name">Имя пользователя</param>
             <returns>Пользователь</returns>
-            <exception cref="T:System.Exception">Ошибка наличия пользователя с указанным именем</exception>
         </member>
         <member name="M:ExpenseAndPointServer.Services.UserService.DeleteUserById(System.Int32)">
             <summary>
@@ -1092,6 +1157,15 @@
             <param name="user">Модель пользователя для работы с БД</param>
             <returns>Измененный пользователь</returns>
             <exception cref="T:System.Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
+        </member>
+        <member name="M:ExpenseAndPointServer.Services.UserService.IsUsernameAndPasswordCorrect(System.String,System.String)">
+            <summary>
+            Проверка правильности имени пользователя и пароля
+            </summary>
+            <param name="username">Имя пользователя</param>
+            <param name="password">Пароль</param>
+            <returns></returns>
+            <exception cref="T:System.Exception">Ошибка праавильности имени пользователя или пароля</exception>
         </member>
         <member name="T:ExpenseAndPoint.Data.AppDbContext">
             <summary>
