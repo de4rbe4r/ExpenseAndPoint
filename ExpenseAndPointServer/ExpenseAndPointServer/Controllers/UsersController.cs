@@ -48,14 +48,15 @@ namespace ExpenseAndPointServer.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<IEnumerable<UserResponse>>> GetUser()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             var userList = await userService.GetUsers();
             var userDtoList = userList.Select(u => u.ToUserOutputDtoMap());
             if (userDtoList.IsNullOrEmpty())
             {
                 return NoContent();
-            } else 
+            }
+            else
             {
                 return Ok(userDtoList);
             }

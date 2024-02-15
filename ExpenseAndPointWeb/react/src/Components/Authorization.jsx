@@ -13,6 +13,8 @@ const Authorization = () => {
     });
     const [errorMessage, setErrorMessage] = useState(null);
 
+    const cookiesLive = 604800; // Неделя
+
     const SignIn = (event) => {
         event.preventDefault();
 
@@ -23,17 +25,16 @@ const Authorization = () => {
 
             axios.post(urlAuth, user)
                 .then(res => {
-                    cookies.set('access_token', res.data.access_token, { path: '/' });
-                    cookies.set('userId', res.data.userId, { path: '/' });
-                    cookies.set('userName', res.data.userName, { path: '/' });
+                    console.log('a');
+                    cookies.set('access_token', res.data.access_token, { path: '/', maxAge: cookiesLive });
+                    console.log('a');
+                    cookies.set('userId', res.data.userId, { path: '/', maxAge: cookiesLive });
+
+                    cookies.set('userName', res.data.userName, { path: '/', maxAge: cookiesLive });
                     window.location.replace('http://localhost:5173')
-                    //console.log(cookies.get('access_token')); 
-                    //console.log(cookies.get('userId')); 
-                    //console.log(cookies.get('userName')); 
                 })
                 .catch(function (error) {
                     if (error.response) {
-                        //console.log(error.response.data);
                         setShowError(true);
                         setErrorMessage(error.response.data.detail);
                     }

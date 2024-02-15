@@ -22,8 +22,8 @@ const NavMenu = () => {
                     <Navbar.Collapse id="responsive-navbar-nar">
                         <Nav className="me-auto">
                             <Nav.Link href="/">День</Nav.Link>
-                            <Nav.Link href="/monthexpenses">Месяц</Nav.Link>
-                            <Nav.Link href="/periodexpenses">Период</Nav.Link>
+                            <Nav.Link href="/month">Месяц</Nav.Link>
+                            <Nav.Link href="/period">Период</Nav.Link>
                         </Nav>
                         <Button variant="dark" className="justify-content-end" disabled>{cookies.get('userName') }</Button>
                         <Button variant="outline-light" className="justify-content-end"

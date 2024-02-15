@@ -1,6 +1,6 @@
 ﻿import { React, useState } from 'react';
 import '../Styles/Authorization.css';
-import { RegisterUser } from "../Urls/UrlList";
+import { RegisterUserUrl } from "../Urls/UrlList";
 import axios from 'axios';
 
 const Authorization = () => {
@@ -24,7 +24,7 @@ const Authorization = () => {
                 throw new Error("Пароли не совпадают");
             }
 
-            axios.post(RegisterUser, user)
+            axios.post(RegisterUserUrl, user)
                 .then(res => {
                     window.location.replace('http://localhost:5173/auth')
                 })

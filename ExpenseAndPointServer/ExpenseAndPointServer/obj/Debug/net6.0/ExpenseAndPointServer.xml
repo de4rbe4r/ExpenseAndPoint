@@ -302,7 +302,7 @@
             <param name="cryptographer">Сервис шифрования пароля</param>
             <param name="passwordChecker">Сервис проверки надежности пароля</param>
         </member>
-        <member name="M:ExpenseAndPointServer.Controllers.UsersController.GetUser">
+        <member name="M:ExpenseAndPointServer.Controllers.UsersController.GetUsers">
             <summary>
             Получение списка пользователей.
             </summary>

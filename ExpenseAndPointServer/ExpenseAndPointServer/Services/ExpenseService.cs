@@ -63,7 +63,7 @@ namespace ExpenseAndPointServer.Services
         {
             if (_context.Users.FirstOrDefault(u => u.Id == userId) == null)
                 throw new Exception($"Пользователя с идентификатором {userId} не существует");
-            return await _context.Expenses.Where(e => e.UserId == userId).ToListAsync();
+            return await _context.Expenses.Where(e => e.UserId == userId).OrderBy(e => e.DateTime.TimeOfDay).ToListAsync();
         }
 
         /// <summary>
