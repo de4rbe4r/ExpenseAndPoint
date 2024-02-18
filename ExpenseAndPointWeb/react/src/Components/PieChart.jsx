@@ -4,30 +4,22 @@ import useWindowDimensions from '../Hooks/useWindowDimensions.jsx'
 
 
 const PieChart = ({ expensesList, categoryList }) => {
-    if (categoryList.length === 0) return <img src="/loading.gif"></img>;
     const { height, width } = useWindowDimensions();
 
     const [chartExpenses, setChartExpenses] = useState([
-        ["Категория", "Сумма"],
-        ["Нет расходов", 1]
     ]);
 
-    const data = [
-        ["Task", "Hours per Day"],
-        ["Work", 11],
-        ["Eat", 2],
-        ["Commute", 2],
-        ["Watch TV", 2],
-        ["Sleep", 7],
+    const emptyExpensesList = [
+        ["Категория", "Сумма"],
+        ["Нет расходов", 1]
     ];
 
-    const[temp, setTemp] = useState([])
     useEffect(() => {
-        var newArray = []
-        newArray.push(["Категория", "Сумма"]);
-        if (expensesList !== undefined && expensesList[0].id !== 0) {
+        if (expensesList !== null && expensesList.count !== 0) {
+            var newArray = []
+            newArray.push(["Категория", "Сумма"]);
             expensesList.map((e, index) => {
-                if (categoryList !== undefined) {
+                if (categoryList !== undefined && categoryList.length !== 0) {
                     var elem = [categoryList.find(c => c.id === e.categoryId).title, e.amount];
                     var index = newArray.findIndex(t => t[0] === elem[0]);
                     if (index !== -1) {
@@ -38,9 +30,14 @@ const PieChart = ({ expensesList, categoryList }) => {
                     }
                 }
             })
+            setChartExpenses(newArray);
         }
-        setTemp(newArray);
     }, [expensesList]);
+
+    if (categoryList.length === 0) return <img src="/loading.gif" style={{
+        width: "100px",
+        }}></img >;
+
 
     const options = {
         title: "Диаграмма расходов",
@@ -54,12 +51,11 @@ const PieChart = ({ expensesList, categoryList }) => {
         height: 0.78 * height,
     };
 
-
     return (
         <>
             <Chart
                 chartType="PieChart"
-                data={temp}
+                data={chartExpenses.length > 1 ? chartExpenses : emptyExpensesList}
                 options={options}
             />
         </>

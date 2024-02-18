@@ -25,9 +25,7 @@ const Authorization = () => {
 
             axios.post(urlAuth, user)
                 .then(res => {
-                    console.log('a');
                     cookies.set('access_token', res.data.access_token, { path: '/', maxAge: cookiesLive });
-                    console.log('a');
                     cookies.set('userId', res.data.userId, { path: '/', maxAge: cookiesLive });
 
                     cookies.set('userName', res.data.userName, { path: '/', maxAge: cookiesLive });

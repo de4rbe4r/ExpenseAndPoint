@@ -4,11 +4,17 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { DeleteExpenseUrl} from "../Urls/UrlList";
 import Button from 'react-bootstrap/Button';
+import AlertModal from './AlertModal.jsx';
+
 
 
 const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsDataUpdated, isDataUpdated }) => {
     if (expense === undefined && category === undefined) return;
     const [title, setTitle] = useState();
+    const [errorMessage, setErrorMessage] = useState("");
+    const [showAlertModal, setShowAlertModal] = useState(false);
+    const [titleAlert, setTitleAlert] = useState("");
+
 
     useEffect(() => {
         if (expense !== undefined) {
@@ -29,21 +35,31 @@ const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsD
         if (expense !== undefined) {
             axios.delete(DeleteExpenseUrl + expense.id, expense)
                 .then(res => {
-                    alert("Расход успешно удален");
+                    setShowAlertModal(true);
+                    setErrorMessage("Расход успешно удален");
+                    setTitleAlert("Успешно");
                 })
                 .catch(function (error) {
                     if (error.response) {
-                        alert(error.response.data.detail);
+                        setShowAlertModal(true);
+                        setErrorMessage(error.message + ". " + error.response.data.detail);
+                        setTitleAlert("Ошибка");
                     }
                 });
-        } else if (action === "Изменить") {
+        }
+        // Тут нужно сделать про удаление категории
+        else if (action === "Изменить") {
             axios.put(EditExpenseUrl + expense.id, expense)
                 .then(res => {
-                    alert("Расход успешно изменен");
+                    setShowAlertModal(true);
+                    setErrorMessage("Расход успешно изменен");
+                    setTitleAlert("Успешно");
                 })
                 .catch(function (error) {
                     if (error.response) {
-                        alert(error.response.data.detail);
+                        setShowAlertModal(true);
+                        setErrorMessage(error.message + ". " + error.response.data.detail);
+                        setTitleAlert("Ошибка");
                     }
                 });
         }
@@ -51,8 +67,13 @@ const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsD
         setIsDataUpdated(!isDataUpdated);
     }
 
+    const setIsShowAlertModal = (data) => {
+        setShowAlertModal(data);
+    }
+
     return (
         <>
+            <AlertModal showModal={showAlertModal} setIsShowModal={setIsShowAlertModal} errorMessage={errorMessage} title={titleAlert} />
             <Modal
                 show={isShowForm}
                 onHide={handleCloseForm}

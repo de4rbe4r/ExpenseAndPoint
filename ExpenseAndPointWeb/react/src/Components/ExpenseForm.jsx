@@ -4,6 +4,8 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { AddExpensesUrl, EditExpenseUrl } from "../Urls/UrlList";
 import Button from 'react-bootstrap/Button';
+import AlertModal from './AlertModal.jsx';
+
 
 
 const ExpenseForm = ({ action, expenseToEdit, categoryList, isShowForm, setIsShowForm, userId, setIsDataUpdated, isDataUpdated }) => {
@@ -39,7 +41,9 @@ const ExpenseForm = ({ action, expenseToEdit, categoryList, isShowForm, setIsSho
     });
 
     const [title, setTitle] = useState();
-
+    const [errorMessage, setErrorMessage] = useState("");
+    const [showAlertModal, setShowAlertModal] = useState(false);
+    const [titleAlert, setTitleAlert] = useState("");
 
     useEffect(() => {
         if (action === "Добавить") {
@@ -85,15 +89,11 @@ const ExpenseForm = ({ action, expenseToEdit, categoryList, isShowForm, setIsSho
     const changeDate = (event) => {
         setDateAndTime({ ...dateAndTime, date: event.target.value });
         setExpense({ ...expense, dateTime: dateAndTime.date.toString() + dateAndTime.constPart + dateAndTime.time.toString() });
-        console.log(dateAndTime);
-        console.log(expense);
     }
 
     const changeTime = (event) => {
         setDateAndTime({ ...dateAndTime, time: event.target.value });
         setExpense({ ...expense, dateTime: dateAndTime.date.toString() + dateAndTime.constPart + dateAndTime.time.toString() });
-        console.log(dateAndTime);
-        console.log(expense);
     }
 
     const handleCloseForm = () => {
@@ -107,14 +107,18 @@ const ExpenseForm = ({ action, expenseToEdit, categoryList, isShowForm, setIsSho
     const addEditExpense = (event) => {
         event.preventDefault();
         if (expense.amount === "") {
-            alert("Введите сумму");
+            setShowAlertModal(true);
+            setErrorMessage("Введите сумму");
+            setTitleAlert("Ошибка");
             return;
         }
 
         if (action === "Добавить") {
             axios.post(AddExpensesUrl, expense)
                 .then(res => {
-                    alert("Расход успешно добавлен");
+                    setShowAlertModal(true);
+                    setErrorMessage("Расход успешно добавлен");
+                    setTitleAlert("Успешно");
                     setExpense({
                         ...expense,
                         amount: '',
@@ -127,26 +131,36 @@ const ExpenseForm = ({ action, expenseToEdit, categoryList, isShowForm, setIsSho
                 })
                 .catch(function (error) {
                     if (error.response) {
-                        alert(error.response.data.detail);
+                        setShowAlertModal(true);
+                        setErrorMessage(error.message + ". " + error.response.data.detail);
+                        setTitleAlert("Ошибка");
                     }
                 });
         } else if (action === "Изменить") {
             axios.put(EditExpenseUrl + expense.id, expense)
                 .then(res => {
-                    alert("Расход успешно изменен");
-                })
+                    setShowAlertModal(true);
+                    setErrorMessage("Расход успешно изменен");
+                    setTitleAlert("Успешно");                })
                 .catch(function (error) {
                     if (error.response) {
-                        alert(error.response.data.detail);
-                    }
+                        setShowAlertModal(true);
+                        setErrorMessage(error.message + ". " + error.response.data.detail);
+                        setTitleAlert("Ошибка");                    }
                 });
             setIsShowForm(false);
         }
         setIsDataUpdated(!isDataUpdated);
     }
 
+    const setIsShowAlertModal = (data) => {
+        setShowAlertModal(data);
+    }
+
+
     return (
         <>
+            <AlertModal showModal={showAlertModal} setIsShowModal={setIsShowAlertModal} errorMessage={errorMessage} title={titleAlert} />
             <Modal
                 show={isShowForm}
                 onHide={handleCloseForm}

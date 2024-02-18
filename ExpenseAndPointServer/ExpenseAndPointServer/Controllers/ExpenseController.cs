@@ -52,14 +52,7 @@ namespace ExpenseAndPointServer.Controllers
             {
                 var expenseList = await expenseService.GetExpensesByUserId(id);
                 var expenseDtoList = expenseList.Select(e => e.ToExpenseDtoMap());
-                if (expenseList.Count() == 0)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    return Ok(expenseDtoList);
-                }
+                return Ok(expenseDtoList);
             } catch (Exception ex)
             {
                 _errorLogger.LogError(System.Reflection.MethodBase.GetCurrentMethod()!.Name,
@@ -86,14 +79,7 @@ namespace ExpenseAndPointServer.Controllers
             try
             {
                 var expense = await expenseService.GetExpensesById(id);
-                if (expense == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    return Ok(expense.ToExpenseDtoMap());
-                }
+                return Ok(expense.ToExpenseDtoMap());
             }
             catch (Exception ex)
             {
@@ -148,14 +134,7 @@ namespace ExpenseAndPointServer.Controllers
             {
                 var expenseList = await expenseService.GetExpenseByUserIdAndDate(expenseInput.UserId, expenseInput.Date);
                 var expenseDtoList = expenseList.Select(e => e.ToExpenseDtoMap());
-                if (expenseList.Count() == 0)
-                {
-                    return NotFound();
-                }
-                else
-                {
                     return Ok(expenseDtoList);
-                }
             }
             catch (Exception ex)
             {
@@ -184,14 +163,7 @@ namespace ExpenseAndPointServer.Controllers
             {
                 var expenseList = await expenseService.GetExpenseByUserIdAndPeriod(expenseInput.UserId, expenseInput.DateStart, expenseInput.DateEnd);
                 var expenseDtoList = expenseList.Select(e => e.ToExpenseDtoMap());
-                if (expenseList.Count() == 0)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    return Ok(expenseDtoList);
-                }
+                return Ok(expenseDtoList);
             }
             catch (Exception ex)
             {
@@ -220,14 +192,7 @@ namespace ExpenseAndPointServer.Controllers
             {
                 var expenseList = await expenseService.GetExpensesByUserIdAndCategoryId(expenseInput.UserId, expenseInput.CategoryId);
                 var expenseDtoList = expenseList.Select(e => e.ToExpenseDtoMap());
-                if (expenseList.Count() == 0)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    return Ok(expenseDtoList);
-                }
+                return Ok(expenseDtoList);
             }
             catch (Exception ex)
             {
@@ -256,14 +221,7 @@ namespace ExpenseAndPointServer.Controllers
             {
                 var expenseList = await expenseService.GetExpensesByUserIdAndCategoryIdAndDate(expenseInput.UserId, expenseInput.CategoryId, expenseInput.Date);
                 var expenseDtoList = expenseList.Select(e => e.ToExpenseDtoMap());
-                if (expenseList.Count() == 0)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    return Ok(expenseDtoList);
-                }
+                return Ok(expenseDtoList);
             }
             catch (Exception ex)
             {
@@ -292,14 +250,7 @@ namespace ExpenseAndPointServer.Controllers
             {
                 var expenseList = await expenseService.GetExpensesByUserIdAndCategoryIdAndPeriod(expenseInput.UserId, expenseInput.CategoryId, expenseInput.DateStart, expenseInput.DateEnd);
                 var expenseDtoList = expenseList.Select(e => e.ToExpenseDtoMap());
-                if (expenseList.Count() == 0)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    return Ok(expenseDtoList);
-                }
+                return Ok(expenseDtoList);
             }
             catch (Exception ex)
             {
