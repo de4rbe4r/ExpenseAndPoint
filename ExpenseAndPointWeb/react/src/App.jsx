@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Authorization from './Components/Authorization';
 import Registration from './Components/Registration';
 import Day from './Components/Day';
+import Month from './Components/Month';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Cookies from 'universal-cookie';
 
@@ -30,6 +31,7 @@ function App() {
                 <Route path='/auth' element={<Authorization />} />
                 <Route path='/register' element={<Registration />} />
                 <Route path='/' element={<Day />} />
+                <Route path='/month' element={<Month />} />
             </Routes>
         </div>
     );

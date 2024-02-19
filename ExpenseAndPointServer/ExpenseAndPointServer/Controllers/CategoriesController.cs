@@ -1,11 +1,10 @@
 ﻿using ExpenseAndPoint.Data;
 using ExpenseAndPointServer.Services;
-using ExpenseAndPointServer.Models.Users;
 using ExpenseAndPointServer.Models.Categories;
-
 using Microsoft.AspNetCore.Mvc;
 using ExpenseAndPointServer.ErrorLogging;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExpenseAndPointServer.Controllers
 {
@@ -14,6 +13,7 @@ namespace ExpenseAndPointServer.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoriesController : ControllerBase
     {
         /// <summary>

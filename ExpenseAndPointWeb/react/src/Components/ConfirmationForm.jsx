@@ -9,7 +9,6 @@ import AlertModal from './AlertModal.jsx';
 
 
 const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsDataUpdated, isDataUpdated }) => {
-    if (expense === undefined && category === undefined) return;
     const [title, setTitle] = useState();
     const [errorMessage, setErrorMessage] = useState("");
     const [showAlertModal, setShowAlertModal] = useState(false);
@@ -70,6 +69,9 @@ const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsD
     const setIsShowAlertModal = (data) => {
         setShowAlertModal(data);
     }
+
+    if (expense === undefined && category === undefined) return;
+
 
     return (
         <>

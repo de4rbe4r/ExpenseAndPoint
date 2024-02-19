@@ -586,3 +586,4 @@ D:\Deev\ExpenseAndPoint\ExpenseAndPointServer\ExpenseAndPointServer\bin\Debug\ne
 D:\Deev\ExpenseAndPoint\ExpenseAndPointServer\ExpenseAndPointServer\obj\Debug\net6.0\ExpenseAndPointServer.xml
 D:\IT\Deev\CourseWork\ExpenseAndPointServer\ExpenseAndPointServer\obj\Debug\net6.0\ExpenseAndPointServer.xml
 D:\IT\Deev\CourseWork\ExpenseAndPointServer\ExpenseAndPointServer\bin\Debug\net6.0\ExpenseAndPointServer.xml
+D:\IT\Deev\CourseWork\ExpenseAndPointServer\ExpenseAndPointServer\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

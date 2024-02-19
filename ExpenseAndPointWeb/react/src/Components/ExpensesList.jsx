@@ -1,7 +1,6 @@
 ﻿import { React, useState, useEffect } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import '../App.css';
-import useWindowDimensions from '../Hooks/useWindowDimensions.jsx'
 import Row from 'react-bootstrap/Row';
 import ExpenseForm from './ExpenseForm.jsx'
 import ConfirmationForm from './ConfirmationForm'
@@ -9,7 +8,7 @@ import { ContextMenuTrigger, ContextMenu, ContextMenuItem } from 'rctx-contextme
 
 
 
-const ExpensesList = ({ expensesList, categoryList, userId, setIsDataUpdatedToParent, isDataUpdated }) => {
+const ExpensesList = ({ expensesList, categoryList, userId, setIsDataUpdatedToParent, isDataUpdated, height, date }) => {
 
     const setIsShowEditForm = (data) => {
         setShowEditForm(data);
@@ -18,8 +17,6 @@ const ExpensesList = ({ expensesList, categoryList, userId, setIsDataUpdatedToPa
     const setIsShowConfirmationForm = (data) => {
         setShowConfirmationForm(data);
     }
-
-    const { height, width } = useWindowDimensions();
 
     const [showEditForm, setShowEditForm] = useState(false);
     const [showConfirmationForm, setShowConfirmationForm] = useState(false);
@@ -63,7 +60,7 @@ const ExpensesList = ({ expensesList, categoryList, userId, setIsDataUpdatedToPa
                 }}>
                 <ListGroup.Item variant="dark" key='Title' value='Title'>
                     <Row className="justify-content-md-center">
-                    Список расходов</Row>
+                        Список расходов {date}</Row>
                 </ListGroup.Item>
                 {
                     ((expensesList !== undefined && expensesList.count !== 0) ? (

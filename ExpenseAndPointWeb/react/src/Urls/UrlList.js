@@ -17,5 +17,6 @@ export const GetCategoryByIdUrl = BASE_URL + CATEGORIES + '/ByUserId/';
 // Expenses
 export const AddExpensesUrl = BASE_URL + EXPENSE;
 export const GetExpensesListByUserIdAndDateUrl = BASE_URL + EXPENSE + '/ByUserIdAndDate';
+export const GetExpensesListByUserIdAndPeriodUrl = BASE_URL + EXPENSE + '/ByUserIdAndPeriod';
 export const EditExpenseUrl = BASE_URL + EXPENSE + '/';
 export const DeleteExpenseUrl = BASE_URL + EXPENSE + '/';

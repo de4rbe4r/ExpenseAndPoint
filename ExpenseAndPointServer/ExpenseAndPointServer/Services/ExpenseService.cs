@@ -111,8 +111,8 @@ namespace ExpenseAndPointServer.Services
                 dateEnd = temp;
             }
             return await _context.Expenses.Where(e => e.UserId == userId 
-                                                && e.DateTime.Date > dateStart.Date 
-                                                && e.DateTime.Date < dateEnd.Date).ToListAsync();
+                                                && e.DateTime.Date >= dateStart.Date 
+                                                && e.DateTime.Date <= dateEnd.Date).ToListAsync();
         }
 
         /// <summary>
@@ -173,8 +173,8 @@ namespace ExpenseAndPointServer.Services
                 dateEnd = temp;
             }
             return await _context.Expenses.Where(e => e.UserId == userId && e.CategoryId == categoryId
-                                                    && e.DateTime.Date > dateStart.Date
-                                                    && e.DateTime.Date < dateEnd.Date).ToListAsync();
+                                                    && e.DateTime.Date >= dateStart.Date
+                                                    && e.DateTime.Date <= dateEnd.Date).ToListAsync();
         }
 
         /// <summary>
