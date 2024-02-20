@@ -55,7 +55,7 @@ const ExpensesList = ({ expensesList, categoryList, userId, setIsDataUpdatedToPa
                 isShowForm={showConfirmationForm} setIsShowForm={setIsShowConfirmationForm} setIsDataUpdated={setIsDataUpdated} isDataUpdated={isDataUpdated} />
             <ListGroup className="overflow-auto"
             style={{
-                height: 0.85 * height,
+                height: height,
                 overflow: scroll
                 }}>
                 <ListGroup.Item variant="dark" key='Title' value='Title'>

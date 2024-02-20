@@ -82,7 +82,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.RequireHttpsMetadata = false;
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            // укзывает, будет ли валидироваться издатель при валидации токена
+            // указывает, будет ли валидироваться издатель при валидации токена
             ValidateIssuer = true,
             // строка, представляющая издателя
             ValidIssuer = AuthOptions.ISSUER,

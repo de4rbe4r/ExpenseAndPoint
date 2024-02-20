@@ -12,6 +12,9 @@ const ExpenseForm = ({ action, expenseToEdit, categoryList, isShowForm, setIsSho
     // Формирование текущей даты
     var today = new Date();
     var day = today.getDate();
+    if (day < 10) {
+        day = '0' + day;
+    }
     var month = today.getMonth() + 1;
     if (month < 10) {
         month = '0' + month;
@@ -88,12 +91,12 @@ const ExpenseForm = ({ action, expenseToEdit, categoryList, isShowForm, setIsSho
 
     const changeDate = (event) => {
         setDateAndTime({ ...dateAndTime, date: event.target.value });
-        setExpense({ ...expense, dateTime: dateAndTime.date.toString() + dateAndTime.constPart + dateAndTime.time.toString() });
+        setExpense({ ...expense, dateTime: event.target.value + dateAndTime.constPart + dateAndTime.time.toString() });
     }
 
     const changeTime = (event) => {
         setDateAndTime({ ...dateAndTime, time: event.target.value });
-        setExpense({ ...expense, dateTime: dateAndTime.date.toString() + dateAndTime.constPart + dateAndTime.time.toString() });
+        setExpense({ ...expense, dateTime: dateAndTime.date.toString() + dateAndTime.constPart + event.target.value });
     }
 
     const handleCloseForm = () => {

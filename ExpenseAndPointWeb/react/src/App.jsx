@@ -5,6 +5,7 @@ import Authorization from './Components/Authorization';
 import Registration from './Components/Registration';
 import Day from './Components/Day';
 import Month from './Components/Month';
+import Period from './Components/Period';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Cookies from 'universal-cookie';
 
@@ -32,6 +33,7 @@ function App() {
                 <Route path='/register' element={<Registration />} />
                 <Route path='/' element={<Day />} />
                 <Route path='/month' element={<Month />} />
+                <Route path='/period' element={<Period/>} />
             </Routes>
         </div>
     );

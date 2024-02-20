@@ -1,49 +1,58 @@
 ﻿import { React, useState, useEffect } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import '../App.css';
-import useWindowDimensions from '../Hooks/useWindowDimensions.jsx'
 import Row from 'react-bootstrap/Row';
 
 
-const DayList = ({ sendClickedDate}) => {
-    // Формирование текущей даты
-    var today = new Date();
-    var day = today.getDate();
-    var month = today.getMonth() + 1;
-    if (month < 10) {
-        month = '0' + month;
-    }
-    var year = today.getFullYear();
-    var currentDate = year + '-' + month + '-' + day;
-    var hours = today.getHours();
-    if (hours < 10) {
-        hours = '0' + hours;
-    }
-    var minutes = today.getMinutes();
-    if (minutes < 10) {
-        minutes = '0' + minutes;
-    }
-
-    const { height, width } = useWindowDimensions();
-
+const DayList = ({ sendClickedDate, height, dateStart, dateEnd}) => {
     const [daysArray, setDaysArray] = useState([]);
-
     useEffect(() => {
         var tempArray = []
-        for (var i = 1; i <= day; i++) {
-            if (i < 10) tempArray.push(year + '-' + month + '-0' + i);
-            else tempArray.push(year + '-' + month + '-' + i);
-        }
-        setDaysArray(tempArray);
-    }, []);
+        var dateS = new Date(dateStart);
+        var dateE = new Date(dateEnd);
+        var day, month, year;
 
+        if (dateS.getDate() > dateE.getDate()) {
+            var temp = dateE;
+            dateE = dateS;
+            dateS = temp;
+        }
+
+        while (dateS.getDate() !== dateE.getDate()) {
+            day = dateS.getDate();
+            if (day < 10) {
+                day = '0' + day;
+            }
+            month = dateS.getMonth() + 1;
+            if (month < 10) {
+                month = '0' + month;
+            }
+            year = dateS.getFullYear();
+
+            tempArray.push(year + '-' + month + '-' + day);
+            dateS.setDate(dateS.getDate() + 1);
+        }
+
+        day = dateE.getDate();
+        if (day < 10) {
+            day = '0' + day;
+        }
+        month = dateE.getMonth() + 1;
+        if (month < 10) {
+            month = '0' + month;
+        }
+        year = dateE.getFullYear();
+        tempArray.push(year + '-' + month + '-' + day);
+
+        setDaysArray(tempArray);
+    }, [dateStart, dateEnd]);
 
 
     return (
         <>
             <ListGroup className="overflow-auto"
             style={{
-                height: 0.75 * height,
+                height: height,
                 overflow: scroll
                 }}>
                 {

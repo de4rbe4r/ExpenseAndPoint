@@ -12,9 +12,10 @@ import AlertModal from './AlertModal.jsx';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import useWindowDimensions from '../Hooks/useWindowDimensions.jsx'
+import Form from 'react-bootstrap/Form';
 
 
-const Month = () => {
+const Period = () => {
     const cookies = new Cookies();
     var today = new Date();
     var day = today.getDate();
@@ -30,7 +31,7 @@ const Month = () => {
 
     const [expensesDict, setExpensesDict] = useState({})
     const [totalAmountExpenses, setTotalAmountExpenses] = useState(null);
-    const [expensesList, setExpensesList] = useState(undefined);
+    const [expensesList, setExpensesList] = useState([]);
     const [fullExpensesList, setFullExpensesList] = useState(null);
     const [categoryList, setCategoryList] = useState([]);
     const [isDataUpdated, setDataUpdated] = useState(false);
@@ -39,8 +40,9 @@ const Month = () => {
     const [showAlertModal, setShowAlertModal] = useState(false);
     const [titleAlert, setTitleAlert] = useState("");
     const [pickedDate, setPickedDate] = useState();
-    const [dateStart, setDateStart] = useState(year + '-' + month + '-' + "01");
+    const [dateStart, setDateStart] = useState(year + '-' + month + '-' + day);
     const [dateEnd, setDateEnd] = useState(year + '-' + month + '-' + day);
+    
 
     const [userId, setUserId] = useState(cookies.get('userId'));
 
@@ -80,7 +82,7 @@ const Month = () => {
                     setErrorMessage(error.message + ". " + error.response.data.detail);
                 }
             });
-    }, [isDataUpdated]);
+    }, [isDataUpdated, dateStart, dateEnd]);
 
     useEffect(() => {
         setExpensesList(expensesDict[pickedDate]);
@@ -114,7 +116,7 @@ const Month = () => {
         setExpensesList(expensesDict[date]);
     }
 
-    if (fullExpensesList === null) return <img src="/loading.gif"></img>;
+    //if (fullExpensesList === null) return <img src="/loading.gif"></img>;
 
     return (
         <>
@@ -125,6 +127,40 @@ const Month = () => {
                 <Row>
                     <Col sm={12}>
                         <Row>
+                            <Col className="d-grid">
+                                <Button variant="outline-light" size="lg" disabled>
+                                    Дата начала периода
+                                </Button>
+                            </Col>
+                            <Col className="d-grid">
+                                <Button variant="outline-light" size="lg" disabled>
+                                    Дата конца периода
+                                </Button>
+                            </Col>
+                        </Row>
+                        <Row>
+                        <p></p>
+                            <Col className="d-grid">
+                                <Form.Control
+                                    type="date"
+                                    defaultValue={dateStart}
+                                    onChange={(event) => {
+                                        setDateStart(event.target.value);
+                                    }}
+                                />
+                            </Col>
+                            <Col className="d-grid">
+                                <Form.Control
+                                    type="date"
+                                    defaultValue={dateEnd}
+                                    onChange={(event) => {
+                                        setDateEnd(event.target.value);
+                                    }}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <p></p>
                             <Col className="d-grid">
                                 <Button variant="outline-light" size="lg" onClick={openForm}>Добавить расход</Button>
                             </Col>
@@ -137,17 +173,17 @@ const Month = () => {
                             <Col className="d-grid">
                             <Button variant="outline-light" size="lg" disabled>
                                     Итого за месяц { totalAmountExpenses}
-                                </Button>
+                            </Button>
                             </Col>
                         </Row>
                         <Row>
                         <p></p>
                             <Col className="d-grid">
-                                <DayList sendClickedDate={showExpensesListByDate} height={0.75 * height} dateStart={dateStart} dateEnd={dateEnd} />
+                                <DayList sendClickedDate={showExpensesListByDate} height={0.63 * height} dateStart={dateStart} dateEnd={dateEnd} />
                             </Col>
                             <Col className="d-grid">
                                 <ExpensesList expensesList={expensesList} categoryList={categoryList} userId={userId} setIsDataUpdatedToParent={setIsDataUpdated}
-                                    isDataUpdated={isDataUpdated} height={0.75 * height} date={pickedDate} />
+                                    isDataUpdated={isDataUpdated} height={0.63 * height} date={pickedDate} />
                             </Col>
                         </Row>
                     </Col>
@@ -157,4 +193,4 @@ const Month = () => {
     );
 }
 
-export default Month;
+export default Period;
