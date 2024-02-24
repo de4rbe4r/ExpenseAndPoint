@@ -37,7 +37,9 @@ const ExpensesHistoryList = ({ isDataUpdated, height }) => {
         setShowAlertModal(data);
     }
     
-    if (expensesHistoryList === undefined) return <img src="/loading.gif"></img>;
+    if (expensesHistoryList === undefined) return <img src="/loading.gif" style={{
+        width: "100px",
+    }}></img>;
 
     return (
         <>

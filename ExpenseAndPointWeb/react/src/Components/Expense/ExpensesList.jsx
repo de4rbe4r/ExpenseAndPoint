@@ -41,7 +41,9 @@ const ExpensesList = ({ expensesList, categoryList, userId, setIsDataUpdatedToPa
         setShowConfirmationForm(true);
     }
 
-    if (categoryList.length === 0 || expensesList === null) return <img src="/loading.gif"></img>;
+    if (categoryList.length === 0 || expensesList === null) return <img src="/loading.gif" style={{
+        width: "100px",
+    }}></img>;
 
 
     return (

@@ -61,7 +61,9 @@ const CategoryList = () => {
         setShowConfirmationForm(data);
     }
 
-    if (categoryList === undefined) return <img src="../../loading.gif"></img>;
+    if (categoryList === undefined) return <img src="../../loading.gif" style={{
+        width: "100px",
+    }}></img>;
 
     return (
         <>

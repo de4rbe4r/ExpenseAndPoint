@@ -139,7 +139,9 @@ const Month = () => {
         setShowCategoryForm(data);
     }
 
-    if (fullExpensesList === null) return <img src="/loading.gif"></img>;
+    if (fullExpensesList === null) return <img src="/loading.gif" style={{
+        width: "100px",
+    }}></img>;
 
     return (
         <>
