@@ -1,4 +1,4 @@
-﻿import { React, useState } from 'react';
+﻿import { React } from 'react';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap'; 
 import Cookies from 'universal-cookie';
 
@@ -25,7 +25,8 @@ const NavMenu = () => {
                             <Nav.Link href="/month">Месяц</Nav.Link>
                             <Nav.Link href="/period">Период</Nav.Link>
                         </Nav>
-                        <Button variant="dark" className="justify-content-end" disabled>{cookies.get('userName') }</Button>
+                        <Button variant="dark" className="justify-content-end" disabled>{cookies.get('userName')}</Button>
+                        <Nav.Link href="/tools"><img height={'25px'} src="/gear.png" style={{ margin: '0 10px 0 0'}} ></img>  </Nav.Link>
                         <Button variant="outline-light" className="justify-content-end"
                             onClick={SignOut}
                         >Выход</Button>

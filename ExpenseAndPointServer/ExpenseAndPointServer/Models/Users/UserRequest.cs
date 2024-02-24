@@ -19,7 +19,12 @@ namespace ExpenseAndPointServer.Models.Users
         /// <summary>
         /// Пароль
         /// </summary>
-        public string Password { get; set; }
+        public string? Password { get; set; }
+        
+        /// <summary>
+        /// Пароль
+        /// </summary>
+        public string? OldPassword { get; set; }
 
         /// <summary>
         /// Преобразование класса UserOtputDto в класс User

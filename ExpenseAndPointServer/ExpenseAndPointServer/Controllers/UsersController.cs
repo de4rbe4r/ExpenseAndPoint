@@ -232,7 +232,7 @@ namespace ExpenseAndPointServer.Controllers
             User editedUser;
             try
             {
-                editedUser = await userService.EditUserPassword(id, userInputDto.ToUserMap());
+                editedUser = await userService.EditUserPassword(id, userInputDto);
             }
             catch (Exception ex)
             {

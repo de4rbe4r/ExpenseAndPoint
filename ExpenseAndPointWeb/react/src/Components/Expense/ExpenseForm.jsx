@@ -2,9 +2,9 @@
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { AddExpensesUrl, EditExpenseUrl } from "../Urls/UrlList";
+import { AddExpensesUrl, EditExpenseUrl } from "../../Urls/UrlList";
 import Button from 'react-bootstrap/Button';
-import AlertModal from './AlertModal.jsx';
+import AlertModal from '../AlertModal.jsx';
 
 
 

@@ -2,7 +2,7 @@
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import { DeleteExpenseUrl} from "../Urls/UrlList";
+import { DeleteExpenseUrl, DeleteCategoryUrl} from "../Urls/UrlList";
 import Button from 'react-bootstrap/Button';
 import AlertModal from './AlertModal.jsx';
 
@@ -45,13 +45,11 @@ const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsD
                         setTitleAlert("Ошибка");
                     }
                 });
-        }
-        // Тут нужно сделать про удаление категории
-        else if (action === "Изменить") {
-            axios.put(EditExpenseUrl + expense.id, expense)
+        } else if (category !== undefined) {
+            axios.delete(DeleteCategoryUrl + category.id, category)
                 .then(res => {
                     setShowAlertModal(true);
-                    setErrorMessage("Расход успешно изменен");
+                    setErrorMessage("Категория успешно удалена");
                     setTitleAlert("Успешно");
                 })
                 .catch(function (error) {
@@ -62,6 +60,7 @@ const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsD
                     }
                 });
         }
+  
         setIsShowForm(false);
         setIsDataUpdated(!isDataUpdated);
     }
@@ -123,7 +122,7 @@ const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsD
                                 <Form.Control
                                     id="category"
                                 type="text"
-                                placeholder={`Категория: ${category.title}`} 
+                                placeholder={category.title}
                                 readOnly
                                 />
                                 </>

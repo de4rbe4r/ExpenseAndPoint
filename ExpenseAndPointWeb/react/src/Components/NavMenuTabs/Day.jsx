@@ -2,16 +2,16 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { GetExpensesListByUserIdAndDateUrl, GetCategoryByIdUrl } from "../Urls/UrlList";
+import { GetExpensesListByUserIdAndDateUrl, GetCategoryByIdUrl } from "../../Urls/UrlList";
 import Cookies from 'universal-cookie';
-import AddCategoryBtn from './AddCategoryBtn'
-import ExpenseForm from './ExpenseForm.jsx'
-import ExpensesList from './ExpensesList.jsx';
-import PieChart from './PieChart.jsx';
-import AlertModal from './AlertModal.jsx';
+import ExpenseForm from '../Expense/ExpenseForm.jsx'
+import ExpensesList from '../Expense/ExpensesList.jsx';
+import PieChart from '../PieChart.jsx';
+import AlertModal from '../AlertModal.jsx';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
-import useWindowDimensions from '../Hooks/useWindowDimensions.jsx'
+import useWindowDimensions from '../../Hooks/useWindowDimensions.jsx'
+import CategoryForm from '../Category/CategoryForm';
 
 
 
@@ -19,11 +19,11 @@ const Day = () => {
     const cookies = new Cookies();
     const { height, width } = useWindowDimensions();
 
-
     const [expensesList, setExpensesList] = useState(null);
     const [categoryList, setCategoryList] = useState([]);
     const [isDataUpdated, setDataUpdated] = useState(false);
     const [showForm, setShowForm] = useState(false);
+    const [showCategoryForm, setShowCategoryForm] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [showAlertModal, setShowAlertModal] = useState(false);
     const [titleAlert, setTitleAlert] = useState("");
@@ -68,6 +68,10 @@ const Day = () => {
         setShowForm(data);
     }
 
+    const setIsShowCategoryForm = (data) => {
+        setShowCategoryForm(data);
+    }
+
     const setIsDataUpdated = (data) => {
         setDataUpdated(data);
     }
@@ -81,12 +85,19 @@ const Day = () => {
         setShowForm(true);
     }
 
+    const openCategoryForm = (event) => {
+        event.preventDefault();
+        setShowCategoryForm(true);
+    }
+
     return (
         <>
             <AlertModal showModal={showAlertModal} setIsShowModal={setIsShowAlertModal} errorMessage={errorMessage} title={titleAlert} />
             <Container>
                 <ExpenseForm action="Добавить" setIsDataUpdated={setIsDataUpdated} categoryList={categoryList} expenseToEdit={undefined}
                     isShowForm={showForm} setIsShowForm={setIsShowForm} userId={userId} isDataUpdated={isDataUpdated} />
+                <CategoryForm action="Добавить" categoryToEdit={undefined}
+                    isShowForm={showCategoryForm} setIsShowForm={setIsShowCategoryForm} userId={userId} setIsDataUpdated={setIsDataUpdated} isDataUpdated={isDataUpdated} />
                 <Row>
                     <Col sm={4} >
                         <ExpensesList expensesList={expensesList} categoryList={categoryList} userId={userId} setIsDataUpdatedToParent={setIsDataUpdated}
@@ -98,7 +109,7 @@ const Day = () => {
                                 <Button variant="outline-light" size="lg" onClick={openForm}>Добавить расход</Button>
                             </Col>
                             <Col className="d-grid">
-                                <AddCategoryBtn setIsDataUpdated={setIsDataUpdated} isDataUpdated={isDataUpdated} />
+                                <Button variant="outline-light" size="lg" onClick={openCategoryForm}>Добавить категорию</Button>
                             </Col>
                         </Row>
                         <Row>

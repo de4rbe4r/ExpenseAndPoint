@@ -4,7 +4,7 @@ import '../App.css';
 import Row from 'react-bootstrap/Row';
 
 
-const DayList = ({ sendClickedDate, height, dateStart, dateEnd}) => {
+const DayList = ({ sendClickedDate, height, dateStart, dateEnd, daysWithAmounts}) => {
     const [daysArray, setDaysArray] = useState([]);
     useEffect(() => {
         var tempArray = []
@@ -18,7 +18,7 @@ const DayList = ({ sendClickedDate, height, dateStart, dateEnd}) => {
             dateS = temp;
         }
 
-        while (dateS.getDate() !== dateE.getDate()) {
+        while (dateS.toDateString() !== dateE.toDateString()) {
             day = dateS.getDate();
             if (day < 10) {
                 day = '0' + day;
@@ -47,6 +47,10 @@ const DayList = ({ sendClickedDate, height, dateStart, dateEnd}) => {
         setDaysArray(tempArray);
     }, [dateStart, dateEnd]);
 
+    const dayAmount = (day) => {
+        var amount = daysWithAmounts.amounts[daysWithAmounts.days.findIndex(d => day === d)];
+        return (amount !== undefined) ? amount : 0;
+    }
 
     return (
         <>
@@ -59,7 +63,8 @@ const DayList = ({ sendClickedDate, height, dateStart, dateEnd}) => {
                     daysArray.map((d, index) => (
                         <ListGroup.Item action variant="dark" key={d} value={d} onClick={event => sendClickedDate(d) }>
                             <Row className="justify-content-md-center">
-                                {d}
+                                {d + ' (' + dayAmount(d)}&#8381;
+                                {')' }
                             </Row>
                         </ListGroup.Item>
                     ))

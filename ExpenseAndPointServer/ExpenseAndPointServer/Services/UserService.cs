@@ -125,15 +125,20 @@ namespace ExpenseAndPointServer.Services
         /// Изменение пароля
         /// </summary>
         /// <param name="id">Идентификатор пользователя</param>
-        /// <param name="user">Модель пользователя для работы с БД</param>
+        /// <param name="user">Модель пользователя приходящей с веб</param>
         /// <returns>Измененный пользователь</returns>
         /// <exception cref="Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
-        public async Task<User> EditUserPassword(int id, User user)
+        public async Task<User> EditUserPassword(int id, UserRequest user)
         {
             if (id != user.Id) throw new Exception("Переданные Id и пользователь не совпадают! Проверьте отправляемые данные");
             _passwordChecker.CheckStrengthPassword(user.Password);
             user.Password = _cryptographer.Encrypt(user.Password);
-            _context.Entry(user).Property(u => u.Password).IsModified = true;
+            user.OldPassword = _cryptographer.Encrypt(user.OldPassword);
+            var userDb = _context.Users.FirstOrDefault(u => u.Id == id);
+            if (userDb == null) throw new Exception("Пользователя с данным Id не существует");
+            if (userDb.Password != user.OldPassword) throw new Exception("Старый пароль не совпадает!");
+            userDb.Password = user.Password;
+            _context.Entry(userDb).Property(u => u.Password).IsModified = true;
             await _context.SaveChangesAsync();
             return await GetUserById(id);
         }

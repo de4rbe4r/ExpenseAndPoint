@@ -2,19 +2,19 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { GetExpensesListByUserIdAndPeriodUrl, GetCategoryByIdUrl } from "../Urls/UrlList";
+import { GetExpensesListByUserIdAndPeriodUrl, GetCategoryByIdUrl } from "../../Urls/UrlList";
 import Cookies from 'universal-cookie';
-import AddCategoryBtn from './AddCategoryBtn'
-import ExpenseForm from './ExpenseForm.jsx'
-import ExpensesList from './ExpensesList.jsx';
-import DayList from './DayList.jsx';
-import AlertModal from './AlertModal.jsx';
+import CategoryForm from '../Category/CategoryForm';
+import ExpensesList from '../Expense/ExpensesList.jsx';
+import DayList from '../DayList.jsx';
+import AlertModal from '../AlertModal.jsx';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
-import useWindowDimensions from '../Hooks/useWindowDimensions.jsx'
+import useWindowDimensions from '../../Hooks/useWindowDimensions.jsx'
+import Form from 'react-bootstrap/Form';
+import ExpenseForm from '../Expense/ExpenseForm';
 
-
-const Month = () => {
+const Period = () => {
     const cookies = new Cookies();
     var today = new Date();
     var day = today.getDate();
@@ -30,7 +30,7 @@ const Month = () => {
 
     const [expensesDict, setExpensesDict] = useState({})
     const [totalAmountExpenses, setTotalAmountExpenses] = useState(null);
-    const [expensesList, setExpensesList] = useState(undefined);
+    const [expensesList, setExpensesList] = useState([]);
     const [fullExpensesList, setFullExpensesList] = useState(null);
     const [categoryList, setCategoryList] = useState([]);
     const [isDataUpdated, setDataUpdated] = useState(false);
@@ -39,8 +39,13 @@ const Month = () => {
     const [showAlertModal, setShowAlertModal] = useState(false);
     const [titleAlert, setTitleAlert] = useState("");
     const [pickedDate, setPickedDate] = useState();
-    const [dateStart, setDateStart] = useState(year + '-' + month + '-' + "01");
+    const [dateStart, setDateStart] = useState(year + '-' + month + '-' + day);
     const [dateEnd, setDateEnd] = useState(year + '-' + month + '-' + day);
+    const [daysWithAmounts, setDaysWithAmounts] = useState({
+        days: [],
+        amounts: []
+    })
+    const [showCategoryForm, setShowCategoryForm] = useState(false);
 
     const [userId, setUserId] = useState(cookies.get('userId'));
 
@@ -64,23 +69,31 @@ const Month = () => {
                 setFullExpensesList(res.data);
                 var temp = [{}];
                 var totalAmount = 0;
+                var daysArray = [];
+                var amountsArray = [];
+                var iterator = 0;
                 res.data.map((exp, index) => {
                     if (temp[exp.dateTime.substr(0, 10)] !== undefined) {
                         temp[exp.dateTime.substr(0, 10)].push(exp);
+                        amountsArray[iterator - 1] += exp.amount;
                     } else {
                         temp[exp.dateTime.substr(0, 10)] = [exp];
+                        daysArray.push(exp.dateTime.substr(0, 10));
+                        amountsArray.push(exp.amount);
+                        iterator++;
                     }
                     totalAmount += totalAmount + exp.amount;
                 })
                 setExpensesDict(temp);
                 setTotalAmountExpenses(totalAmount);
+                setDaysWithAmounts({ amounts: amountsArray, days: daysArray })
             })
             .catch(function (error) {
                 if (error.response) {
                     setErrorMessage(error.message + ". " + error.response.data.detail);
                 }
             });
-    }, [isDataUpdated]);
+    }, [isDataUpdated, dateStart, dateEnd]);
 
     useEffect(() => {
         setExpensesList(expensesDict[pickedDate]);
@@ -114,7 +127,16 @@ const Month = () => {
         setExpensesList(expensesDict[date]);
     }
 
-    if (fullExpensesList === null) return <img src="/loading.gif"></img>;
+    const openCategoryForm = (event) => {
+        event.preventDefault();
+        setShowCategoryForm(true);
+    }
+
+    const setIsShowCategoryForm = (data) => {
+        setShowCategoryForm(data);
+    }
+
+    //if (fullExpensesList === null) return <img src="/loading.gif"></img>;
 
     return (
         <>
@@ -122,32 +144,68 @@ const Month = () => {
             <Container>
                 <ExpenseForm action="Добавить" setIsDataUpdated={setIsDataUpdated} categoryList={categoryList} expenseToEdit={undefined}
                     isShowForm={showForm} setIsShowForm={setIsShowForm} userId={userId} isDataUpdated={isDataUpdated} />
+                <CategoryForm action="Добавить" categoryToEdit={undefined}
+                    isShowForm={showCategoryForm} setIsShowForm={setIsShowCategoryForm} userId={userId} setIsDataUpdated={setIsDataUpdated} isDataUpdated={isDataUpdated} />
                 <Row>
                     <Col sm={12}>
                         <Row>
                             <Col className="d-grid">
-                                <Button variant="outline-light" size="lg" onClick={openForm}>Добавить расход</Button>
+                                <Button variant="outline-light" size="lg" disabled>
+                                    Дата начала периода
+                                </Button>
                             </Col>
                             <Col className="d-grid">
-                                <AddCategoryBtn setIsDataUpdated={setIsDataUpdated} isDataUpdated={isDataUpdated} />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <p></p>
-                            <Col className="d-grid">
-                            <Button variant="outline-light" size="lg" disabled>
-                                    Итого за месяц { totalAmountExpenses}
+                                <Button variant="outline-light" size="lg" disabled>
+                                    Дата конца периода
                                 </Button>
                             </Col>
                         </Row>
                         <Row>
                         <p></p>
                             <Col className="d-grid">
-                                <DayList sendClickedDate={showExpensesListByDate} height={0.75 * height} dateStart={dateStart} dateEnd={dateEnd} />
+                                <Form.Control
+                                    type="date"
+                                    defaultValue={dateStart}
+                                    onChange={(event) => {
+                                        setDateStart(event.target.value);
+                                    }}
+                                />
+                            </Col>
+                            <Col className="d-grid">
+                                <Form.Control
+                                    type="date"
+                                    defaultValue={dateEnd}
+                                    onChange={(event) => {
+                                        setDateEnd(event.target.value);
+                                    }}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <p></p>
+                            <Col className="d-grid">
+                                <Button variant="outline-light" size="lg" onClick={openForm}>Добавить расход</Button>
+                            </Col>
+                            <Col className="d-grid">
+                                <Button variant="outline-light" size="lg" onClick={openCategoryForm}>Добавить категорию</Button>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <p></p>
+                            <Col className="d-grid">
+                            <Button variant="outline-light" size="lg" disabled>
+                                    Итого за период {totalAmountExpenses} &#8381;
+                            </Button>
+                            </Col>
+                        </Row>
+                        <Row>
+                        <p></p>
+                            <Col className="d-grid">
+                                <DayList sendClickedDate={showExpensesListByDate} height={0.53 * height} dateStart={dateStart} dateEnd={dateEnd} daysWithAmounts={daysWithAmounts} />
                             </Col>
                             <Col className="d-grid">
                                 <ExpensesList expensesList={expensesList} categoryList={categoryList} userId={userId} setIsDataUpdatedToParent={setIsDataUpdated}
-                                    isDataUpdated={isDataUpdated} height={0.75 * height} date={pickedDate} />
+                                    isDataUpdated={isDataUpdated} height={0.53 * height} date={pickedDate} />
                             </Col>
                         </Row>
                     </Col>
@@ -157,4 +215,4 @@ const Month = () => {
     );
 }
 
-export default Month;
+export default Period;

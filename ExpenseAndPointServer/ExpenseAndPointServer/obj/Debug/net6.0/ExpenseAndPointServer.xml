@@ -818,6 +818,11 @@
             Пароль
             </summary>
         </member>
+        <member name="P:ExpenseAndPointServer.Models.Users.UserRequest.OldPassword">
+            <summary>
+            Пароль
+            </summary>
+        </member>
         <member name="M:ExpenseAndPointServer.Models.Users.UserRequest.ToUserMap">
             <summary>
             Преобразование класса UserOtputDto в класс User
@@ -1149,12 +1154,12 @@
             <returns>Измененный пользователь</returns>
             <exception cref="T:System.Exception">Ошибки в переданных данных или ошибка наличия пользователя с таким же именем</exception>
         </member>
-        <member name="M:ExpenseAndPointServer.Services.UserService.EditUserPassword(System.Int32,ExpenseAndPointServer.Models.Users.User)">
+        <member name="M:ExpenseAndPointServer.Services.UserService.EditUserPassword(System.Int32,ExpenseAndPointServer.Models.Users.UserRequest)">
             <summary>
             Изменение пароля
             </summary>
             <param name="id">Идентификатор пользователя</param>
-            <param name="user">Модель пользователя для работы с БД</param>
+            <param name="user">Модель пользователя приходящей с веб</param>
             <returns>Измененный пользователь</returns>
             <exception cref="T:System.Exception">Ошибки наличия пользователя с таким же именем и ненадежности пароля</exception>
         </member>

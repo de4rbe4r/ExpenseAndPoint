@@ -1,9 +1,9 @@
 ﻿import { React, useState, useEffect } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import '../App.css';
+import '../../App.css';
 import Row from 'react-bootstrap/Row';
 import ExpenseForm from './ExpenseForm.jsx'
-import ConfirmationForm from './ConfirmationForm'
+import ConfirmationForm from '../ConfirmationForm'
 import { ContextMenuTrigger, ContextMenu, ContextMenuItem } from 'rctx-contextmenu';
 
 

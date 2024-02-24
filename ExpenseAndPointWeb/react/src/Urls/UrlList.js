@@ -9,10 +9,14 @@ export const urlAuth = BASE_URL + '/api/Authentication'
 // Users
 export const isUsernameAndPasswordCorrectUrl = BASE_URL + USERS + '/IsUsernameAndPasswordCorrect'
 export const RegisterUserUrl = BASE_URL + USERS;
+export const EditUserNameUrl = BASE_URL + USERS + '/EditUserName/';
+export const EditUserPasswordUrl = BASE_URL + USERS + '/EditUserPassword/';
 
 // Categories
 export const AddCategoryUrl = BASE_URL + CATEGORIES;
 export const GetCategoryByIdUrl = BASE_URL + CATEGORIES + '/ByUserId/';
+export const EditCategoryUrl = BASE_URL + CATEGORIES + '/';
+export const DeleteCategoryUrl = BASE_URL + CATEGORIES + '/';
 
 // Expenses
 export const AddExpensesUrl = BASE_URL + EXPENSE;
