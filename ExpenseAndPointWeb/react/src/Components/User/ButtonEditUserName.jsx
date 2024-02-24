@@ -9,6 +9,9 @@ import AlertModal from './../AlertModal.jsx';
 
 const ButtonEditUserName = () => {
     const cookies = new Cookies();
+    const config = {
+        headers: { Authorization: `Bearer ${cookies.get('access_token')}` }
+    };
     const cookiesLive = 604800; // Неделя
     const [showForm, setShowForm] = useState(false);
     const [userId, setUserId] = useState(cookies.get('userId'));
@@ -31,7 +34,7 @@ const ButtonEditUserName = () => {
     const ChangeName = (event) => {
         event.preventDefault();
 
-        axios.put(EditUserNameUrl + userId, user)
+        axios.put(EditUserNameUrl + userId, user, config)
             .then(res => {
                 setShowAlertModal(true);
                 setErrorMessage("Имя пользователя успешно изменено");

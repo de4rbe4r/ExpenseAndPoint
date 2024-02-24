@@ -1,8 +1,8 @@
 ﻿using ExpenseAndPoint.Data;
 using ExpenseAndPointServer.ErrorLogging;
-using ExpenseAndPointServer.Models.Categories;
 using ExpenseAndPointServer.Models.Expenses;
 using ExpenseAndPointServer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -13,6 +13,7 @@ namespace ExpenseAndPointServer.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ExpenseController : ControllerBase
     {
         /// <summary>

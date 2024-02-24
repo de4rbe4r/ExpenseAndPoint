@@ -16,6 +16,9 @@ import ExpenseForm from '../Expense/ExpenseForm';
 
 const Period = () => {
     const cookies = new Cookies();
+    const config = {
+        headers: { Authorization: `Bearer ${cookies.get('access_token')}` }
+    };
     var today = new Date();
     var day = today.getDate();
     if (day < 10) {
@@ -50,7 +53,7 @@ const Period = () => {
     const [userId, setUserId] = useState(cookies.get('userId'));
 
     useEffect(() => {
-        axios.get(GetCategoryByIdUrl + userId)
+        axios.get(GetCategoryByIdUrl + userId, config)
             .then(res => {
                 setCategoryList(res.data)
             })
@@ -64,7 +67,7 @@ const Period = () => {
     }, [isDataUpdated]);
 
     useEffect(() => {
-        axios.post(GetExpensesListByUserIdAndPeriodUrl, getRequest)
+        axios.post(GetExpensesListByUserIdAndPeriodUrl, getRequest, config)
             .then(res => {
                 setFullExpensesList(res.data);
                 var temp = [{}];

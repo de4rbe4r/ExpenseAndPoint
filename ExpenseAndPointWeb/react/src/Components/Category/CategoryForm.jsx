@@ -5,8 +5,7 @@ import Form from 'react-bootstrap/Form';
 import { AddCategoryUrl, EditCategoryUrl } from "../../Urls/UrlList";
 import Button from 'react-bootstrap/Button';
 import AlertModal from '../AlertModal';
-
-
+import Cookies from 'universal-cookie';
 
 const CategoryForm = ({ action, categoryToEdit, isShowForm, setIsShowForm, userId, setIsDataUpdated, isDataUpdated }) => {
     const [title, setTitle] = useState();
@@ -18,6 +17,11 @@ const CategoryForm = ({ action, categoryToEdit, isShowForm, setIsShowForm, userI
         userId: '',
         title: ''
     });
+    const cookies = new Cookies();
+
+    const config = {
+        headers: { Authorization: `Bearer ${cookies.get('access_token')}` }
+    };
 
     useEffect(() => {
         if (action === "Добавить") {
@@ -61,7 +65,7 @@ const CategoryForm = ({ action, categoryToEdit, isShowForm, setIsShowForm, userI
         }
 
         if (action === "Добавить") {
-            axios.post(AddCategoryUrl, category)
+            axios.post(AddCategoryUrl, category, config)
                 .then(res => {
                     setShowAlertModal(true);
                     setErrorMessage("Категория успешно добавлена");
@@ -79,7 +83,7 @@ const CategoryForm = ({ action, categoryToEdit, isShowForm, setIsShowForm, userI
                     }
                 });
         } else if (action === "Изменить") {
-            axios.put(EditCategoryUrl + category.id, category)
+            axios.put(EditCategoryUrl + category.id, category, config)
                 .then(res => {
                     setShowAlertModal(true);
                     setErrorMessage("Категория успешно изменена");

@@ -75,6 +75,7 @@ namespace ExpenseAndPointServer.Models.Expenses
                     expenseHistoryDto.Action = "Изменил";
                     break;
             }
+            expenseHistoryDto.Id = Id;
             expenseHistoryDto.DateCreated = DateCreated;
             expenseHistoryDto.NewCategoryTitle = NewCategoryTitle;
             expenseHistoryDto.OldCategoryTitle = OldCategoryTitle;

@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import { DeleteExpenseUrl, DeleteCategoryUrl} from "../Urls/UrlList";
 import Button from 'react-bootstrap/Button';
 import AlertModal from './AlertModal.jsx';
+import Cookies from 'universal-cookie';
 
 
 
@@ -13,7 +14,10 @@ const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsD
     const [errorMessage, setErrorMessage] = useState("");
     const [showAlertModal, setShowAlertModal] = useState(false);
     const [titleAlert, setTitleAlert] = useState("");
-
+    const cookies = new Cookies();
+    const config = {
+        headers: { Authorization: `Bearer ${cookies.get('access_token')}` }
+    };
 
     useEffect(() => {
         if (expense !== undefined) {
@@ -32,7 +36,7 @@ const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsD
         event.preventDefault();
 
         if (expense !== undefined) {
-            axios.delete(DeleteExpenseUrl + expense.id, expense)
+            axios.delete(DeleteExpenseUrl + expense.id, expense, config)
                 .then(res => {
                     setShowAlertModal(true);
                     setErrorMessage("Расход успешно удален");
@@ -46,7 +50,7 @@ const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsD
                     }
                 });
         } else if (category !== undefined) {
-            axios.delete(DeleteCategoryUrl + category.id, category)
+            axios.delete(DeleteCategoryUrl + category.id, category, config)
                 .then(res => {
                     setShowAlertModal(true);
                     setErrorMessage("Категория успешно удалена");

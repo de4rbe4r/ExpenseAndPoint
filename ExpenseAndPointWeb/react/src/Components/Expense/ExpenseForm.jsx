@@ -5,10 +5,11 @@ import Form from 'react-bootstrap/Form';
 import { AddExpensesUrl, EditExpenseUrl } from "../../Urls/UrlList";
 import Button from 'react-bootstrap/Button';
 import AlertModal from '../AlertModal.jsx';
-
-
+import Cookies from 'universal-cookie';
 
 const ExpenseForm = ({ action, expenseToEdit, categoryList, isShowForm, setIsShowForm, userId, setIsDataUpdated, isDataUpdated }) => {
+    const cookies = new Cookies();
+
     // Формирование текущей даты
     var today = new Date();
     var day = today.getDate();
@@ -35,6 +36,9 @@ const ExpenseForm = ({ action, expenseToEdit, categoryList, isShowForm, setIsSho
         constPart: 'T',
         time: ''
     })
+    const config = {
+        headers: { Authorization: `Bearer ${cookies.get('access_token')}` }
+    };
 
     const [expense, setExpense] = useState({
         amount: '',
@@ -117,7 +121,7 @@ const ExpenseForm = ({ action, expenseToEdit, categoryList, isShowForm, setIsSho
         }
 
         if (action === "Добавить") {
-            axios.post(AddExpensesUrl, expense)
+            axios.post(AddExpensesUrl, expense, config)
                 .then(res => {
                     setShowAlertModal(true);
                     setErrorMessage("Расход успешно добавлен");
@@ -140,7 +144,7 @@ const ExpenseForm = ({ action, expenseToEdit, categoryList, isShowForm, setIsSho
                     }
                 });
         } else if (action === "Изменить") {
-            axios.put(EditExpenseUrl + expense.id, expense)
+            axios.put(EditExpenseUrl + expense.id, expense, config)
                 .then(res => {
                     setShowAlertModal(true);
                     setErrorMessage("Расход успешно изменен");

@@ -2,6 +2,7 @@
 using ExpenseAndPointServer.ErrorLogging;
 using ExpenseAndPointServer.Models.Expenses;
 using ExpenseAndPointServer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseAndPointServer.Controllers
@@ -11,6 +12,7 @@ namespace ExpenseAndPointServer.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ExpenseHistoryController : ControllerBase
     {
         /// <summary>

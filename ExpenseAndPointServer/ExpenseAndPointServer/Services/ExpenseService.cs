@@ -63,7 +63,8 @@ namespace ExpenseAndPointServer.Services
         {
             if (_context.Users.FirstOrDefault(u => u.Id == userId) == null)
                 throw new Exception($"Пользователя с идентификатором {userId} не существует");
-            return await _context.Expenses.Where(e => e.UserId == userId).OrderBy(e => e.DateTime.TimeOfDay).ToListAsync();
+            return await _context.Expenses.Where(e => e.UserId == userId).OrderBy(e => e.DateTime.TimeOfDay)
+                .OrderByDescending(e => e.DateTime).ToListAsync();
         }
 
         /// <summary>
@@ -89,7 +90,8 @@ namespace ExpenseAndPointServer.Services
                 throw new Exception($"Не существует расходов с датой из будущего ({date.ToString("yyyyMMddHHmmss")})");
             if (_context.Users.FirstOrDefault(u => u.Id == userId) == null)
                 throw new Exception($"Пользователя с идентификатором {userId} не существует");
-            return await _context.Expenses.Where(e => e.UserId == userId && e.DateTime.Date == date.Date).ToListAsync();
+            return await _context.Expenses.Where(e => e.UserId == userId && e.DateTime.Date == date.Date)
+                                .OrderByDescending(e => e.DateTime).ToListAsync();
         }
 
         /// <summary>
@@ -112,7 +114,8 @@ namespace ExpenseAndPointServer.Services
             }
             return await _context.Expenses.Where(e => e.UserId == userId 
                                                 && e.DateTime.Date >= dateStart.Date 
-                                                && e.DateTime.Date <= dateEnd.Date).ToListAsync();
+                                                && e.DateTime.Date <= dateEnd.Date)
+                                .OrderByDescending(e => e.DateTime).ToListAsync();
         }
 
         /// <summary>
@@ -128,7 +131,8 @@ namespace ExpenseAndPointServer.Services
                 throw new Exception($"Пользователя с идентификатором {userId} не существует");
             if (_context.Categories.FirstOrDefault(c => c.Id == categoryId) == null)
                 throw new Exception($"Категории с идентификатором {categoryId} не существует");
-            return await _context.Expenses.Where(e => e.UserId == userId && e.CategoryId == categoryId).ToListAsync();
+            return await _context.Expenses.Where(e => e.UserId == userId && e.CategoryId == categoryId)
+                .OrderByDescending(e => e.DateTime).ToListAsync();
         }
 
         /// <summary>
@@ -148,7 +152,8 @@ namespace ExpenseAndPointServer.Services
             if (date > DateTime.Now)
                 throw new Exception($"Не существует расходов с датой из будущего ({date.ToString("yyyyMMddHHmmss")})");
             return await _context.Expenses.Where(e => e.UserId == userId && e.CategoryId == categoryId 
-                                                    && e.DateTime.Date == date.Date).ToListAsync();
+                                                    && e.DateTime.Date == date.Date)
+                                .OrderByDescending(e => e.DateTime).ToListAsync();
         }
 
         /// <summary>
@@ -174,7 +179,8 @@ namespace ExpenseAndPointServer.Services
             }
             return await _context.Expenses.Where(e => e.UserId == userId && e.CategoryId == categoryId
                                                     && e.DateTime.Date >= dateStart.Date
-                                                    && e.DateTime.Date <= dateEnd.Date).ToListAsync();
+                                                    && e.DateTime.Date <= dateEnd.Date)
+                                .OrderByDescending(e => e.DateTime).ToListAsync();
         }
 
         /// <summary>

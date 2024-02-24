@@ -9,6 +9,9 @@ import AlertModal from './../AlertModal.jsx';
 
 const ButtonEditUserPassword = () => {
     const cookies = new Cookies();
+    const config = {
+        headers: { Authorization: `Bearer ${cookies.get('access_token')}` }
+    };
     const [showForm, setShowForm] = useState(false);
     const [userId, setUserId] = useState(cookies.get('userId'));
     const [user, setUser] = useState({
@@ -39,7 +42,7 @@ const ButtonEditUserPassword = () => {
             return;
         }
 
-        axios.put(EditUserPasswordUrl + userId, user)
+        axios.put(EditUserPasswordUrl + userId, user, config)
             .then(res => {
                 setShowAlertModal(true);
                 setErrorMessage("Пароль успешно изменен");

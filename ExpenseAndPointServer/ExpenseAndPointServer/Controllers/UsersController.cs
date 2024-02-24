@@ -1,10 +1,10 @@
 ﻿using ExpenseAndPoint.Data;
 using ExpenseAndPointServer.ErrorLogging;
 using ExpenseAndPointServer.Models.Users;
-
 using ExpenseAndPointServer.Services;
 using ExpenseAndPointServer.Services.Cryptographer;
 using ExpenseAndPointServer.Services.PasswordChecker;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json;
@@ -48,6 +48,7 @@ namespace ExpenseAndPointServer.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             var userList = await userService.GetUsers();
@@ -74,6 +75,7 @@ namespace ExpenseAndPointServer.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
         public async Task<ActionResult<UserResponse>> GetUserById(int id)
         {
             try
@@ -109,6 +111,7 @@ namespace ExpenseAndPointServer.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<UserResponse>>> GetUserByName(string name)
         {
             try
@@ -170,6 +173,7 @@ namespace ExpenseAndPointServer.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
         public async Task<IActionResult> DeleteUser(int id)
         {
             try
@@ -197,6 +201,7 @@ namespace ExpenseAndPointServer.Controllers
         [HttpPut("EditUserName/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
         public async Task<ActionResult<UserResponse>> PutUserName(int id, UserRequest userInputDto)
         {
             User editedUser;
@@ -227,6 +232,7 @@ namespace ExpenseAndPointServer.Controllers
         [HttpPut("EditUserPassword/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
         public async Task<ActionResult<UserResponse>> PutUserPassword(int id, UserRequest userInputDto)
         {
             User editedUser;
@@ -256,6 +262,7 @@ namespace ExpenseAndPointServer.Controllers
         [HttpPost("IsUsernameAndPasswordCorrect")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
         public async Task<IActionResult> IsUsernameAndPasswordCorrect(UserRequest userRequest)
         {
             try

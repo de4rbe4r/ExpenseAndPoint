@@ -13,6 +13,7 @@ namespace ExpenseAndPointServer.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoriesController : ControllerBase
     {
         /// <summary>

@@ -12,8 +12,7 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import useWindowDimensions from '../../Hooks/useWindowDimensions.jsx'
 import CategoryForm from '../Category/CategoryForm';
-
-
+import ExpensesHistoryList from '../Expense/ExpensesHistoryList ';
 
 const Day = () => {
     const cookies = new Cookies();
@@ -31,10 +30,12 @@ const Day = () => {
 
     var today = new Date();
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-
+    const config = {
+        headers: { Authorization: `Bearer ${cookies.get('access_token')}` }
+    };
 
     useEffect(() => {
-        axios.get(GetCategoryByIdUrl + userId)
+        axios.get(GetCategoryByIdUrl + userId, config)
             .then(res => {
                 setCategoryList(res.data)
             })
@@ -48,7 +49,7 @@ const Day = () => {
     }, [isDataUpdated]);
 
     useEffect(() => {
-        axios.post(GetExpensesListByUserIdAndDateUrl, getRequest)
+        axios.post(GetExpensesListByUserIdAndDateUrl, getRequest, config)
             .then(res => {
                 setExpensesList(res.data);
             })
@@ -115,6 +116,10 @@ const Day = () => {
                         <Row>
                             <p></p>
                             <PieChart expensesList={expensesList} categoryList={categoryList} />
+                        </Row>
+                        <Row>
+                            <p></p>
+                            <ExpensesHistoryList isDataUpdated={isDataUpdated} height={ 0.35 * height} />
                         </Row>
                     </Col>
                 </Row>

@@ -2,6 +2,7 @@ const BASE_URL = 'https://localhost:7184';
 const USERS = '/api/users'
 const CATEGORIES = '/api/categories'
 const EXPENSE = '/api/expense';
+const EXPENSEHISTORY = '/api/expensehistory'
 
 // Authentication
 export const urlAuth = BASE_URL + '/api/Authentication'
@@ -24,3 +25,6 @@ export const GetExpensesListByUserIdAndDateUrl = BASE_URL + EXPENSE + '/ByUserId
 export const GetExpensesListByUserIdAndPeriodUrl = BASE_URL + EXPENSE + '/ByUserIdAndPeriod';
 export const EditExpenseUrl = BASE_URL + EXPENSE + '/';
 export const DeleteExpenseUrl = BASE_URL + EXPENSE + '/';
+
+// ExpensesHistory
+export const GetExpensesHistoryListByUserId = BASE_URL + EXPENSEHISTORY + '/ByUserId/';

@@ -82,7 +82,8 @@ namespace ExpenseAndPointServer.Services
                 throw new Exception($"Пользователя с идентификатором {userId} не существует");
             return await _context.ExpenseHistories.Where(e => e.UserId == userId 
                                 && e.DateCreated < DateTime.Now 
-                                || e.DateCreated > DateTime.Now.AddDays(-30)).ToListAsync();
+                                || e.DateCreated > DateTime.Now.AddDays(-30))
+                .OrderByDescending(e => e.DateCreated).ToListAsync();
         }
     }
 }

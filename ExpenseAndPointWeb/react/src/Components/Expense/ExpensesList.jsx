@@ -6,8 +6,6 @@ import ExpenseForm from './ExpenseForm.jsx'
 import ConfirmationForm from '../ConfirmationForm'
 import { ContextMenuTrigger, ContextMenu, ContextMenuItem } from 'rctx-contextmenu';
 
-
-
 const ExpensesList = ({ expensesList, categoryList, userId, setIsDataUpdatedToParent, isDataUpdated, height, date }) => {
 
     const setIsShowEditForm = (data) => {

@@ -48,7 +48,7 @@ const PieChart = ({ expensesList, categoryList }) => {
         legendTextStyle: { color: '#FFF' },
         titleTextStyle: { color: '#FFF' },
         width: 0.48 * width,
-        height: 0.78 * height,
+        height: 0.4 * height,
     };
 
     return (

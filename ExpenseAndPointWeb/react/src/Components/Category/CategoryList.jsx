@@ -21,12 +21,16 @@ const CategoryList = () => {
     const [categoryToDelete, setCategoryToDelete] = useState();
     const [showConfirmationForm, setShowConfirmationForm] = useState(false);
 
+    const config = {
+        headers: { Authorization: `Bearer ${cookies.get('access_token')}` }
+    };
+
     const setIsDataUpdated = (data) => {
         setDataUpdated(data);
     }
 
     useEffect(() => {
-        axios.get(GetCategoryByIdUrl + userId)
+        axios.get(GetCategoryByIdUrl + userId, config)
             .then(res => {
                 setCategoryList(res.data)
             })
