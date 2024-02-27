@@ -34,9 +34,9 @@ const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsD
 
     const DeleteExpense = (event) => {
         event.preventDefault();
-
+        console.log(config);
         if (expense !== undefined) {
-            axios.delete(DeleteExpenseUrl + expense.id, expense, config)
+            axios.delete(DeleteExpenseUrl + expense.id, config)
                 .then(res => {
                     setShowAlertModal(true);
                     setErrorMessage("Расход успешно удален");
@@ -50,7 +50,7 @@ const ConfirmationForm = ({ expense, category, isShowForm, setIsShowForm, setIsD
                     }
                 });
         } else if (category !== undefined) {
-            axios.delete(DeleteCategoryUrl + category.id, category, config)
+            axios.delete(DeleteCategoryUrl + category.id, config)
                 .then(res => {
                     setShowAlertModal(true);
                     setErrorMessage("Категория успешно удалена");

@@ -14,7 +14,7 @@ const ExpensesHistoryList = ({ isDataUpdated, height }) => {
     };
     const [userId, setUserId] = useState(cookies.get('userId'));
     const [username, setUsername] = useState(cookies.get('userName'));
-    const [expensesHistoryList, setExpensesHistoryList] = useState(undefined);
+    const [expensesHistoryList, setExpensesHistoryList] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     const [showAlertModal, setShowAlertModal] = useState(false);
     const [titleAlert, setTitleAlert] = useState("");
@@ -36,7 +36,7 @@ const ExpensesHistoryList = ({ isDataUpdated, height }) => {
     const setIsShowAlertModal = (data) => {
         setShowAlertModal(data);
     }
-    
+
     if (expensesHistoryList === undefined) return <img src="/loading.gif" style={{
         width: "100px",
     }}></img>;
@@ -54,7 +54,7 @@ const ExpensesHistoryList = ({ isDataUpdated, height }) => {
                     <Row className="justify-content-md-center">
                         История изменений</Row>
                 </ListGroup.Item>
-                {
+                {(expensesHistoryList !== null ) ?
                     expensesHistoryList.map((e, index) => (
                         <div key={`div-${e.id}`}>
                             <ListGroup.Item action variant="dark" key={e.id} value={e.id}>
@@ -73,7 +73,7 @@ const ExpensesHistoryList = ({ isDataUpdated, height }) => {
                                     </Row>
                                 </ListGroup.Item>
                         </div>
-                        ))
+                        )) : null
                 }
             </ListGroup>
         </>

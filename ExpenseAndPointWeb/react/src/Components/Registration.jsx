@@ -5,10 +5,10 @@ import axios from 'axios';
 
 const Authorization = () => {
     const [showError, setShowError] = useState(false);
+    const [confirmedPassword, setConfirmedPassword] = useState();
     const [user, setUser] = useState({
         name: '',
-        password: '',
-        confirmedPassword: ''
+        password: ''
     });
     const [errorMessage, setErrorMessage] = useState(null);
 
@@ -20,7 +20,7 @@ const Authorization = () => {
                 throw new Error("Введите имя пользователя и пароль");
             }
 
-            if (user.password !== user.confirmedPassword) {
+            if (user.password !== confirmedPassword) {
                 throw new Error("Пароли не совпадают");
             }
 
@@ -60,7 +60,7 @@ const Authorization = () => {
                     <input className="input" type="password" placeholder="Пароль"
                         value={user.password} onChange={event => setUser({ ...user, password: event.target.value })}></input>
                     <input className="input" type="password" placeholder="Подтвердите пароль"
-                        value={user.confirmedPassword} onChange={event => setUser({ ...user, confirmedPassword: event.target.value })}></input>
+                        value={user.confirmedPassword} onChange={event => setConfirmedPassword(event.target.value)}></input>
                 </form>
                 <button className="button"
                     onClick={ Register }>Зарегистрироваться</button>

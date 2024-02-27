@@ -52,14 +52,7 @@ namespace ExpenseAndPointServer.Controllers
             {
                 var expenseList = await expenseHistoryService.GetLast30DaysExpenseHistoriesByUserId(id);
                 var expenseDtoList = expenseList.Select(e => e.ToExpenseHistoryDtoMap());
-                if (expenseList.Count() == 0)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    return Ok(expenseDtoList);
-                }
+                return Ok(expenseDtoList);
             }
             catch (Exception ex)
             {
