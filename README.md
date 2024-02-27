@@ -6,34 +6,34 @@
 # Общая информация о приложении
 ## Регистрация и авторизация
 Для получения доступа к приложению пользователю необходимо пройти этап регистрации и авторизации. Если пользователь не будет авторизован, то основные страницы приложения, в том числе домашная страница, будет недоступна. Неавторизованному пользователю доступны 2 страницы: авторизация и регистрация.
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/01.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/01.PNG" width="700"/></div>
 
 ### Регистрация
 Для регистрации пользователя необходимо ввести имя пользователя и пароль. При успешной регистрации пользователь будет перенаправлен на страницу входа.
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/02.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/02.PNG" width="700"/></div>
 
 Возможные ошибки при нажатии на кнопку зарегистрироваться:
 #### Логин и пароль не введен
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/03.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/03.PNG" width="700"/></div>
 
 #### Введенные пароли не совпадают
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/04.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/04.PNG" width="700"/></div>
 
 #### Пользователь с указанным именем уже зарегестрирован
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/05.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/05.PNG" width="700"/></div>
 
 #### Введенный пароль не соответствует требования безопасности
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/06.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/06.PNG" width="700"/></div>
 
 ### Авторизация
 Для входа в приложение необходимо ввести логин и пароль зарегистрированного пользователя.
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/07.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/07.PNG" width="700"/></div>
 
 При успешной авторизации пользователь будет перенаправлен на главную страницу приложения. Информация получения в результате регистрации (JWT токен, имя пользователя, Id пользователя) записываются и хранятся в Cookies. Если зарегистрированный пользователь попытается перейти к страницам авторизации или регистрации, то он будет перенаправлен на домашнюю страницу.
 
 Возможные ситуации при нажатии на кнопку войти:
 #### Введено неверное имя пользователя или пароль
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/08.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/08.PNG" width="700"/></div>
 
 ## Основной функционал приложения
 Приложение состоит из вкладок:
@@ -44,27 +44,27 @@
 - Кнопка выхода из приложения: при нажатии на кнопку данные в Cookies будут удалены.
 
 На вкладках день, месяц, период находятся кнопки, с помощью которых происходит добавление расхода или категории.
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/11.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/11.PNG" width="700"/></div>
 
 ### Добавить категорию
 При нажатии на кнопку "Добавить категорию" отобразится модальное окно с вводом названия категории.
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/12.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/12.PNG" width="700"/></div>
 
 При возникновении какой-либо ошибки отобразится модальное окно с текстом ошибки.
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/13.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/13.PNG" width="700"/></div>
 
 При успешном добавлении категории отобразится модальное окно.
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/14.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/14.PNG" width="700"/></div>
 
 ### Добавить расход
 При нажатии на кнопку "Добавить расход" отобразится модальное окно для ввода параметров. На данной форме представлен выбор категории из выпадающего списка, выбор даты и времеи расхода (имеется возможность добавления расхода за прошедшее время).
 
 
 ### Вкладка день
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/09.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/09.PNG" width="700"/></div>
 
 На данной вкладке представлен список расходов, который позволяет изменять и удалять информация о расходе. Для этого необходимо нажать ПКМ по интересующему расходу и выбрать действие.
-<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndDot/blob/master/Images/08.PNG" width="700"/></div>
+<div align="center"><img src="https://github.com/de4rbe4r/ExpenseAndPoint/blob/master/Images/08.PNG" width="700"/></div>
 
 Lkz 
 ---
